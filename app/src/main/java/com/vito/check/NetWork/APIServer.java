@@ -4,6 +4,7 @@ import com.vito.check.bean.Device;
 import com.vito.check.bean.MyOrder;
 import com.vito.check.bean.Regist;
 import com.vito.check.bean.User;
+import com.vito.check.bean.sendOrder;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -45,4 +46,9 @@ public interface APIServer {
     //查询自己的派单信息
     @GET("getMyDispatch.do")
     Observable<MyOrder> getMyOrders(@Query("token") String token, @Query("state") String state);
+
+    //派单
+    @POST("transferDispatch.do")
+    @FormUrlEncoded
+    Observable<sendOrder> sendOrder(@Field("token") String token, @Field("dispatchId") String id, @Field("transferTo") String pwd);
 }

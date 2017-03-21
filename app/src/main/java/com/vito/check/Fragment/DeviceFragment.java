@@ -96,8 +96,7 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
     private boolean mFirstFix = false;
     private LatLng mylocation;
     private Marker mAddMarker;
-    private List<Marker> markers;
-    private boolean isShowInfoWindows = false;
+    private List<Device.ContentBean> bContent;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -201,14 +200,8 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
                 if (aMap != null) {
                     aMap.clear();
                 }
-                if (device.getContent().size() == 0) {
-                    mFirstFix = false;
-                    mLocMarker = null;
-                    Toast.makeText(mActivity, "未查到相关设备信息", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
                     addMarkersToMap(device);
-                }
+
 
 
             }
@@ -301,10 +294,18 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
      * @param b
      */
     private void addMarkersToMap(Device b) {
+        bContent = b.getContent();
+        mFirstFix = false;
+        mLocMarker = null;
+
+        if (b.getContent().size() == 0) {
+            Toast.makeText(mActivity, "未查到相关设备信息", Toast.LENGTH_SHORT).show();
+            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylocation, 13));
+            return;
+        }
         List<Device.ContentBean> content = b.getContent();
         Log.d("aa", "获取到的设备数量" + content.size() + "");
         mList = new ArrayList<>();
-        markers = new ArrayList<>();
         for (Device.ContentBean device : content) {
             double lat = device.getLat();
             double lng = device.getLng();
@@ -324,13 +325,10 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
                 markerOption.icon(BitmapDescriptorFactory
                         .defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
             }
-            mAddMarker = aMap.addMarker(markerOption);
-            markers.add(mAddMarker);
+            aMap.addMarker(markerOption);
         }
+
         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mList.get(0), 13));
-        //将地图移动至个人位置
-        mFirstFix = false;
-        mLocMarker = null;
     }
 
     /**
@@ -443,7 +441,7 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
                     mSensorHelper.setCurrentMarker(mLocMarker);//定位图标旋转
 
                     Log.d("location", mEt.getText().toString());
-                    if (mEt.getText().toString().equals("请选择设备")) {
+                    if (mEt.getText().toString().equals("请选择设备")||bContent.size()==0) {
                         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylocation, 13));
                     }
                 } else {

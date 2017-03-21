@@ -2,19 +2,24 @@ package com.vito.check.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.vito.check.NetWork.ApiWrapper;
 import com.vito.check.R;
 import com.vito.check.bean.MyOrder;
+import com.vito.check.bean.sendOrder;
 import com.vito.check.util.SpUtils;
 
 import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * Created by xk on 2017/3/10.
@@ -34,13 +39,17 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
     @BindView(R.id.login_btn)
     Button mLoginBtn;
     private MyOrder.ContentBean mOrderBean;
-
+    private String mToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("派单", true);
+        mToken = SpUtils.getString(this, "token", "");
         mOrderBean = (MyOrder.ContentBean) getIntent().getSerializableExtra("orderBean");
-        init();
+        if(mOrderBean!=null){
+            init();
+        }
+
         mLoginBtn.setOnClickListener(this);
     }
 
@@ -63,7 +72,32 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
         String Address = mTvAddress.getText().toString();
         String Desc = mTvDesc.getText().toString();
         String SendPhone = mTvSendPhone.getText().toString();
+        Observable<sendOrder> obsevable = ApiWrapper.getInstance().sendOrder(mToken, "1", "柴长进");
+        addSubscription(obsevable, new Subscriber<sendOrder>() {
+            @Override
+            public void onCompleted() {
 
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(sendOrder sendOrder) {
+                String content = sendOrder.getContent();
+                Log.d("order",content);
+                boolean success = sendOrder.isSuccess();
+                Log.d("order",success+"");
+                if(success){
+                    Toast.makeText(getApplicationContext(),"派发成功",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(),"派发失败",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
     }
 }

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.vito.check.Activity.DeviceCheckActivity;
+import com.vito.check.Activity.InspectionRecord;
 import com.vito.check.Activity.LoginActivity;
 import com.vito.check.Activity.ReportActivity;
 import com.vito.check.Activity.SendOrderActivity;
@@ -75,7 +76,7 @@ public class WorkFragment extends Fragment {
 //                    Toast.makeText(mActivity, mySection.t.getContent()+"----"+position, Toast.LENGTH_LONG).show();
                 switch (position) {
                     case 1:
-
+                        startActivity(InspectionRecord.class);
                         break;
                     case 2:
                         startActivity(ReportActivity.class);

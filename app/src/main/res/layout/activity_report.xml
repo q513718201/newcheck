@@ -5,6 +5,22 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <include layout="@layout/my_toolbar"></include>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/blue"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="周考勤"
+            android:layout_centerInParent="true"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            />
+
+    </RelativeLayout>
     <com.liulishuo.magicprogresswidget.MagicProgressBar
         android:id="@+id/demo_2_mpb"
         android:layout_width="match_parent"

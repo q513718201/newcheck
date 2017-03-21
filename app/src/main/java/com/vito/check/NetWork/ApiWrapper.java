@@ -5,6 +5,8 @@ import com.vito.check.bean.Device;
 import com.vito.check.bean.MyOrder;
 import com.vito.check.bean.Regist;
 import com.vito.check.bean.User;
+import com.vito.check.bean.sendOrder;
+
 import rx.Observable;
 
 /**
@@ -69,11 +71,16 @@ public class ApiWrapper extends RetrofitUtil {
         return apiServer.getCheckedDevices(token,isChecked);
     }
     /**
-     * 派单
+     * 看看自己的派单
      */
     public Observable<MyOrder> getMyOrders(String token, String state) {
         return apiServer.getMyOrders(token,state);
     }
+    /**
+     * 自己派单出去
+     */
 
-
+    public Observable<sendOrder> sendOrder(String token, String id, String transferTo) {
+        return apiServer.sendOrder(token,id,transferTo);
+    }
 }

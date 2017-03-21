@@ -43,7 +43,7 @@ public class MyOrderActivity extends BaseActivity implements RadioGroup.OnChecke
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("我的派单",true);
+        setTitle("我的派单", true);
         mToken = SpUtils.getString(this, "token", "");
         mRgGp.setOnCheckedChangeListener(this);
 
@@ -59,20 +59,16 @@ public class MyOrderActivity extends BaseActivity implements RadioGroup.OnChecke
         switch (checkedId) {
             case R.id.rb_paidan:
                 state = "派单中";
-                Toast.makeText(getApplicationContext(), state, Toast.LENGTH_LONG).show();
                 break;
             case R.id.rb_daishenhe:
                 state = "待审核";
-                Toast.makeText(getApplicationContext(), state, Toast.LENGTH_LONG).show();
                 break;
             case R.id.rb_jiedan:
                 state = "已结单";
-                Toast.makeText(getApplicationContext(), state, Toast.LENGTH_LONG).show();
                 break;
 
         }
-
-        if(mContent!=null){
+        if (mContent != null) {
             mContent.clear();
         }
         Observable<MyOrder> myOrders = ApiWrapper.getInstance().getMyOrders(mToken, state);
@@ -90,8 +86,8 @@ public class MyOrderActivity extends BaseActivity implements RadioGroup.OnChecke
             @Override
             public void onNext(MyOrder myOrder) {
                 mContent = myOrder.getContent();
-                Log.d("order",mContent.toString());
-                mLv.setAdapter(new MyAdapter(mContent,getApplicationContext()));
+                Log.d("order", mContent.toString());
+                mLv.setAdapter(new MyAdapter(mContent, getApplicationContext()));
             }
         });
     }
