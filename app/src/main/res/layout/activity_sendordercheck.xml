@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#ffffff"
+              android:orientation="vertical">
+
+    <include layout="@layout/my_toolbar"></include>
+    <RelativeLayout
+        android:id="@+id/rl_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        android:textColor="@color/base_gray">
+
+        <TextView
+            android:id="@+id/et_phone"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="设备号:"
+            android:textColor="@color/base_gray"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/tv_deviceNo"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/et_phone"
+            android:background="@drawable/et_normal"
+            android:hint="单行输入"
+            android:maxLength="11"
+            android:singleLine="true"
+            android:textColor="@color/base_gray"
+            android:textColorHint="@color/gray"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:textColor="@color/base_gray">
+
+        <TextView
+            android:id="@+id/tv_address1"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="地址:"
+            android:textColor="@color/base_gray"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/tv_address"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/et_normal"
+            android:layout_toRightOf="@id/tv_address1"
+            android:hint="单行输入"
+            android:maxLength="11"
+            android:singleLine="true"
+            android:textColor="@color/base_gray"
+            android:textColorHint="@color/gray"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:textColor="@color/base_gray">
+
+        <TextView
+            android:id="@+id/tv_desc_title"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="问题描述:"
+            android:textColor="@color/base_gray"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/tv_desc"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_margin="8dp"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/tv_desc_title"
+            android:hint="说点什么吧..."
+            android:background="@null" >
+        </EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:textColor="@color/base_gray">
+
+        <TextView
+            android:id="@+id/tv_sendPhone1"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="指派给:"
+            android:textColor="@color/base_gray"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/tv_sendPhone"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/et_normal"
+            android:layout_toRightOf="@id/tv_sendPhone1"
+            android:hint="指派人手机号"
+            android:maxLength="11"
+            android:singleLine="true"
+            android:textColor="@color/base_gray"
+            android:textColorHint="@color/gray"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="200dp"
+        android:background="@drawable/button_selector"
+        android:onClick="click"
+        android:text="派单"
+        android:textColor="#ffffff"
+        android:textSize="20sp"/>
+
+
+</LinearLayout>

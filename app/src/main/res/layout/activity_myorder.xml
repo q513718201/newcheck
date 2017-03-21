@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+<include layout="@layout/my_toolbar"></include>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_marginStart="37dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="选择派单类型："
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:textColor="@color/base_gray"
+            android:textSize="18dp"
+            />
+        <RadioGroup
+            android:id="@+id/rg_gp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/rb_paidan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="派单中"
+                />
+            <RadioButton
+                android:id="@+id/rb_daishenhe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="待审核"
+                />
+            <RadioButton
+                android:id="@+id/rb_jiedan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已结单"
+                />
+
+        </RadioGroup>
+        </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.6dp"
+        android:background="#e3e3e3"/>
+    <ListView
+        android:id="@+id/lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+
+</LinearLayout>

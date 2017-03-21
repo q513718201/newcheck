@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:notButton="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/rl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        ></FrameLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.6dp"
+        android:layout_below="@+id/rl_phone"
+        android:background="#e3e3e3"/>
+
+    <RadioGroup
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/content_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <com.vito.check.View.NotificationButton
+            android:id="@+id/message"
+            style="@style/content_rb_style"
+            notButton:circleBgColor="@android:color/holo_red_light"
+            notButton:circleSize="6dp"
+            notButton:textColor="@android:color/white"
+            android:drawableTop="@drawable/select_bottom"
+            android:text="消息"/>
+
+        <com.vito.check.View.NotificationButton
+            android:id="@+id/device"
+            style="@style/content_rb_style"
+            notButton:circleBgColor="@android:color/holo_red_light"
+            notButton:circleSize="6dp"
+            notButton:textColor="@android:color/white"
+            android:drawableTop="@drawable/select_bottom"
+            android:text="设备状态"/>
+
+        <com.vito.check.View.NotificationButton
+            android:id="@+id/work"
+            style="@style/content_rb_style"
+            notButton:circleBgColor="@android:color/holo_red_light"
+            notButton:circleSize="6dp"
+            notButton:textColor="@android:color/white"
+            android:drawableTop="@drawable/select_bottom"
+            android:text="工作"/>
+
+    </RadioGroup>
+
+</LinearLayout>
