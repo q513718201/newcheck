@@ -90,6 +90,7 @@
 
         <activity android:name=".Activity.SendOrderActivity"></activity>
         <activity android:name=".Activity.MyOrderActivity"></activity>
+        <activity android:name=".Activity.ReportActivity"></activity>
 
         <service android:name="com.amap.api.location.APSService"></service>
 

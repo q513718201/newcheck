@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <com.liulishuo.magicprogresswidget.MagicProgressBar
+        android:id="@+id/demo_2_mpb"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        app:mpb_color="#ff0000"
+        app:mpb_default_color="#95ff00"/>
+
+</LinearLayout>

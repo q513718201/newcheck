@@ -1,5 +1,6 @@
 package com.vito.check.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -7,7 +8,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.vito.check.R;
+import com.vito.check.bean.MyOrder;
 import com.vito.check.util.SpUtils;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,11 +33,21 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
     EditText mTvSendPhone;
     @BindView(R.id.login_btn)
     Button mLoginBtn;
+    private MyOrder.ContentBean mOrderBean;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("派单", true);
+        mOrderBean = (MyOrder.ContentBean) getIntent().getSerializableExtra("orderBean");
+        init();
         mLoginBtn.setOnClickListener(this);
+    }
+
+    private void init() {
+        mTvDeviceNo.setText(mOrderBean.getDevNo());
+        mTvAddress.setText(mOrderBean.getDevAddress());
+        mTvDesc.setText(mOrderBean.getDescription());
     }
 
     @Override

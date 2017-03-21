@@ -1,10 +1,15 @@
 package com.vito.check.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.vito.check.Activity.DeviceCheckActivity;
+import com.vito.check.Activity.SendOrderActivity;
 import com.vito.check.R;
 import com.vito.check.bean.MyOrder;
 import java.util.List;
@@ -12,9 +17,10 @@ import java.util.List;
 /**
  * Created by xk on 2017/3/20.
  */
-public class MyAdapter extends BaseAdapter {
+public class MyAdapter extends BaseAdapter implements View.OnClickListener {
     private List<MyOrder.ContentBean> content;
     private Context context;
+    private MyOrder.ContentBean mOrderBean;
 
     public MyAdapter(List<MyOrder.ContentBean> content,Context context) {
         this.content=content;
@@ -55,6 +61,8 @@ public class MyAdapter extends BaseAdapter {
             holder.tv_desc= (TextView) convertView.findViewById(R.id.tv_desc);
             holder.tv_address= (TextView) convertView.findViewById(R.id.tv_address);
             holder.tv_state= (TextView) convertView.findViewById(R.id.tv_state);
+            holder.bt_check= (Button) convertView.findViewById(R.id.bt_check);
+            holder.bt_order= (Button) convertView.findViewById(R.id.bt_send);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -65,7 +73,27 @@ public class MyAdapter extends BaseAdapter {
         holder.tv_desc.setText("故障描述:"+content.get(position).getDescription());
         holder.tv_address.setText("设备地址:"+content.get(position).getDevAddress());
         holder.tv_state.setText(content.get(position).getState());
+        mOrderBean = content.get(position);
+        holder.bt_check.setOnClickListener(this);
+        holder.bt_order.setOnClickListener(this);
         return convertView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.bt_check:
+                Intent check=new Intent(context, DeviceCheckActivity.class);
+                check.putExtra("orderBean",mOrderBean);
+                context.startActivity(check);
+
+                break;
+            case R.id.bt_send:
+                Intent order=new Intent(context, SendOrderActivity.class);
+                order.putExtra("orderBean",mOrderBean);
+                context.startActivity(order);
+                break;
+        }
     }
 
 
@@ -75,6 +103,8 @@ public class MyAdapter extends BaseAdapter {
         public TextView tv_desc;
         public TextView tv_address;
         public TextView tv_state;
+        public Button   bt_check;
+        public Button   bt_order;
     }
 
 }

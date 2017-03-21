@@ -1,6 +1,9 @@
 package com.vito.check.Fragment;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,12 +20,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.vito.check.Activity.DeviceCheckActivity;
 import com.vito.check.Activity.LoginActivity;
+import com.vito.check.Activity.ReportActivity;
 import com.vito.check.Activity.SendOrderActivity;
 import com.vito.check.Adapter.SectionAdapter;
 import com.vito.check.MainActivity;
 import com.vito.check.R;
 import com.vito.check.bean.WorkSelect;
 import com.vito.check.data.DataServer;
+import com.vito.check.data.DialogUtils;
 import com.vito.check.util.SpUtils;
 
 import java.util.List;
@@ -53,10 +58,10 @@ public class WorkFragment extends Fragment {
     }
 
     private void initRecycleView() {
-        mRecyclerView = (RecyclerView)view. findViewById(R.id.rv_list);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         mData = DataServer.getSampleData();
-        Log.i("tangj", "onCreate: "+mData);
+        Log.i("tangj", "onCreate: " + mData);
         SectionAdapter sectionAdapter = new SectionAdapter(R.layout.item_section_content, R.layout.def_section_head, mData);
         sectionAdapter.openLoadAnimation(BaseQuickAdapter.SCALEIN);
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
@@ -68,12 +73,12 @@ public class WorkFragment extends Fragment {
 //                    Toast.makeText(mActivity, mySection.header, Toast.LENGTH_LONG).show();
 //                else
 //                    Toast.makeText(mActivity, mySection.t.getContent()+"----"+position, Toast.LENGTH_LONG).show();
-                switch (position){
+                switch (position) {
                     case 1:
 
                         break;
                     case 2:
-
+                        startActivity(ReportActivity.class);
                         break;
                     case 3:
                         startActivity(DeviceCheckActivity.class);
@@ -85,12 +90,7 @@ public class WorkFragment extends Fragment {
 
                         break;
                     case 8:
-                        SpUtils.putString(mActivity, "username", "");
-                        SpUtils.putString(mActivity, "pwd", "");
-                        SpUtils.putString(mActivity, "token", "");
-                        Toast.makeText(mActivity,"注销成功请重新登陆",Toast.LENGTH_SHORT).show();
-                        startActivity(LoginActivity.class);
-                        mActivity.finish();
+                        dialog();
                         break;
                 }
             }
@@ -99,8 +99,34 @@ public class WorkFragment extends Fragment {
         mRecyclerView.setAdapter(sectionAdapter);
     }
 
-    public void startActivity(Class c){
-        Intent i=new Intent(mActivity,c);
+    public void startActivity(Class c) {
+        Intent i = new Intent(mActivity, c);
         mActivity.startActivity(i);
+    }
+
+    public void dialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        builder.setMessage("是否要退出账号");
+        builder.setTitle("提示");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                SpUtils.putString(mActivity, "username", "");
+                SpUtils.putString(mActivity, "pwd", "");
+                SpUtils.putString(mActivity, "token", "");
+                Toast.makeText(mActivity, "注销成功请重新登陆", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(mActivity, LoginActivity.class));
+                mActivity.finish();
+
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 }

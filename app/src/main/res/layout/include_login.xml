@@ -43,7 +43,6 @@
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp"
                 android:singleLine="true"
-                android:text="18393918636"
                 android:textColor="@color/base_gray"
                 android:textColorHint="@color/gray"
                 android:textSize="14sp"/>

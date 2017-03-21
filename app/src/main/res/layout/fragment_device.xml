@@ -28,6 +28,15 @@
             android:src="@drawable/down_arrow"/>
 
     </RelativeLayout>
+
+        <!--<Button-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:id="@+id/open"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="0.5"-->
+            <!--android:text="设备详情" />-->
+
     <View
 
         android:layout_width="fill_parent"

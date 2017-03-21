@@ -2,15 +2,11 @@ package com.vito.check.Fragment;
 
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,6 +31,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.AMapException;
 import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.LocationSource;
@@ -52,7 +50,6 @@ import com.vito.check.MainActivity;
 import com.vito.check.NetWork.ApiWrapper;
 import com.vito.check.R;
 import com.vito.check.bean.Device;
-import com.vito.check.data.DialogUtils;
 import com.vito.check.util.DensityUtils;
 import com.vito.check.util.SensorEventHelper;
 import com.vito.check.util.SpUtils;
@@ -98,6 +95,9 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
     private static final int FILL_COLOR = Color.argb(10, 0, 0, 180);
     private boolean mFirstFix = false;
     private LatLng mylocation;
+    private Marker mAddMarker;
+    private List<Marker> markers;
+    private boolean isShowInfoWindows = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -217,6 +217,7 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
 
     @Override
     public void onClick(View v) {
+
         String isOnLine = "";
         String isChecked = "";
         if (v.getId() == R.id.arrow) {
@@ -303,6 +304,7 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
         List<Device.ContentBean> content = b.getContent();
         Log.d("aa", "获取到的设备数量" + content.size() + "");
         mList = new ArrayList<>();
+        markers = new ArrayList<>();
         for (Device.ContentBean device : content) {
             double lat = device.getLat();
             double lng = device.getLng();
@@ -322,8 +324,10 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
                 markerOption.icon(BitmapDescriptorFactory
                         .defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
             }
-            aMap.addMarker(markerOption);
+            mAddMarker = aMap.addMarker(markerOption);
+            markers.add(mAddMarker);
         }
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mList.get(0), 13));
         //将地图移动至个人位置
         mFirstFix = false;
         mLocMarker = null;
@@ -343,7 +347,7 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
         // 调起高德地图导航
         try {
             AMapUtils.openAMapNavi(naviPara, mActivity);
-        } catch (com.amap.api.maps2d.AMapException e) {
+        } catch (AMapException e) {
 
             // 如果没安装会进入异常，调起下载页面
             AMapUtils.getLatestAMapApp(mActivity);
@@ -437,7 +441,11 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
                     addCircle(mylocation, amapLocation.getAccuracy());//添加定位精度圆
                     addMarker(mylocation);//添加定位图标
                     mSensorHelper.setCurrentMarker(mLocMarker);//定位图标旋转
-                    aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylocation, 13));
+
+                    Log.d("location", mEt.getText().toString());
+                    if (mEt.getText().toString().equals("请选择设备")) {
+                        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylocation, 13));
+                    }
                 } else {
                     mCircle.setCenter(mylocation);
                     mCircle.setRadius(amapLocation.getAccuracy());
@@ -446,7 +454,6 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
 
             } else {
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
-              //  DialogUtils.dialog(mActivity);
                 aa();
             }
         }
@@ -467,10 +474,10 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==1){
-            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (requestCode == 1) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-            }else{
+            } else {
 
             }
         }

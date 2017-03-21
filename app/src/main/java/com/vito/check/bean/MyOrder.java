@@ -1,5 +1,6 @@
 package com.vito.check.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class MyOrder {
         this.content = content;
     }
 
-    public static class ContentBean {
+    public static class ContentBean implements Serializable{
         /**
          * id : 6
          * devNo : LZD0010

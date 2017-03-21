@@ -100,7 +100,6 @@
             android:layout_marginLeft="30dp"
             android:layout_toRightOf="@id/tv_desc"
             android:background="@drawable/et_normal"
-            android:hint="单行输入"
             android:maxLength="11"
             android:singleLine="true"
             android:textColor="@color/base_gray"
