@@ -41,7 +41,7 @@ public interface APIServer {
 
     //获取是否巡检设备
     @GET("getDevInfo.do")
-    Observable<Device> getCheckedDevices(@Query("token") String token,@Query("isChecked") String isChecked);
+    Observable<Device> getCheckedDevices(@Query("token") String token, @Query("isChecked") String isChecked);
 
     //查询自己的派单信息
     @GET("getMyDispatch.do")

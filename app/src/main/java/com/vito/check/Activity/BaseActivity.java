@@ -66,12 +66,12 @@ public abstract class BaseActivity extends AppCompatActivity  {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         onUnSubscribe();
 
     }
-    protected void onUnSubscribe() {
+    public void onUnSubscribe() {
         if (mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
             mCompositeSubscription.unsubscribe();
         }

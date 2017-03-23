@@ -2,6 +2,7 @@ package com.vito.check.Fragment;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,10 +19,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,8 +45,8 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.NaviPara;
-import com.leo.simplearcloader.ArcConfiguration;
-import com.leo.simplearcloader.SimpleArcDialog;
+import com.github.ybq.android.spinkit.SpinKitView;
+import com.vito.check.Activity.LoginActivity;
 import com.vito.check.MainActivity;
 import com.vito.check.NetWork.ApiWrapper;
 import com.vito.check.R;
@@ -73,6 +74,12 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
     @BindView(R.id.arrow)
     ImageView mArrow;
     MapView mapView;
+    @BindView(R.id.device_no)
+    TextView mDeviceNo;
+
+    @BindView(R.id.ll_progress_)
+    LinearLayout mLlProgress;
+
 
     private MainActivity mActivity;
     private PopupWindow mPopupWindow;
@@ -83,7 +90,6 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
     private Marker currentMarker;
     private Observable<Device> mDevices;
     private String mToken;
-    private SimpleArcDialog mDialog;
 
     private SensorEventHelper mSensorHelper;
     private AMapLocationClient mlocationClient;
@@ -95,7 +101,6 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
     private static final int FILL_COLOR = Color.argb(10, 0, 0, 180);
     private boolean mFirstFix = false;
     private LatLng mylocation;
-    private Marker mAddMarker;
     private List<Device.ContentBean> bContent;
 
     @Override
@@ -160,14 +165,8 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
 
     //网络请求
     public void getDevices(final String isOnline, final String isChecked) {
-        if (mDialog == null) {
-            mDialog = new SimpleArcDialog(mActivity);
-        }
 
-        ArcConfiguration arcConfiguration = new ArcConfiguration(mActivity);
-        mDialog.setConfiguration(arcConfiguration);
-        arcConfiguration.setText("正在查询中...");
-        mDialog.show();
+        mLlProgress.setVisibility(View.VISIBLE);
 
         Log.d("aa", mToken);
 
@@ -185,23 +184,28 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
         mActivity.addSubscription(mDevices, new Subscriber<Device>() {
             @Override
             public void onCompleted() {
-                mDialog.dismiss();
+                mLlProgress.setVisibility(View.GONE);
             }
 
             @Override
             public void onError(Throwable e) {
+                mLlProgress.setVisibility(View.GONE);
+                Toast.makeText(mActivity, "您的账号在其它地方登陆，请重新登陆", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(mActivity, LoginActivity.class));
+                mActivity.finish();
             }
 
             @Override
             public void onNext(Device device) {
                 Log.d("aa", "我请求了");
                 Log.d("aa", device.getContent().toString());
+                Log.d("aa", device.isSuccess() + "");
 
+                mDeviceNo.setText(device.getContent().size() + "");
                 if (aMap != null) {
                     aMap.clear();
                 }
-                    addMarkersToMap(device);
-
+                addMarkersToMap(device);
 
 
             }
@@ -295,6 +299,8 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
      */
     private void addMarkersToMap(Device b) {
         bContent = b.getContent();
+
+
         mFirstFix = false;
         mLocMarker = null;
 
@@ -441,7 +447,7 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
                     mSensorHelper.setCurrentMarker(mLocMarker);//定位图标旋转
 
                     Log.d("location", mEt.getText().toString());
-                    if (mEt.getText().toString().equals("请选择设备")||bContent.size()==0) {
+                    if (mEt.getText().toString().equals("请选择设备") || bContent.size() == 0) {
                         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mylocation, 13));
                     }
                 } else {

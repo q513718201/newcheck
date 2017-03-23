@@ -21,6 +21,7 @@ public class DataServer {
         list.add(new WorkSelect(new WorkContent("考核")));
         list.add(new WorkSelect(true, "账户", false));
         list.add(new WorkSelect(new WorkContent("注销登录")));
+        list.add(new WorkSelect(new WorkContent("修改密码")));
         return list;
     }
 

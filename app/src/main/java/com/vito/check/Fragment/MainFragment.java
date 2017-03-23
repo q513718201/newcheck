@@ -47,8 +47,8 @@ public class MainFragment extends Fragment implements RadioGroup.OnCheckedChange
 
     private void init() {
         mMessage.setNotificationNumber(1);
-        mRg.check(R.id.message);
-        replace(new MessageFragment());
+        mRg.check(R.id.device);
+        replace(new BaiduDeviceFragment());
         mRg.setOnCheckedChangeListener(this);
     }
 
@@ -67,7 +67,7 @@ public class MainFragment extends Fragment implements RadioGroup.OnCheckedChange
                 break;
             case R.id.device:
                 mRg.check(R.id.device);
-                replace(new DeviceFragment());
+                replace(new BaiduDeviceFragment());
                 break;
             case R.id.work:
                 mRg.check(R.id.work);

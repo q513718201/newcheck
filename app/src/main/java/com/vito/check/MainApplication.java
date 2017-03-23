@@ -2,6 +2,8 @@ package com.vito.check;
 
 import android.app.Application;
 
+import com.baidu.mapapi.SDKInitializer;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -16,6 +18,7 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        SDKInitializer.initialize(this);
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
 //        JPushInterface.setAlias(this,"111",null);
