@@ -3,6 +3,7 @@ package com.vito.check;
 import android.app.Application;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.yolanda.nohttp.NoHttp;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -18,6 +19,7 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        NoHttp.initialize(this);
         SDKInitializer.initialize(this);
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);

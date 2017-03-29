@@ -171,12 +171,12 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
         Log.d("aa", mToken);
 
         if (!isOnline.equals("")) {
-            mDevices = ApiWrapper.getInstance().getDevices(mToken, isOnline);
+            mDevices = ApiWrapper.getInstance().getDevices(mToken, isOnline,"","");
         } else {
-            mDevices = ApiWrapper.getInstance().getAllDevices(mToken);
+            mDevices = ApiWrapper.getInstance().getAllDevices(mToken,"","");
         }
         if (!isChecked.equals("")) {
-            mDevices = ApiWrapper.getInstance().getCheckedDevices(mToken, isChecked);
+            mDevices = ApiWrapper.getInstance().getCheckedDevices(mToken, isChecked,"","");
         }
 
 

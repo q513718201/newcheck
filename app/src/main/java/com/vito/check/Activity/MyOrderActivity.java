@@ -39,6 +39,7 @@ public class MyOrderActivity extends BaseActivity implements RadioGroup.OnChecke
     private String state = "";
     private String mToken;
     private List<MyOrder.ContentBean> mContent;
+    private int day=3;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +72,7 @@ public class MyOrderActivity extends BaseActivity implements RadioGroup.OnChecke
         if (mContent != null) {
             mContent.clear();
         }
-        Observable<MyOrder> myOrders = ApiWrapper.getInstance().getMyOrders(mToken, state);
+        Observable<MyOrder> myOrders = ApiWrapper.getInstance().getMyOrders(mToken,day,state);
         addSubscription(myOrders, new Subscriber<MyOrder>() {
             @Override
             public void onCompleted() {
@@ -90,6 +91,7 @@ public class MyOrderActivity extends BaseActivity implements RadioGroup.OnChecke
                 mLv.setAdapter(new MyAdapter(mContent, getApplicationContext()));
             }
         });
+
     }
 
 

@@ -70,7 +70,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Activity.FinishOrderActivity"></activity>
 
+        <activity android:name=".Activity.AllUserActivity"></activity>
         <activity
             android:name=".Activity.LoginActivity"/>
 
@@ -78,7 +80,7 @@
             android:name=".Activity.MarkerActivity"/>
 
         <activity
-            android:name=".MainActivity"/>
+        android:name=".MainActivity"/>
         <activity
             android:name=".Activity.LocationActivity"
             android:alwaysRetainTaskState="true"/>
@@ -96,9 +98,11 @@
         <activity android:name=".Activity.DeviceCheckActivity"/>
 
         <activity android:name=".Activity.SendOrderActivity"/>
+
         <activity android:name=".Activity.MyOrderActivity"/>
         <activity android:name=".Activity.ReportActivity"/>
         <activity android:name=".Activity.InspectionRecord"/>
+<activity android:name=".Activity.OnlinerateActivity"></activity>
 
         <service android:name="com.amap.api.location.APSService"/>
 

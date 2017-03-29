@@ -86,6 +86,7 @@
             android:layout_toRightOf="@+id/tv_phonetitle"
             android:background="@drawable/et_normal"
             android:hint="设备号"
+            android:singleLine="true"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:textColor="@color/base_gray"
@@ -98,23 +99,50 @@
             android:layout_height="40dp"
             android:background="@drawable/button_selector"
             android:text="查询"
-
             android:textColor="@color/colorAccent"
             />
 
     </LinearLayout>
 
-    <ImageView
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:visibility="gone"
         android:layout_below="@+id/view"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_chose"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/et_normal"
+            android:focusable="false"
+            android:paddingLeft="30dp"
+            android:text="查看人员"/>
+
+        <ImageView
+            android:layout_alignRight="@id/et_chose"
+            android:paddingRight="10dp"
+            android:id="@+id/arrow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/down_arrow"/>
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+         android:layout_marginBottom="10dp"
+        android:layout_marginRight="50dp"
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/locaton_my"
-
-
         android:textColor="@color/colorAccent"
         />
 

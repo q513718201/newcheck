@@ -48,9 +48,9 @@ public class SplashActivity extends BaseActivity {
     public void initView() {
         ivLogo = (ImageView)findViewById(R.id.iv_logo);
        tvName=  (TextView)findViewById(R.id.tv_name);
-        PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat("alpha", 0.3f, 0.8f);
+        PropertyValuesHolder alpha = PropertyValuesHolder.ofFloat("alpha", 0.5f, 1f);
         PropertyValuesHolder scaleX = PropertyValuesHolder.ofFloat("scaleX", 0.6f, 1f);
-        PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat("scaleY", 0.6f, 1f);
+        PropertyValuesHolder scaleY = PropertyValuesHolder.ofFloat("scaleY", 0.6f, 1.3f);
         ObjectAnimator objectAnimator1 = ObjectAnimator.ofPropertyValuesHolder(tvName, alpha, scaleX, scaleY);
         ObjectAnimator objectAnimator2 = ObjectAnimator.ofPropertyValuesHolder(ivLogo, alpha, scaleX, scaleY);
 

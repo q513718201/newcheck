@@ -18,9 +18,12 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.vito.check.Activity.AllUserActivity;
 import com.vito.check.Activity.DeviceCheckActivity;
+import com.vito.check.Activity.FinishOrderActivity;
 import com.vito.check.Activity.InspectionRecord;
 import com.vito.check.Activity.LoginActivity;
+import com.vito.check.Activity.OnlinerateActivity;
 import com.vito.check.Activity.ReportActivity;
 import com.vito.check.Activity.SendOrderActivity;
 import com.vito.check.Adapter.SectionAdapter;
@@ -53,7 +56,6 @@ public class WorkFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_work, container, false);
-        mActivity.setToolBarTittle("工作");
         initRecycleView();
         return view;
     }
@@ -85,15 +87,15 @@ public class WorkFragment extends Fragment {
                         startActivity(DeviceCheckActivity.class);
                         break;
                     case 5:
-                        startActivity(SendOrderActivity.class);
+                       startActivity(SendOrderActivity.class);
                         break;
-                    case 6:
-
-                        break;
-                    case 8:
-                        dialog();
+                    case 7:
+                        startActivity(OnlinerateActivity.class);
                         break;
                     case 9:
+                        dialog();
+                        break;
+                    case 10:
 
                         break;
                 }

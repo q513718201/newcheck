@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
 import com.vito.check.Activity.BaseActivity;
 import com.vito.check.Fragment.MainFragment;
+import com.vito.check.util.SpUtils;
+
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +36,7 @@ public class MainActivity extends BaseActivity {
         String message = getIntent().getStringExtra("message");
         ButterKnife.bind(this);
         initFragment();
+        name.setText(SpUtils.getString(this,"username",""));
 
     }
 
@@ -52,6 +55,8 @@ public class MainActivity extends BaseActivity {
   public void  setToolBarTittle(String name){
       mTv_toolbar.setText(name);
   }
+
+
 
 
 

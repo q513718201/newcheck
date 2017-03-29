@@ -9,8 +9,9 @@ import java.util.List;
 
 public class MyOrder {
 
+
     /**
-     * content : [{"id":6,"devNo":"LZD0010","faultType":"硬件","urgency":"紧急","finishTime":"24","type":"坏了","description":"屏幕碎了","userInfo":"白江伟","devAddress":"兰大","situation":"搞定了","doImage":null,"sendTo":"18393918636","state":"已结单","isChecked":"1","startDate":1489757754000,"finishDate":0}]
+     * content : [{"id":33,"devNo":"LZX0000","description":"派单测试,不用理会,谢谢","address":"中山公园","phone":"18888888","processInfo":"可以啦,没有事情啦","doImage":"265bc538-0bed-4201-8628-b8fef50b604bCapture001.png","sendTo":"xj003","startDate":1490427543000,"finishDate":1490430896000,"state":"已结单","owner":"gc001","branch":"工程部"}]
      * success : true
      */
 
@@ -35,63 +36,53 @@ public class MyOrder {
 
     public static class ContentBean implements Serializable{
         /**
-         * id : 6
-         * devNo : LZD0010
-         * faultType : 硬件
-         * urgency : 紧急
-         * finishTime : 24
-         * type : 坏了
-         * description : 屏幕碎了
-         * userInfo : 白江伟
-         * devAddress : 兰大
-         * situation : 搞定了
-         * doImage : null
-         * sendTo : 18393918636
+         * id : 33
+         * devNo : LZX0000
+         * description : 派单测试,不用理会,谢谢
+         * address : 中山公园
+         * phone : 18888888
+         * processInfo : 可以啦,没有事情啦
+         * doImage : 265bc538-0bed-4201-8628-b8fef50b604bCapture001.png
+         * sendTo : xj003
+         * startDate : 1490427543000
+         * finishDate : 1490430896000
          * state : 已结单
-         * isChecked : 1
-         * startDate : 1489757754000
-         * finishDate : 0
+         * owner : gc001
+         * branch : 工程部
          */
 
         private int id;
         private String devNo;
-        private String faultType;
-        private String urgency;
-        private String finishTime;
-        private String type;
         private String description;
-        private String userInfo;
-        private String devAddress;
-        private String situation;
+        private String address;
+        private String phone;
+        private String processInfo;
+        private String doImage;
+        private String sendTo;
+        private long startDate;
+        private long finishDate;
+        private String state;
+        private String owner;
+        private String branch;
 
         @Override
         public String toString() {
             return "ContentBean{" +
                     "id=" + id +
                     ", devNo='" + devNo + '\'' +
-                    ", faultType='" + faultType + '\'' +
-                    ", urgency='" + urgency + '\'' +
-                    ", finishTime='" + finishTime + '\'' +
-                    ", type='" + type + '\'' +
                     ", description='" + description + '\'' +
-                    ", userInfo='" + userInfo + '\'' +
-                    ", devAddress='" + devAddress + '\'' +
-                    ", situation='" + situation + '\'' +
-                    ", doImage=" + doImage +
+                    ", address='" + address + '\'' +
+                    ", phone='" + phone + '\'' +
+                    ", processInfo='" + processInfo + '\'' +
+                    ", doImage='" + doImage + '\'' +
                     ", sendTo='" + sendTo + '\'' +
-                    ", state='" + state + '\'' +
-                    ", isChecked='" + isChecked + '\'' +
                     ", startDate=" + startDate +
                     ", finishDate=" + finishDate +
+                    ", state='" + state + '\'' +
+                    ", owner='" + owner + '\'' +
+                    ", branch='" + branch + '\'' +
                     '}';
         }
-
-        private Object doImage;
-        private String sendTo;
-        private String state;
-        private String isChecked;
-        private long startDate;
-        private int finishDate;
 
         public int getId() {
             return id;
@@ -109,38 +100,6 @@ public class MyOrder {
             this.devNo = devNo;
         }
 
-        public String getFaultType() {
-            return faultType;
-        }
-
-        public void setFaultType(String faultType) {
-            this.faultType = faultType;
-        }
-
-        public String getUrgency() {
-            return urgency;
-        }
-
-        public void setUrgency(String urgency) {
-            this.urgency = urgency;
-        }
-
-        public String getFinishTime() {
-            return finishTime;
-        }
-
-        public void setFinishTime(String finishTime) {
-            this.finishTime = finishTime;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
         public String getDescription() {
             return description;
         }
@@ -149,35 +108,35 @@ public class MyOrder {
             this.description = description;
         }
 
-        public String getUserInfo() {
-            return userInfo;
+        public String getAddress() {
+            return address;
         }
 
-        public void setUserInfo(String userInfo) {
-            this.userInfo = userInfo;
+        public void setAddress(String address) {
+            this.address = address;
         }
 
-        public String getDevAddress() {
-            return devAddress;
+        public String getPhone() {
+            return phone;
         }
 
-        public void setDevAddress(String devAddress) {
-            this.devAddress = devAddress;
+        public void setPhone(String phone) {
+            this.phone = phone;
         }
 
-        public String getSituation() {
-            return situation;
+        public String getProcessInfo() {
+            return processInfo;
         }
 
-        public void setSituation(String situation) {
-            this.situation = situation;
+        public void setProcessInfo(String processInfo) {
+            this.processInfo = processInfo;
         }
 
-        public Object getDoImage() {
+        public String getDoImage() {
             return doImage;
         }
 
-        public void setDoImage(Object doImage) {
+        public void setDoImage(String doImage) {
             this.doImage = doImage;
         }
 
@@ -189,22 +148,6 @@ public class MyOrder {
             this.sendTo = sendTo;
         }
 
-        public String getState() {
-            return state;
-        }
-
-        public void setState(String state) {
-            this.state = state;
-        }
-
-        public String getIsChecked() {
-            return isChecked;
-        }
-
-        public void setIsChecked(String isChecked) {
-            this.isChecked = isChecked;
-        }
-
         public long getStartDate() {
             return startDate;
         }
@@ -213,12 +156,36 @@ public class MyOrder {
             this.startDate = startDate;
         }
 
-        public int getFinishDate() {
+        public long getFinishDate() {
             return finishDate;
         }
 
-        public void setFinishDate(int finishDate) {
+        public void setFinishDate(long finishDate) {
             this.finishDate = finishDate;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
+
+        public String getOwner() {
+            return owner;
+        }
+
+        public void setOwner(String owner) {
+            this.owner = owner;
+        }
+
+        public String getBranch() {
+            return branch;
+        }
+
+        public void setBranch(String branch) {
+            this.branch = branch;
         }
     }
 }

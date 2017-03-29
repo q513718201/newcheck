@@ -35,7 +35,7 @@ public class DeviceCheckActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("巡检设备",true);
+        setTitle("日常巡检",true);
         initRecycleView();
         mBtn.setOnClickListener(this);
     }

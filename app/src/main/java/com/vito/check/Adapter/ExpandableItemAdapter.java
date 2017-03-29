@@ -1,7 +1,9 @@
 package com.vito.check.Adapter;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -31,6 +33,7 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
         super(data);
         addItemType(TYPE_LEVEL_0, R.layout.item_expandable_lv0);
         addItemType(TYPE_PERSON, R.layout.item_expandable_lv1);
+
     }
 
     @Override
@@ -54,9 +57,17 @@ public class ExpandableItemAdapter extends BaseMultiItemQuickAdapter<MultiItemEn
                 });
                 break;
             case TYPE_PERSON:
+
                 final Person person = (Person)item;
                 holder.setText(R.id.tv, person.name + " parent pos: " + getParentPosition(person))
                 .setText(R.id.tv_sub,person.subName);
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        int pos = holder.getAdapterPosition();
+                        Toast.makeText(mContext,pos+"",Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
         }
     }

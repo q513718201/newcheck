@@ -60,12 +60,6 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessage(SendMessage user) {
-        User user1= user.getUserMessage();
-        mTvNick.setText(user1.getContent());
-    }
-
 
     private void init() {
         String nick = SpUtils.getString(mContext, "nick", "");

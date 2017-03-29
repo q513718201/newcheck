@@ -16,7 +16,7 @@
         android:textColor="@color/base_gray">
 
         <TextView
-            android:id="@+id/et_phone"
+            android:id="@+id/tv_no"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -31,9 +31,8 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_toRightOf="@+id/et_phone"
+            android:layout_toRightOf="@+id/tv_no"
             android:background="@drawable/et_normal"
-            android:hint="单行输入"
             android:maxLength="11"
             android:singleLine="true"
             android:textColor="@color/base_gray"
@@ -62,17 +61,16 @@
 
         <EditText
             android:id="@+id/tv_address"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@null"
+
             android:layout_marginLeft="30dp"
-            android:background="@drawable/et_normal"
             android:layout_toRightOf="@id/tv_address1"
-            android:hint="单行输入"
-            android:maxLength="11"
-            android:singleLine="true"
+            android:hint="请输入地址"
             android:textColor="@color/base_gray"
             android:textColorHint="@color/gray"
-            android:textSize="14sp"/>
+            android:textSize="18sp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -98,14 +96,48 @@
             android:id="@+id/tv_desc"
             android:layout_width="fill_parent"
             android:layout_height="100dp"
+            android:background="@null"
             android:layout_margin="8dp"
             android:layout_marginLeft="30dp"
             android:layout_toRightOf="@id/tv_desc_title"
             android:hint="说点什么吧..."
-            android:background="@null" >
+             >
         </EditText>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:textColor="@color/base_gray">
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="联系电话:"
+            android:textColor="@color/base_gray"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/et_phone"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/et_normal"
+            android:layout_toRightOf="@id/tv_phone"
+            android:hint="您的手机号"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColor="@color/base_gray"
+            android:textColorHint="@color/gray"
+            android:textSize="14sp"/>
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -125,19 +157,32 @@
             android:textColor="@color/base_gray"
             android:textSize="18sp"/>
 
-        <EditText
-            android:id="@+id/tv_sendPhone"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
+        <RelativeLayout
             android:layout_marginLeft="30dp"
-            android:background="@drawable/et_normal"
-            android:layout_toRightOf="@id/tv_sendPhone1"
-            android:hint="指派人手机号"
-            android:maxLength="11"
-            android:singleLine="true"
-            android:textColor="@color/base_gray"
-            android:textColorHint="@color/gray"
-            android:textSize="14sp"/>
+            android:layout_toRightOf="@+id/tv_sendPhone1"
+            android:id="@+id/rl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_chose"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_normal"
+                android:focusable="false"
+                android:paddingLeft="30dp"
+                android:hint="选择人员"/>
+
+            <ImageView
+                android:layout_alignRight="@id/et_chose"
+                android:paddingRight="10dp"
+                android:id="@+id/arrow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/down_arrow"/>
+
+        </RelativeLayout>
     </RelativeLayout>
 
     <Button
@@ -145,7 +190,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:layout_marginStart="200dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/button_selector"
         android:onClick="click"
         android:text="派单"

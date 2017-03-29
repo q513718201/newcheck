@@ -1,12 +1,20 @@
 package com.vito.check.NetWork;
 
 
+import com.vito.check.bean.AllUsers;
 import com.vito.check.bean.Device;
 import com.vito.check.bean.MyOrder;
+import com.vito.check.bean.OnlineRate;
 import com.vito.check.bean.Regist;
+import com.vito.check.bean.SendOrder;
 import com.vito.check.bean.User;
-import com.vito.check.bean.sendOrder;
 
+import java.io.File;
+import java.util.Map;
+
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
 import rx.Observable;
 
 /**
@@ -53,34 +61,57 @@ public class ApiWrapper extends RetrofitUtil {
     /**
      * 获取在线或离线设备
      */
-    public Observable<Device> getDevices(String token,String isOnline) {
-        return apiServer.getDevices(token,isOnline);
+    public Observable<Device> getDevices(String token,String isOnline,String xjName, String devNo) {
+        return apiServer.getDevices(token,isOnline,xjName,devNo);
     }
 
     /**
      * 获取全部设备
      */
-    public Observable<Device> getAllDevices(String token) {
-        return apiServer.getAllDevices(token);
+    public Observable<Device> getAllDevices(String token,String xjName, String devNo) {
+        return apiServer.getAllDevices(token,xjName,devNo);
     }
 
     /**
      * 获取以巡检设备
      */
-    public Observable<Device> getCheckedDevices(String token,String isChecked) {
-        return apiServer.getCheckedDevices(token,isChecked);
+    public Observable<Device> getCheckedDevices(String token,String isChecked,String xjName, String devNo) {
+        return apiServer.getCheckedDevices(token,isChecked,xjName,devNo);
     }
     /**
      * 看看自己的派单
      */
-    public Observable<MyOrder> getMyOrders(String token, String state) {
-        return apiServer.getMyOrders(token,state);
+    public Observable<MyOrder> getMyOrders(String token,int day,String state) {
+        return apiServer.getMyOrders(token,day,state);
     }
+
     /**
-     * 自己派单出去
+     * 查询所有巡检人信息
+     */
+    public Observable<AllUsers> getAllUsers(String token) {
+        return apiServer.getAllUsers(token);
+    }
+
+    /**
+     * 工程部派单
      */
 
-    public Observable<sendOrder> sendOrder(String token, String id, String transferTo) {
-        return apiServer.sendOrder(token,id,transferTo);
+    public Observable<SendOrder> sendOrder(String token, String devNo, String description, String address, String phone, String sendTo) {
+        return apiServer.sendOrder(token,devNo,description,address,phone,sendTo);
+    }
+
+    /**
+     * 完成工程部派单
+     */
+    public Observable<SendOrder> finishEngineerOrder(RequestBody Body){
+
+        return apiServer.finishEngineerOrder(Body);
+    }
+
+    /**
+     * 查询在线率
+     */
+    public Observable<OnlineRate> getOnlineRate(String token,String xjName){
+        return apiServer.getOnlineRate(token,xjName);
     }
 }

@@ -93,6 +93,7 @@ public class NotificationButton extends RadioButton {
     }
 
     public boolean isHavePoint(){
+
         return notificationNumber>0?true:false;
     }
 }

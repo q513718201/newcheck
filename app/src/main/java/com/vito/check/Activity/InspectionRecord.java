@@ -15,14 +15,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class InspectionRecord extends BaseActivity {
-    private    RecyclerView               mRecyclerView;
+    private RecyclerView mRecyclerView;
     private ArrayList<MultiItemEntity> list;
-    private ExpandableItemAdapter      adapter;
+    private ExpandableItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("巡检记录",true);
+        setTitle("巡检记录", true);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         list = generateData();
@@ -38,7 +38,7 @@ public class InspectionRecord extends BaseActivity {
     }
 
     private void expandAll() {
-        for (int i = 0; i <list.size() ; i++) {
+        for (int i = 0; i < list.size(); i++) {
             adapter.expand(i + adapter.getHeaderLayoutCount(), false, false);
         }
     }
@@ -53,10 +53,17 @@ public class InspectionRecord extends BaseActivity {
         Random random = new Random();
 
         ArrayList<MultiItemEntity> res = new ArrayList<>();
+
         for (int i = 0; i < level0.length; i++) {
-            Level0Item lv0 = new Level0Item(level0[i], "subtitle of " + i);
+
+            Level0Item lv0 = new Level0Item(level0[i],"");
             for (int k = 0; k < personCount; k++) {
-                lv0.addSubItem(new Person(nameList[k],nameList[k]+"--子类", random.nextInt(40)));
+                if (lv0.title.equals(level0[0])) {
+                    lv0.addSubItem(new Person("bbb", nameList[k] + "--子类", random.nextInt(40)));
+                }
+                if (lv0.title.equals(level0[1])) {
+                    lv0.addSubItem(new Person("aaaa", nameList[k] + "--子类", random.nextInt(40)));
+                }
             }
             res.add(lv0);
         }

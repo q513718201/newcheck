@@ -38,7 +38,6 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
-        mActivity.setToolBarTittle("消息");
         ButterKnife.bind(this, view);
         mCardMy.setOnClickListener(this);
         mCardNew.setOnClickListener(this);

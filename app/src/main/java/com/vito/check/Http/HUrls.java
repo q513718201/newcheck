@@ -6,5 +6,5 @@ package com.vito.check.Http;
 
 public class HUrls {
 
-    public static String baseUrl="http://118.89.45.113:20001/check/android/";
+    public static String baseUrl="http://118.89.45.113:20001/test/android/";
 }

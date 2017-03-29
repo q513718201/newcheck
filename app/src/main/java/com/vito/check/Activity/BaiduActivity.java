@@ -105,7 +105,7 @@ public class BaiduActivity extends BaseActivity {
         initOritationListener();
 
         mToken = SpUtils.getString(this, "token", "");
-        getDevices();
+
 
 
     }
@@ -115,37 +115,7 @@ public class BaiduActivity extends BaseActivity {
         return R.layout.baidu;
     }
 
-    private void getDevices() {
 
-        mDevices = ApiWrapper.getInstance().getAllDevices(mToken);
-
-
-        addSubscription(mDevices, new Subscriber<Device>() {
-            @Override
-            public void onCompleted() {
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(Device device) {
-                Log.d("aa", "我请求了");
-                Log.d("aa", device.getContent().toString());
-                Log.d("aa", device.isSuccess() + "");
-
-                if (mBaiduMap != null) {
-                    mBaiduMap.clear();
-                }
-                addMarkersToMap(device);
-
-
-            }
-        });
-
-    }
     private void addMarkersToMap(Device b) {
 
         List<Device.ContentBean> content = b.getContent();

@@ -9,13 +9,13 @@ import com.vito.check.bean.User;
 public class SendMessage {
 
 
-        private User user;
-        public SendMessage(User user) {
+        private String msg;
+        public SendMessage(String msg) {
             // TODO Auto-generated constructor stub
-            this.user = user;
+            this.msg = msg;
         }
-        public User getUserMessage(){
-            return user;
+        public String getUserMessage(){
+            return msg;
         }
 
 }

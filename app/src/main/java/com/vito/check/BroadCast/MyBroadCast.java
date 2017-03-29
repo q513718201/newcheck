@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.vito.check.Activity.MyOrderActivity;
+import com.vito.check.Fragment.MainFragment;
 import com.vito.check.MainActivity;
 
 import cn.jpush.android.api.JPushInterface;
@@ -35,10 +37,14 @@ public class MyBroadCast extends BroadcastReceiver {
             manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             Bundle extras = intent.getExtras();
             String msg = extras.getString(JPushInterface.EXTRA_MESSAGE);
+            Log.d("jiguang",msg);
+//            MainFragment m=new MainFragment();
+//            m.show();
+
 
         }
         if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-            Intent i = new Intent(context, MainActivity.class);
+            Intent i = new Intent(context, MyOrderActivity.class);
             Bundle extras = intent.getExtras();
             String msg = extras.getString(JPushInterface.EXTRA_MESSAGE);
             i.putExtra("message", msg);
