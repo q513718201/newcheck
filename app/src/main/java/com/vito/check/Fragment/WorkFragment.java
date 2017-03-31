@@ -78,25 +78,20 @@ public class WorkFragment extends Fragment {
 //                    Toast.makeText(mActivity, mySection.t.getContent()+"----"+position, Toast.LENGTH_LONG).show();
                 switch (position) {
                     case 1:
-                        startActivity(InspectionRecord.class);
+                        startActivity(SendOrderActivity.class);
                         break;
                     case 2:
+                        startActivity(OnlinerateActivity.class);
+
+                        break;
+                    case 4:
                         startActivity(ReportActivity.class);
                         break;
-                    case 3:
-                        startActivity(DeviceCheckActivity.class);
-                        break;
                     case 5:
-                       startActivity(SendOrderActivity.class);
+
                         break;
                     case 7:
-                        startActivity(OnlinerateActivity.class);
-                        break;
-                    case 9:
                         dialog();
-                        break;
-                    case 10:
-
                         break;
                 }
             }

@@ -2,12 +2,14 @@ package com.vito.check.NetWork;
 
 
 import com.vito.check.bean.AllUsers;
+import com.vito.check.bean.DayReport;
 import com.vito.check.bean.Device;
 import com.vito.check.bean.MyOrder;
 import com.vito.check.bean.OnlineRate;
 import com.vito.check.bean.Regist;
 import com.vito.check.bean.SendOrder;
 import com.vito.check.bean.User;
+import com.vito.check.bean.WeekReport;
 
 import java.io.File;
 import java.util.Map;
@@ -113,5 +115,19 @@ public class ApiWrapper extends RetrofitUtil {
      */
     public Observable<OnlineRate> getOnlineRate(String token,String xjName){
         return apiServer.getOnlineRate(token,xjName);
+    }
+
+    /**
+     * 日报表
+     */
+    public Observable<DayReport>  getDayReport(String token,String xjName){
+        return apiServer.getDayReport(token,xjName);
+    }
+
+    /**
+     * 周报表
+     */
+    public Observable<WeekReport>  getWeekReport(String token, String xjName){
+        return apiServer.getWeekReport(token,xjName);
     }
 }

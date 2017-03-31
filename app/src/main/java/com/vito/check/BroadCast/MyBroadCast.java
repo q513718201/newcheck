@@ -33,16 +33,6 @@ public class MyBroadCast extends BroadcastReceiver {
             Log.d("jpush", title + "---" + message);
         }
 
-        if (intent.getAction().equals(JPushInterface.ACTION_NOTIFICATION_RECEIVED)) {
-            manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-            Bundle extras = intent.getExtras();
-            String msg = extras.getString(JPushInterface.EXTRA_MESSAGE);
-            Log.d("jiguang",msg);
-//            MainFragment m=new MainFragment();
-//            m.show();
-
-
-        }
         if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Intent i = new Intent(context, MyOrderActivity.class);
             Bundle extras = intent.getExtras();

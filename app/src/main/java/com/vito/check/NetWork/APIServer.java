@@ -1,12 +1,14 @@
 package com.vito.check.NetWork;
 
 import com.vito.check.bean.AllUsers;
+import com.vito.check.bean.DayReport;
 import com.vito.check.bean.Device;
 import com.vito.check.bean.MyOrder;
 import com.vito.check.bean.OnlineRate;
 import com.vito.check.bean.Regist;
 import com.vito.check.bean.SendOrder;
 import com.vito.check.bean.User;
+import com.vito.check.bean.WeekReport;
 
 import java.io.File;
 import java.util.Map;
@@ -88,4 +90,12 @@ public interface APIServer {
     //查看在线率
     @GET("getOnlineRate.do")
     Observable<OnlineRate> getOnlineRate(@Query("token") String token, @Query("xjName") String xjName);
+
+    //日报表查询
+    @GET("getTodayReport.do")
+    Observable<DayReport>  getDayReport(@Query("token") String token, @Query("xjName") String xjName);
+
+    //周报表查询
+    @GET("getWeekReport.do")
+    Observable<WeekReport>  getWeekReport(@Query("token") String token, @Query("xjName") String xjName);
 }

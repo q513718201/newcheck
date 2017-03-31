@@ -1,31 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/gray"
+                android:orientation="vertical"
+    >
 
     <include layout="@layout/my_toolbar"></include>
+
     <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:layout_below="@+id/tl_toolbar"
         android:background="@color/blue"
         >
+
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text="报表类型："
+                android:textColor="@color/base_gray"
+                android:textSize="18dp"
+                />
+
+            <RadioGroup
+                android:id="@+id/rg_gp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/rb_paidan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="日报表"
+                    />
+
+                <RadioButton
+                    android:id="@+id/rb_daishenhe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="周报表"
+                    />
+
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:layout_toRightOf="@+id/ll"
+            android:visibility="gone"
+            >
+
+            <EditText
+                android:id="@+id/et_chose"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_normal"
+                android:focusable="false"
+                android:paddingLeft="30dp"
+                android:text="查看人员"/>
+
+            <ImageView
+                android:id="@+id/arrow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/et_chose"
+                android:layout_centerVertical="true"
+                android:paddingRight="10dp"
+                android:src="@drawable/down_arrow"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+    <!--<com.liulishuo.magicprogresswidget.MagicProgressBar-->
+    <!--android:id="@+id/demo_2_mpb"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="30dp"-->
+    <!--app:mpb_color="#ff0000"-->
+    <!--app:mpb_default_color="#95ff00"/>-->
+    <include layout="@layout/day_report"></include>
+
+    <include layout="@layout/week_report"></include>
+
+    <LinearLayout
+        android:id="@+id/ll_progress"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/loading_normal"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/progress"
+            style="@style/SpinKitView.Circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:SpinKit_Color="@color/colorAccent"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="周考勤"
-            android:layout_centerInParent="true"
-            android:textColor="#ffffff"
-            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:text="正在查询中..."
+            android:textColor="@color/colorAccent"
             />
 
-    </RelativeLayout>
-    <com.liulishuo.magicprogresswidget.MagicProgressBar
-        android:id="@+id/demo_2_mpb"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        app:mpb_color="#ff0000"
-        app:mpb_default_color="#95ff00"/>
 
-</LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -57,12 +58,16 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
     EditText mEtChose;
     @BindView(R.id.arrow1)
     ImageView mArrow1;
+    @BindView(R.id.tv_phone)
+    TextView mTvPhone;
+    @BindView(R.id.ll_progress)
+    LinearLayout mLlProgress;
     private MyOrder.ContentBean mOrderBean;
     private String mToken;
     private PopupWindow mPopupWindow1;
     private List<AllUsers.ContentBean> allUsersContent;
     private ListView lv_name;
-    private String XjName="";
+    private String XjName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +89,6 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
         mTvDesc.setText(mOrderBean.getDescription());
 
 
-
     }
 
     @Override
@@ -96,27 +100,27 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.login_btn:
                 String DeviceNo = mTvDeviceNo.getText().toString();
                 String Address = mTvAddress.getText().toString();
                 String Desc = mTvDesc.getText().toString();
                 String phone = etPhone.getText().toString();
                 String SendTo = mEtChose.getText().toString();
-                if(TextUtils.isEmpty(phone)){
+                if (TextUtils.isEmpty(phone)) {
                     Toast.makeText(getApplicationContext(), "手机号不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(TextUtils.isEmpty(SendTo)){
+                if (TextUtils.isEmpty(SendTo)) {
                     Toast.makeText(getApplicationContext(), "派发人不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-                Observable<SendOrder> obsevable = ApiWrapper.getInstance().sendOrder(mToken, DeviceNo, Desc,Address, phone, XjName);
+                 mLlProgress.setVisibility(View.VISIBLE);
+                Observable<SendOrder> obsevable = ApiWrapper.getInstance().sendOrder(mToken, DeviceNo, Desc, Address, phone, XjName);
                 addSubscription(obsevable, new Subscriber<SendOrder>() {
                     @Override
                     public void onCompleted() {
-
+                        mLlProgress.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -145,7 +149,6 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
                 showPopWindow1();
                 break;
         }
-
 
 
     }
@@ -197,10 +200,10 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onNext(AllUsers allUsers) {
                 allUsersContent = allUsers.getContent();
-                if(allUsersContent.size()!=0){
+                if (allUsersContent.size() != 0) {
                     lv_name.setAdapter(new AllUserAdapter(allUsersContent, getApplicationContext()));
-                }else{
-                    Toast.makeText(getApplicationContext(),"未能查询到巡检人员",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "未能查询到巡检人员", Toast.LENGTH_SHORT).show();
                 }
 
 

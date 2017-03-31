@@ -19,6 +19,15 @@
             android:textSize="20dp"
             android:textColor="#bb00ff"
             />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="派单时间：1"
+            android:textSize="20dp"
+            android:textColor="#bb00ff"
+            />
 
         <TextView
             android:id="@+id/tv_orderno"
@@ -27,7 +36,7 @@
             android:layout_marginTop="5dp"
             android:text="订单编号：1"
             android:textSize="20dp"
-            android:textColor="#ff0000"
+            android:textColor="#bb00ff"
             />
 
         <TextView
@@ -37,7 +46,7 @@
             android:layout_marginTop="5dp"
             android:text="故障描述：屏幕坏了啊所发生的给对方过得很好大商股份电饭锅电饭锅的和"
             android:textSize="20dp"
-            android:textColor="#bb00ff"
+            android:textColor="#ff0000"
             />
 
         <TextView
@@ -81,15 +90,15 @@
             android:background="@drawable/button_selector"
             android:textSize="20sp"
             />
-        <Button
-            android:layout_marginTop="5dp"
-            android:id="@+id/bt_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="派单"
-            android:background="@drawable/button_selector"
-            android:textSize="20sp"
-            />
+        <!--<Button-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:id="@+id/bt_send"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="派单"-->
+            <!--android:background="@drawable/button_selector"-->
+            <!--android:textSize="20sp"-->
+            <!--/>-->
 
     </LinearLayout>
 

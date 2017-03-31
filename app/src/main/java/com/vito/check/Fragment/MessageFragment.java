@@ -24,8 +24,8 @@ import butterknife.ButterKnife;
 public class MessageFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.card_my)
     CardView mCardMy;
-    @BindView(R.id.card_new)
-    CardView mCardNew;
+//    @BindView(R.id.card_new)
+//    CardView mCardNew;
     private MainActivity mActivity;
 
     @Override
@@ -40,7 +40,7 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_message, container, false);
         ButterKnife.bind(this, view);
         mCardMy.setOnClickListener(this);
-        mCardNew.setOnClickListener(this);
+       // mCardNew.setOnClickListener(this);
         return view;
     }
 
@@ -50,8 +50,8 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
             case R.id.card_my:
                 startActivity(new Intent(mActivity, MyOrderActivity.class));
                 break;
-            case R.id.card_new:
-                break;
+//            case R.id.card_new:
+//                break;
         }
     }
 }

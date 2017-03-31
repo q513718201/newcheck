@@ -165,6 +165,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         mArrow.setOnClickListener(this);
         mArrow1.setOnClickListener(this);
         mQuery.setOnClickListener(this);
+        mLocation.setOnClickListener(this);
     }
 
 
@@ -417,6 +418,11 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
             return;
         }
 
+        if(v.getId() == R.id.location){
+            center2myLoc(new LatLng(mCurrentLantitude,mCurrentLongitude));
+            return;
+        }
+
         if (v.getId() == R.id.query) {
             mBaiduMap.setMyLocationEnabled(false);
             deviceNo = mDeviceno.getText().toString();
@@ -602,7 +608,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
             mBaiduMap.addOverlay(mOoD);
         }
         if (mList.get(0) != null) {
-            center2myLoc(mList.get(0));
+            center2myLoc(mList.get(mList.size()/2));
         }
     }
 
