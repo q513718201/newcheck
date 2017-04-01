@@ -82,15 +82,17 @@ public class WorkFragment extends Fragment {
                         break;
                     case 2:
                         startActivity(OnlinerateActivity.class);
-
                         break;
-                    case 4:
-                        startActivity(ReportActivity.class);
+                    case 3:
+                        startActivity(DeviceCheckActivity.class);
                         break;
                     case 5:
+                        startActivity(ReportActivity.class);
+                        break;
+                    case 6:
 
                         break;
-                    case 7:
+                    case 8:
                         dialog();
                         break;
                 }

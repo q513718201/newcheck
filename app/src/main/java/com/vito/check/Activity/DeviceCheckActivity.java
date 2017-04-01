@@ -29,69 +29,18 @@ public class DeviceCheckActivity extends BaseActivity implements View.OnClickLis
 
     @BindView(R.id.login_btn)
     Button mBtn;
-    private PhotoAdapter photoAdapter;
-    private ArrayList<String> selectedPhotos = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("日常巡检",true);
-        initRecycleView();
         mBtn.setOnClickListener(this);
-    }
-
-    private void initRecycleView() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        photoAdapter = new PhotoAdapter(this, selectedPhotos);
-
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
-        recyclerView.setAdapter(photoAdapter);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
-                new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
-                            PhotoPicker.builder()
-                                    .setPhotoCount(PhotoAdapter.MAX)
-                                    .setShowCamera(true)
-                                    .setPreviewEnabled(false)
-                                    .setSelected(selectedPhotos)
-                                    .start(DeviceCheckActivity.this);
-                        } else {
-                            PhotoPreview.builder()
-                                    .setPhotos(selectedPhotos)
-                                    .setCurrentItem(position)
-                                    .start(DeviceCheckActivity.this);
-                        }
-                    }
-                }));
-
     }
 
     @Override
     public int getLayout() {
         return R.layout.activity_devicecheck;
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK &&
-                (requestCode == PhotoPicker.REQUEST_CODE || requestCode == PhotoPreview.REQUEST_CODE)) {
-
-            List<String> photos = null;
-            if (data != null) {
-                photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
-            }
-            selectedPhotos.clear();
-            Log.i("tangj", "onActivityResult: " + photos);
-            if (photos != null) {
-                selectedPhotos.addAll(photos);
-            }
-            photoAdapter.notifyDataSetChanged();
-        }
     }
 
     @Override

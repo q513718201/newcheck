@@ -15,6 +15,7 @@ public class DataServer {
         list.add(new WorkSelect(true, "巡检", false));
         list.add(new WorkSelect(new WorkContent("派单")));
         list.add(new WorkSelect(new WorkContent("在线率查询")));
+        list.add(new WorkSelect(new WorkContent("日常巡检")));
 
         list.add(new WorkSelect(true, "管理", false));
         list.add(new WorkSelect(new WorkContent("报表")));
