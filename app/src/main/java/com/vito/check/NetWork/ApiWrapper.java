@@ -1,6 +1,7 @@
 package com.vito.check.NetWork;
 
 
+import com.vito.check.bean.AddressModify;
 import com.vito.check.bean.AllUsers;
 import com.vito.check.bean.DayReport;
 import com.vito.check.bean.Device;
@@ -17,6 +18,7 @@ import java.util.Map;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
 import rx.Observable;
 
 /**
@@ -80,6 +82,14 @@ public class ApiWrapper extends RetrofitUtil {
     public Observable<Device> getCheckedDevices(String token,String isChecked,String xjName, String devNo) {
         return apiServer.getCheckedDevices(token,isChecked,xjName,devNo);
     }
+
+    /**
+     * 获取派单设备
+     */
+    public Observable<Device> getOrderDevices(String token) {
+        return apiServer.getOrderDevices(token);
+    }
+
     /**
      * 看看自己的派单
      */
@@ -129,5 +139,13 @@ public class ApiWrapper extends RetrofitUtil {
      */
     public Observable<WeekReport>  getWeekReport(String token, String xjName){
         return apiServer.getWeekReport(token,xjName);
+    }
+
+    /**
+     * 修改设备位置
+     */
+
+    public Observable<AddressModify> addressModify( String token,String devNo, double lat, double lng, String address){
+        return apiServer.addressModify(token,devNo,lat,lng,address);
     }
 }

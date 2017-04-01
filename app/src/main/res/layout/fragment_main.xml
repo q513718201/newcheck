@@ -11,20 +11,15 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         ></FrameLayout>
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="0.6dp"
-        android:layout_below="@+id/rl_phone"
-        android:background="#e3e3e3"/>
 
     <RadioGroup
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="@color/gray"
         android:id="@+id/content_rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
 
         <com.vito.check.View.NotificationButton
             android:id="@+id/message"

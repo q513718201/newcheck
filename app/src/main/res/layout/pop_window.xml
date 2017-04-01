@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="200dip"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -20,6 +20,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/title"
+        android:layout_marginTop="10dp"
         android:textColor="@android:color/black" />
 
     <ImageButton
@@ -30,5 +31,14 @@
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/snippet"
         android:background="@drawable/start_uri" />
+    <ImageButton
+        android:id="@+id/modify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/title"
+        android:background="@drawable/sign" />
+
 
 </RelativeLayout>

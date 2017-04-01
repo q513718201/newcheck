@@ -1,5 +1,6 @@
 package com.vito.check.NetWork;
 
+import com.vito.check.bean.AddressModify;
 import com.vito.check.bean.AllUsers;
 import com.vito.check.bean.DayReport;
 import com.vito.check.bean.Device;
@@ -56,6 +57,9 @@ public interface APIServer {
     @GET("getDevInfo.do")
     Observable<Device> getCheckedDevices(@Query("token") String token, @Query("isChecked") String isChecked,@Query("xjName") String xjName,@Query("devNo") String devNo);
 
+    //获取派单设备
+    @GET("getDispatchDevInfos.do")
+    Observable<Device> getOrderDevices(@Query("token") String token);
 
     //查询自己的派单信息
     @GET("findMyDispatch.do")
@@ -98,4 +102,10 @@ public interface APIServer {
     //周报表查询
     @GET("getWeekReport.do")
     Observable<WeekReport>  getWeekReport(@Query("token") String token, @Query("xjName") String xjName);
+
+    //修改设备地址
+    @GET("updateDevPosition.do")
+    Observable<AddressModify>  addressModify(@Query("token") String token,@Query("devNo") String devNo,
+                                             @Query("lat") double lat,@Query("lng") double lng,
+                                             @Query("address") String address );
 }

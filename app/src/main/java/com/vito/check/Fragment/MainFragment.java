@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -64,6 +66,12 @@ public class MainFragment extends Fragment implements RadioGroup.OnCheckedChange
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        mActivity.getMenuInflater().inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
         switch (checkedId) {
@@ -106,15 +114,6 @@ public class MainFragment extends Fragment implements RadioGroup.OnCheckedChange
      public void  show(){
              mMessage.setNotificationNumber(1);
      }
-
-
-
-    public void replace(Fragment fragment) {
-
-
-        mTransaction.replace(R.id.rl_content, fragment);
-        mTransaction.commit();
-    }
 
     public void switchContent(Fragment from, Fragment to) {
         mFragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();

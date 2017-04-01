@@ -1,12 +1,13 @@
 package com.vito.check.Fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,6 +32,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BaiduMapOptions;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
@@ -41,13 +45,12 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
-import com.github.ybq.android.spinkit.SpinKitView;
-import com.vito.check.Activity.AllUserActivity;
 import com.vito.check.Activity.LoginActivity;
 import com.vito.check.Adapter.AllUserAdapter;
 import com.vito.check.MainActivity;
 import com.vito.check.NetWork.ApiWrapper;
 import com.vito.check.R;
+import com.vito.check.bean.AddressModify;
 import com.vito.check.bean.AllUsers;
 import com.vito.check.bean.Device;
 import com.vito.check.util.DensityUtils;
@@ -67,7 +70,7 @@ import rx.Subscriber;
  * Created by xk on 2017/3/16.
  */
 
-public class BaiduDeviceFragment extends Fragment implements View.OnClickListener, BaiduMap.OnMarkerClickListener, BaiduMap.OnMapClickListener {
+public class BaiduDeviceFragment extends Fragment implements View.OnClickListener, BaiduMap.OnMarkerClickListener, BaiduMap.OnMapClickListener, CompoundButton.OnCheckedChangeListener {
 
     @BindView(R.id.et)
     EditText mEt;
@@ -90,6 +93,10 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
     ImageView mLocation;
     @BindView(R.id.rl1)
     RelativeLayout mRl1;
+    @BindView(R.id.cb)
+    CheckBox mCb;
+    @BindView(R.id.ll_query)
+    LinearLayout mLlQuery;
 
 
     private MainActivity mActivity;
@@ -118,11 +125,17 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
     private ListView lv_name;
     private AllUserAdapter allUserAdapter;
     private List<AllUsers.ContentBean> allUsersContent;
-    String xjName="";
+    String xjName = "";
     private String et;
-    private String isOnLine="";
-    private String isChecked="";
-    private String deviceNo="";
+    private String isOnLine = "";
+    private String isChecked = "";
+    private String deviceNo = "";
+    private String mRole;
+    private String mDeviceNumber;
+    private String mDeviceAddress;
+    private double mDevicelatitude;
+    private double mDevicelongitude;
+    private LatLng mDeviceposition;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -138,6 +151,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         View view = inflater.inflate(R.layout.fragment_baidudevice, container, false);
         ButterKnife.bind(this, view);
         mMapView = (MapView) view.findViewById(R.id.device_map);
+        mMapView.showZoomControls(false);
         init();
         initMap();
         return view;
@@ -145,34 +159,35 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
 
     //获取之前请求的值
     private void init() {
-        String role = SpUtils.getString(mActivity, "role", "");
+        mRole = SpUtils.getString(mActivity, "role", "");
         mToken = SpUtils.getString(mActivity, "token", "");
         et = SpUtils.getString(mActivity, "et", "");
         isOnLine = SpUtils.getString(mActivity, "isOnLine", "");
         isChecked = SpUtils.getString(mActivity, "isChecked", "");
 
-        if (role.equals("manager")) {
+        if (mRole.equals("manager")) {
             mRl1.setVisibility(View.VISIBLE);
+            mLocation.setVisibility(View.GONE);
         }
 
         if (et != "") {
             mEt.setText(et);
-            getDevices(isOnLine, isChecked, xjName,"");
+            getDevices(isOnLine, isChecked, xjName, "");
         } else {
             mEt.setText("全部设备");
-            getDevices("", "", xjName,"");
+            getDevices("", "", xjName, "");
         }
         mArrow.setOnClickListener(this);
         mArrow1.setOnClickListener(this);
         mQuery.setOnClickListener(this);
         mLocation.setOnClickListener(this);
+        mCb.setOnCheckedChangeListener(this);
     }
 
 
     //初始化地图
     private void initMap() {
         mBaiduMap = mMapView.getMap();
-
         MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(15.0f);
         mBaiduMap.setMapStatus(msu);
 
@@ -204,10 +219,14 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        String title = marker.getTitle();
+        mDeviceNumber = marker.getTitle();
         Bundle extraInfo = marker.getExtraInfo();
-        String address = extraInfo.getString("address");
-        pushWindow(title, address, marker.getPosition());
+        mDeviceAddress = extraInfo.getString("address");
+        mDeviceposition = marker.getPosition();
+        mDevicelatitude = mDeviceposition.latitude;
+        mDevicelongitude = mDeviceposition.longitude;
+
+        pushWindow(mDeviceNumber, mDeviceAddress, mDeviceposition);
 //        Toast.makeText(mActivity, marker.getTitle() + "--" + address, Toast.LENGTH_SHORT).show();
         return false;
     }
@@ -223,6 +242,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
             viewHold.title = (TextView) mView.findViewById(R.id.title);
             viewHold.snippet = (TextView) mView.findViewById(R.id.snippet);
             viewHold.start_amap_app = (ImageButton) mView.findViewById(R.id.start_amap_app);
+            viewHold.address = (ImageButton) mView.findViewById(R.id.modify);
             mView.setTag(viewHold);
         } else {
             viewHold = (ViewHold) mView.getTag();
@@ -230,6 +250,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         viewHold.title.setText(title);
         viewHold.snippet.setText(address);
         viewHold.start_amap_app.setOnClickListener(this);
+        viewHold.address.setOnClickListener(this);
         //将marker所在的经纬度的信息转化成屏幕上的坐标
         InfoWindow mInfoWindow = new InfoWindow(mView, ll, DensityUtils.dp2px(mActivity, -32));
         if (!isShowPopWindow) {
@@ -257,10 +278,21 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         return false;
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            mLlQuery.setVisibility(View.VISIBLE);
+        }else{
+            mLlQuery.setVisibility(View.GONE);
+        }
+
+    }
+
     public static class ViewHold {
         TextView title;
         TextView snippet;
         ImageButton start_amap_app;
+        ImageButton address;
     }
 
     /**
@@ -337,22 +369,22 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
     }
 
     //    //网络请求
-    public void getDevices(final String isOnline, final String isChecked, String xjName,String devNo) {
+    public void getDevices(final String isOnline, final String isChecked, String xjName, String devNo) {
 
         mLlProgress.setVisibility(View.VISIBLE);
 
         Log.d("aa", mToken);
 
         if (!isOnline.equals("")) {
-            mDevices = ApiWrapper.getInstance().getDevices(mToken, isOnline,xjName,devNo);
+            mDevices = ApiWrapper.getInstance().getDevices(mToken, isOnline, xjName, devNo);
         }
-        if(isOnline.equals("")&&isChecked.equals("")){
-            mDevices = ApiWrapper.getInstance().getAllDevices(mToken,xjName,devNo);
+        if (isOnline.equals("") && isChecked.equals("")) {
+            mDevices = ApiWrapper.getInstance().getAllDevices(mToken, xjName, devNo);
         }
 
 
         if (!isChecked.equals("")) {
-            mDevices = ApiWrapper.getInstance().getCheckedDevices(mToken, isChecked,xjName,devNo);
+            mDevices = ApiWrapper.getInstance().getCheckedDevices(mToken, isChecked, xjName, devNo);
         }
 
 
@@ -414,12 +446,12 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
             return;
         }
         if (v.getId() == R.id.start_amap_app) {
-            DialogUtil.startRoutePlanDriving(mActivity, new LatLng(mCurrentLantitude, mCurrentLongitude));
+            DialogUtil.startRoutePlanDriving(mActivity, new LatLng(mCurrentLantitude, mCurrentLongitude), mDeviceAddress);
             return;
         }
 
-        if(v.getId() == R.id.location){
-            center2myLoc(new LatLng(mCurrentLantitude,mCurrentLongitude));
+        if (v.getId() == R.id.location) {
+            center2myLoc(new LatLng(mCurrentLantitude, mCurrentLongitude));
             return;
         }
 
@@ -430,11 +462,24 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
             if (TextUtils.isEmpty(deviceNo)) {
                 Toast.makeText(mActivity, "请输入设备号", Toast.LENGTH_SHORT).show();
                 return;
-            }else{
-                getDevices(isOnLine,isChecked,xjName, deviceNo);
+            } else {
+                getDevices(isOnLine, isChecked, xjName, deviceNo);
             }
             return;
 
+        }
+
+        if (v.getId() == R.id.order) {
+            mEt.setText("派单设备");
+            SpUtils.putString(mActivity, "et", "派单设备");
+            getDevice();
+            mPopupWindow.dismiss();
+            return;
+        }
+
+        if (v.getId() == R.id.modify) {
+            modifyAddress();
+            return;
         }
         switch (v.getId()) {
             case R.id.all:
@@ -469,12 +514,98 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
                 break;
         }
         deviceNo = mDeviceno.getText().toString();
-        getDevices(isOnLine, isChecked, xjName,deviceNo);
+        getDevices(isOnLine, isChecked, xjName, deviceNo);
 
         SpUtils.putString(mActivity, "isOnLine", isOnLine);
         SpUtils.putString(mActivity, "isChecked", isChecked);
         mPopupWindow.dismiss();
 
+    }
+
+    /**
+     * 修改设备地址
+     */
+    private void modifyAddress() {
+        View view = View.inflate(mActivity, R.layout.dialog_input, null);
+        final EditText et_address = (EditText) view.findViewById(R.id.et_address);
+
+        new AlertDialog.Builder(mActivity)
+                .setView(view)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        final String dev_id = et_address.getText().toString();
+                        if (TextUtils.isEmpty(dev_id)) {
+                            Toast.makeText(mActivity, "请输入地址", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Observable<AddressModify> addressModifyObservable = ApiWrapper.getInstance().addressModify(mToken, dev_id, mDevicelatitude, mDevicelongitude, mDeviceAddress);
+                            mActivity.addSubscription(addressModifyObservable, new Subscriber<AddressModify>() {
+                                @Override
+                                public void onCompleted() {
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                }
+
+                                @Override
+                                public void onNext(AddressModify addressModify) {
+                                    if (addressModify.isSuccess()) {
+                                        mDeviceAddress = dev_id;
+                                        pushWindow(mDeviceNumber, mDeviceAddress, mDeviceposition);
+                                        Toast.makeText(mActivity, addressModify.getContent(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(mActivity, addressModify.getContent(), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            });
+                        }
+
+                    }
+                })
+                .setNegativeButton("取消", null)
+                .show();
+
+    }
+
+    private void getDevice() {
+
+        Observable<Device> orderDevices = ApiWrapper.getInstance().getOrderDevices(mToken);
+        mActivity.addSubscription(orderDevices, new Subscriber<Device>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Device device) {
+                int size = device.getContent().size();
+                mDeviceNo.setText(size + "");
+                mBaiduMap.clear();
+
+
+                if (!device.isSuccess()) {
+                    Toast.makeText(mActivity, "账号在其他地方登陆，请重新登陆", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(mActivity, LoginActivity.class));
+                    mActivity.finish();
+                    return;
+                }
+                if (device.getContent().size() == 0) {
+                    center2myLoc(new LatLng(mCurrentLantitude, mCurrentLantitude));
+                    Toast.makeText(mActivity, "未查到相关设备信息", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                addMarkersToMap(device);
+
+
+            }
+        });
     }
 
     /**
@@ -485,7 +616,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
             //弹出PopupWindow
             int width = mEt.getWidth();//PopupWindow宽度和编辑框一致
             int height = DensityUtils.dp2px(mActivity, 140);
-            mPopupWindow = new PopupWindow(width, height);
+            mPopupWindow = new PopupWindow(width, LinearLayout.LayoutParams.WRAP_CONTENT);
         }
         View view = View.inflate(mActivity, R.layout.device_pop_window, null);
         //设置PopupWindow里面的View
@@ -495,13 +626,16 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         TextView tv3 = (TextView) view.findViewById(R.id.yes_check);
         TextView tv4 = (TextView) view.findViewById(R.id.online);
         TextView tv5 = (TextView) view.findViewById(R.id.outline);
-
+        TextView tv6 = (TextView) view.findViewById(R.id.order);
+        if (mRole.equals("manager")) {
+            tv6.setVisibility(View.GONE);
+        }
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
         tv3.setOnClickListener(this);
         tv4.setOnClickListener(this);
         tv5.setOnClickListener(this);
-
+        tv6.setOnClickListener(this);
         //让PopupWindow能够消失
         mPopupWindow.setOutsideTouchable(true);
         mPopupWindow.setBackgroundDrawable(new ColorDrawable());
@@ -522,9 +656,9 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         lv_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                xjName=allUsersContent.get(i).getLogin_name();
+                xjName = allUsersContent.get(i).getLogin_name();
                 mEtChose.setText(allUsersContent.get(i).getNick_name());
-                getDevices(isOnLine, isChecked, xjName,deviceNo);
+                getDevices(isOnLine, isChecked, xjName, deviceNo);
                 mPopupWindow1.dismiss();
 
             }
@@ -557,11 +691,11 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
             @Override
             public void onNext(AllUsers allUsers) {
                 allUsersContent = allUsers.getContent();
-                if(allUsersContent.size()!=0){
+                if (allUsersContent.size() != 0) {
                     allUserAdapter = new AllUserAdapter(allUsersContent, mActivity);
                     lv_name.setAdapter(allUserAdapter);
-                }else{
-                    Toast.makeText(mActivity,"未能查询到巡检人员",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mActivity, "未能查询到巡检人员", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -608,7 +742,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
             mBaiduMap.addOverlay(mOoD);
         }
         if (mList.get(0) != null) {
-            center2myLoc(mList.get(mList.size()/2));
+            center2myLoc(mList.get(mList.size() / 2));
         }
     }
 
@@ -620,11 +754,13 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(a);
         mBaiduMap.animateMapStatus(u);
     }
+
     @Override
     public void onPause() {
         super.onPause();
         mMapView.onPause();
     }
+
     @Override
     public void onStop() {
         // 关闭图层定位
@@ -635,6 +771,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         myOrientationListener.stop();
         super.onStop();
     }
+
     @Override
     public void onStart() {
         // 开启图层定位
@@ -646,11 +783,13 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         myOrientationListener.start();
         super.onStart();
     }
+
     @Override
     public void onResume() {
         super.onResume();
         mMapView.onResume();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
