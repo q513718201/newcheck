@@ -2,7 +2,6 @@ package com.vito.check.Fragment;
 
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,12 +17,10 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.vito.check.Activity.AllUserActivity;
 import com.vito.check.Activity.DeviceCheckActivity;
 import com.vito.check.Activity.FinishOrderActivity;
-import com.vito.check.Activity.InspectionRecord;
 import com.vito.check.Activity.LoginActivity;
-import com.vito.check.Activity.OnlinerateActivity;
+import com.vito.check.Activity.OnlineActivity;
 import com.vito.check.Activity.ReportActivity;
 import com.vito.check.Activity.SendOrderActivity;
 import com.vito.check.Adapter.SectionAdapter;
@@ -31,7 +28,6 @@ import com.vito.check.MainActivity;
 import com.vito.check.R;
 import com.vito.check.bean.WorkSelect;
 import com.vito.check.data.DataServer;
-import com.vito.check.data.DialogUtils;
 import com.vito.check.util.SpUtils;
 
 import java.util.List;
@@ -81,7 +77,7 @@ public class WorkFragment extends Fragment {
                         startActivity(SendOrderActivity.class);
                         break;
                     case 2:
-                        startActivity(OnlinerateActivity.class);
+                        startActivity(OnlineActivity.class);
                         break;
                     case 3:
                         startActivity(DeviceCheckActivity.class);
@@ -90,7 +86,7 @@ public class WorkFragment extends Fragment {
                         startActivity(ReportActivity.class);
                         break;
                     case 6:
-
+                      //  startActivity(FinishOrderActivity.class);
                         break;
                     case 8:
                         dialog();

@@ -59,49 +59,13 @@
             </RadioGroup>
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="25dp"
-            android:layout_toRightOf="@+id/ll"
-            android:visibility="gone"
-            >
-
-            <EditText
-                android:id="@+id/et_chose"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/et_normal"
-                android:focusable="false"
-                android:paddingLeft="30dp"
-                android:text="查看人员"/>
-
-            <ImageView
-                android:id="@+id/arrow1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@id/et_chose"
-                android:layout_centerVertical="true"
-                android:paddingRight="10dp"
-                android:src="@drawable/down_arrow"/>
-
-        </RelativeLayout>
-
-
     </RelativeLayout>
 
-
-    <!--<com.liulishuo.magicprogresswidget.MagicProgressBar-->
-    <!--android:id="@+id/demo_2_mpb"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="30dp"-->
-    <!--app:mpb_color="#ff0000"-->
-    <!--app:mpb_default_color="#95ff00"/>-->
     <include layout="@layout/day_report"></include>
 
     <include layout="@layout/week_report"></include>
+
+    <include layout="@layout/listview_report"></include>
 
     <LinearLayout
         android:id="@+id/ll_progress"

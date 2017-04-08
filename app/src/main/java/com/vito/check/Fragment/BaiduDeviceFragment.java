@@ -32,7 +32,6 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BaiduMapOptions;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
@@ -70,7 +69,7 @@ import rx.Subscriber;
  * Created by xk on 2017/3/16.
  */
 
-public class BaiduDeviceFragment extends Fragment implements View.OnClickListener, BaiduMap.OnMarkerClickListener, BaiduMap.OnMapClickListener, CompoundButton.OnCheckedChangeListener {
+public class BaiduDeviceFragment extends Fragment implements View.OnClickListener, BaiduMap.OnMarkerClickListener, BaiduMap.OnMapClickListener {
 
     @BindView(R.id.et)
     EditText mEt;
@@ -93,11 +92,12 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
     ImageView mLocation;
     @BindView(R.id.rl1)
     RelativeLayout mRl1;
-    @BindView(R.id.cb)
-    CheckBox mCb;
     @BindView(R.id.ll_query)
     LinearLayout mLlQuery;
-
+    @BindView(R.id.isshowquery)
+    ImageView mIsshowquery;
+    @BindView(R.id.isshowchose)
+    ImageView mIsshowchose;
 
     private MainActivity mActivity;
     private List<LatLng> mList;
@@ -136,13 +136,13 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
     private double mDevicelatitude;
     private double mDevicelongitude;
     private LatLng mDeviceposition;
+    private boolean isShow=true;
+    private boolean isShowChose=true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = (MainActivity) getActivity();
-
-
     }
 
     @Nullable
@@ -168,20 +168,27 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         if (mRole.equals("manager")) {
             mRl1.setVisibility(View.VISIBLE);
             mLocation.setVisibility(View.GONE);
+            mIsshowchose.setVisibility(View.VISIBLE);
         }
 
         if (et != "") {
-            mEt.setText(et);
-            getDevices(isOnLine, isChecked, xjName, "");
+            if (et.equals("派单设备")) {
+                getDevice();
+            } else {
+                mEt.setText(et);
+                getDevices(isOnLine, isChecked, xjName, "");
+            }
+
         } else {
-            mEt.setText("全部设备");
-            getDevices("", "", xjName, "");
+            mEt.setText("在线设备");
+            getDevices("1", "", xjName, "");
         }
-        mArrow.setOnClickListener(this);
-        mArrow1.setOnClickListener(this);
+        mEt.setOnClickListener(this);
+        mEtChose.setOnClickListener(this);
         mQuery.setOnClickListener(this);
         mLocation.setOnClickListener(this);
-        mCb.setOnCheckedChangeListener(this);
+        mIsshowquery.setOnClickListener(this);
+        mIsshowchose.setOnClickListener(this);
     }
 
 
@@ -278,15 +285,6 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         return false;
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-            mLlQuery.setVisibility(View.VISIBLE);
-        }else{
-            mLlQuery.setVisibility(View.GONE);
-        }
-
-    }
 
     public static class ViewHold {
         TextView title;
@@ -381,8 +379,6 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         if (isOnline.equals("") && isChecked.equals("")) {
             mDevices = ApiWrapper.getInstance().getAllDevices(mToken, xjName, devNo);
         }
-
-
         if (!isChecked.equals("")) {
             mDevices = ApiWrapper.getInstance().getCheckedDevices(mToken, isChecked, xjName, devNo);
         }
@@ -437,11 +433,34 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
 
-        if (v.getId() == R.id.arrow) {
+        if (v.getId() == R.id.et) {
             showPopWindow();
             return;
         }
-        if (v.getId() == R.id.arrow1) {
+        if(v.getId() == R.id.isshowquery){
+            if (isShow) {
+                mLlQuery.setVisibility(View.VISIBLE);
+                isShow=!isShow;
+            } else {
+                mLlQuery.setVisibility(View.GONE);
+                mDeviceno.setText("");
+                isShow=!isShow;
+            }
+            return;
+        }
+        if(v.getId()==R.id.isshowchose){
+
+            if (isShowChose) {
+                mRl1.setVisibility(View.VISIBLE);
+                isShowChose=!isShowChose;
+            } else {
+                mRl1.setVisibility(View.GONE);
+                isShowChose=!isShowChose;
+            }
+            return;
+        }
+
+        if (v.getId() == R.id.et_chose) {
             showPopWindow1();
             return;
         }

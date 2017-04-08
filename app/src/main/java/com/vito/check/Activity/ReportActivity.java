@@ -1,29 +1,22 @@
 package com.vito.check.Activity;
 
-import android.graphics.drawable.ColorDrawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.vito.check.Adapter.AllUserAdapter;
+import com.vito.check.Adapter.ReportDayAdapter;
+import com.vito.check.Adapter.ReportWeekAdapter;
 import com.vito.check.NetWork.ApiWrapper;
 import com.vito.check.R;
-import com.vito.check.bean.AllUsers;
 import com.vito.check.bean.DayReport;
 import com.vito.check.bean.WeekReport;
-import com.vito.check.util.DensityUtils;
 import com.vito.check.util.SpUtils;
 
 import java.util.List;
@@ -36,7 +29,7 @@ import rx.Subscriber;
  * Created by xk on 2017/3/21.
  */
 
-public class ReportActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
+public class ReportActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
 
     @BindView(R.id.rb_paidan)
     RadioButton mRbday;
@@ -44,12 +37,6 @@ public class ReportActivity extends BaseActivity implements RadioGroup.OnChecked
     RadioButton mRbWeek;
     @BindView(R.id.rg_gp)
     RadioGroup mRgGp;
-    @BindView(R.id.et_chose)
-    EditText mEtChose;
-    @BindView(R.id.arrow1)
-    ImageView mArrow1;
-    @BindView(R.id.rl1)
-    RelativeLayout mRl1;
     @BindView(R.id.date)
     TextView mDate;
     @BindView(R.id.firstSignin)
@@ -80,12 +67,14 @@ public class ReportActivity extends BaseActivity implements RadioGroup.OnChecked
     TextView mWeekTopOnlineRate;
     @BindView(R.id.ll_week)
     LinearLayout mLlWeek;
+    @BindView(R.id.lv_report)
+    ListView mLvReport;
+    @BindView(R.id.ll_listview)
+    LinearLayout mLlListview;
     private String mToken;
     private String mRole;
     private String xjName = "";
-    private PopupWindow mPopupWindow1;
-    private List<AllUsers.ContentBean> allUsersContent;
-    private ListView lv_name;
+    private ReportDayAdapter mReportDayAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,48 +84,71 @@ public class ReportActivity extends BaseActivity implements RadioGroup.OnChecked
         mRole = SpUtils.getString(getApplicationContext(), "role", "");
         init();
         mRgGp.setOnCheckedChangeListener(this);
-        mArrow1.setOnClickListener(this);
     }
 
     private void init() {
         if (mRole.equals("manager")) {
             mRbday.setChecked(true);
-            mRl1.setVisibility(View.VISIBLE);
-            mLlDay.setVisibility(View.GONE);
-
+            mLlListview.setVisibility(View.VISIBLE);
+            getDayReport(xjName);
         } else {
             mRbday.setChecked(true);
             getDayReport(xjName);
         }
     }
 
-    private void getDayReport(String xjName) {
+    private void getDayReport(final String xjName) {
+        mLlDay.setVisibility(View.GONE);
         mLlWeek.setVisibility(View.GONE);
         mLlProgress.setVisibility(View.VISIBLE);
         Observable<DayReport> dayReport = ApiWrapper.getInstance().getDayReport(mToken, xjName);
         addSubscription(dayReport, new Subscriber<DayReport>() {
             @Override
             public void onCompleted() {
-                mLlProgress.setVisibility(View.GONE);
-                mLlDay.setVisibility(View.VISIBLE);
+                if (!mRole.equals("manager")) {
+                    mLlProgress.setVisibility(View.GONE);
+                    mLlDay.setVisibility(View.VISIBLE);
+                } else {
+                    mLlProgress.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                Log.d("report", e.getMessage());
+                return;
             }
 
             @Override
             public void onNext(DayReport dayReport) {
-                Log.d("report", dayReport.toString());
-                mDate.setText(dayReport.getDate());
-                mFirstSignin.setText(dayReport.getFirstSignin());
-                mLastSignin.setText(dayReport.getLastSignin());
-                mUserfulNum.setText(dayReport.getXjNumToday() + "");
-                mOrderNum.setText(dayReport.getProcessNumToday() + "");
-                mTopOnline.setText(dayReport.getTopOnline());
-                mXjNumWeek.setText(dayReport.getXjNumWeek() + "");
-                mProcessWeek.setText(dayReport.getProcessWeek() + "");
+                List<DayReport.ContentBean> content = dayReport.getContent();
+                Log.d("report", content.get(0).toString());
+                if (content != null) {
+                    if (!mRole.equals("manager")) {
+                        DayReport.ContentBean dayreport = content.get(0);
+                        mDate.setText(dayreport.getDate());
+                        mFirstSignin.setText(dayreport.getFirstSignin());
+                        mLastSignin.setText(dayreport.getLastSignin());
+                        mUserfulNum.setText(dayreport.getXjNumToday() + "");
+                        mOrderNum.setText(dayreport.getProcessNumToday() + "");
+                        mTopOnline.setText(dayreport.getTopOnline());
+                        mXjNumWeek.setText(dayreport.getXjNumWeek() + "");
+                        mProcessWeek.setText(dayreport.getProcessWeek() + "");
+                    } else {
+                        mReportDayAdapter = new ReportDayAdapter(content, getApplicationContext());
+                        mLvReport.setAdapter(mReportDayAdapter);
+                        mReportDayAdapter.setOnClickDay(new ReportDayAdapter.OnClickDayListener() {
+                            @Override
+                            public void onClickDay(DayReport.ContentBean mOrderBean) {
+                                Intent check = new Intent(getApplicationContext(), DayReportActivity.class);
+                                check.putExtra("daybean", mOrderBean);
+                                startActivity(check);
+                            }
+                        });
+                    }
+
+                }
+
             }
         });
     }
@@ -150,25 +162,23 @@ public class ReportActivity extends BaseActivity implements RadioGroup.OnChecked
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rb_paidan:
-                if(mRole.equals("manager")){
-                    if(!xjName.equals("")){
-                        getDayReport(xjName);
-                        mLlWeek.setVisibility(View.GONE);
-                    }
+                if (mRole.equals("manager")) {
+                    mLlDay.setVisibility(View.GONE);
+                    mLlWeek.setVisibility(View.GONE);
+                    getDayReport(xjName);
 
-                }else{
+                } else {
                     getDayReport(xjName);
                     mLlWeek.setVisibility(View.GONE);
                 }
 
                 break;
             case R.id.rb_daishenhe:
-                if(mRole.equals("manager")){
-                    if(!xjName.equals("")){
-                        getWeekReport(xjName);
-                        mLlWeek.setVisibility(View.GONE);
-                    }
-                }else{
+                if (mRole.equals("manager")) {
+                    getWeekReport(xjName);
+                    mLlWeek.setVisibility(View.GONE);
+                    mLlDay.setVisibility(View.GONE);
+                } else {
                     getWeekReport(xjName);
                     mLlDay.setVisibility(View.GONE);
                 }
@@ -177,15 +187,20 @@ public class ReportActivity extends BaseActivity implements RadioGroup.OnChecked
         }
     }
 
-    private void getWeekReport(String xjName) {
+    private void getWeekReport(final String xjName) {
         mLlDay.setVisibility(View.GONE);
+        mLlWeek.setVisibility(View.GONE);
         mLlProgress.setVisibility(View.VISIBLE);
         Observable<WeekReport> weekReport = ApiWrapper.getInstance().getWeekReport(mToken, xjName);
         addSubscription(weekReport, new Subscriber<WeekReport>() {
             @Override
             public void onCompleted() {
-                mLlProgress.setVisibility(View.GONE);
-                mLlWeek.setVisibility(View.VISIBLE);
+                if (!mRole.equals("manager")) {
+                    mLlProgress.setVisibility(View.GONE);
+                    mLlWeek.setVisibility(View.VISIBLE);
+                } else {
+                    mLlProgress.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -195,85 +210,33 @@ public class ReportActivity extends BaseActivity implements RadioGroup.OnChecked
 
             @Override
             public void onNext(WeekReport weekReport) {
-                Log.d("report", weekReport.toString());
-                mXjNumWeek1.setText(weekReport.getXjNumWeek() + "");
-                mDispatchNumWeek.setText(weekReport.getDispatchNumWeek() + "");
-                mProcessNumWeek.setText(weekReport.getProcessNumWeek() + "");
-                mWeekTopOnlineRate.setText(weekReport.getTopOnlineRate());
+                List<WeekReport.ContentBean> content = weekReport.getContent();
+                if (content != null) {
+                    if (!mRole.equals("manager")) {
+                        WeekReport.ContentBean contentBean = content.get(0);
+                        mXjNumWeek1.setText(contentBean.getXjNumWeek() + "");
+                        mDispatchNumWeek.setText(contentBean.getDispatchNumWeek() + "");
+                        mProcessNumWeek.setText(contentBean.getProcessNumWeek() + "");
+                        mWeekTopOnlineRate.setText(contentBean.getTopOnlineRate());
+                    } else {
+                        ReportWeekAdapter reportWeekAdapter = new ReportWeekAdapter(content, getApplicationContext());
+                        mLvReport.setAdapter(reportWeekAdapter);
+                        reportWeekAdapter.setOnClickWeek(new ReportWeekAdapter.OnClickWeekListener() {
+                            @Override
+                            public void onClickWeek(WeekReport.ContentBean mOrderBean) {
+                                Intent check=new Intent(getApplicationContext(), WeekReportActivity.class);
+                                check.putExtra("weekbean",mOrderBean);
+                                startActivity(check);
+                            }
+                        });
+
+                    }
+
+                }
+
 
             }
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        showPopWindow1();
-    }
-
-    private void showPopWindow1() {
-        if (mPopupWindow1 == null) {
-            //弹出PopupWindow
-            int width = mEtChose.getWidth();//PopupWindow宽度和编辑框一致
-            int height = DensityUtils.dp2px(this, 180);
-            mPopupWindow1 = new PopupWindow(width, height);
-        }
-        View view = View.inflate(this, R.layout.user_pop_window, null);
-        lv_name = (ListView) view.findViewById(R.id.lv);
-        getUserData();
-        lv_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                xjName = allUsersContent.get(i).getLogin_name();
-                mEtChose.setText(allUsersContent.get(i).getNick_name());
-                mPopupWindow1.dismiss();
-                if (mRbday.isChecked()) {
-                    getDayReport(xjName);
-                }
-                if (mRbWeek.isChecked()) {
-                    getWeekReport(xjName);
-
-                }
-
-            }
-        });
-        //设置PopupWindow里面的View
-        mPopupWindow1.setContentView(view);
-
-
-        //让PopupWindow能够消失
-        mPopupWindow1.setOutsideTouchable(true);
-        mPopupWindow1.setBackgroundDrawable(new ColorDrawable());
-        //弹出mPopupWindow, 在mEdit下显示
-        mPopupWindow1.showAsDropDown(mEtChose);
-    }
-
-    private void getUserData() {
-        Observable<AllUsers> users = ApiWrapper.getInstance().getAllUsers(mToken);
-        addSubscription(users, new Subscriber<AllUsers>() {
-
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(AllUsers allUsers) {
-                allUsersContent = allUsers.getContent();
-                if (allUsersContent.size() != 0) {
-                    lv_name.setAdapter(new AllUserAdapter(allUsersContent, getApplicationContext()));
-                } else {
-                    Toast.makeText(getApplicationContext(), "未能查询到巡检人员", Toast.LENGTH_SHORT).show();
-                }
-
-
-            }
-        });
-
-
-    }
 }

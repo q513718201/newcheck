@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         initFragment();
-        name.setText(SpUtils.getString(this, "username", ""));
+        name.setText(SpUtils.getString(this, "nickname", ""));
 
     }
 

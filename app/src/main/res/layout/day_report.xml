@@ -1,262 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              android:id="@+id/ll_day"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:layout_below="@+id/rl"
-              android:id="@+id/ll_day"
+              android:orientation="vertical"
               android:visibility="gone"
     >
 
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="0.6dp"
-        android:background="#4F4F4F"/>
-
-    <RelativeLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="报表日期："
-            android:textSize="20dp"
-            android:textColor="#ff00dd"
-            />
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.568"
-            android:textSize="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:textColor="#aa00ff"
-            />
+            android:orientation="vertical">
 
-    </RelativeLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
 
-    <View
-        android:layout_marginTop="10dp"
-        android:layout_width="fill_parent"
-        android:layout_height="0.6dp"
-        android:background="#4F4F4F"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="报表日期："
+                    android:textColor="#ff00dd"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:text="0.568"
+                    android:textColor="#aa00ff"
+                    android:textSize="20dp"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="10dp"
+                android:background="#4F4F4F"/>
 
 
-    <RelativeLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="当天第一次签到时间："
-            android:textSize="20dp"
-            android:textColor="#ff00dd"
-            />
-        <TextView
-            android:id="@+id/firstSignin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.568"
-            android:textSize="20dp"
-            android:textColor="#aa00ff"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp">
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="当天第一次签到时间："
+                    android:textColor="#ff00dd"
+                    android:textSize="20dp"
+                    />
 
-    <View
-        android:layout_marginTop="12dp"
-        android:layout_width="fill_parent"
-        android:layout_height="0.6dp"
-        android:background="#4F4F4F"/>
+                <TextView
+                    android:id="@+id/firstSignin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:text="0.568"
+                    android:textColor="#aa00ff"
+                    android:textSize="20dp"
+                    />
 
-    <RelativeLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="当天最后一次签到时间："
-            android:textSize="20dp"
-            android:textColor="#ff00dd"
-            />
-        <TextView
-            android:id="@+id/lastSignin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.568"
-            android:textSize="20dp"
-            android:textColor="#aa00ff"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            />
+            </RelativeLayout>
 
-    </RelativeLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="12dp"
+                android:background="#4F4F4F"/>
 
-    <View
-        android:layout_marginTop="12dp"
-        android:layout_width="fill_parent"
-        android:layout_height="0.6dp"
-        android:background="#4F4F4F"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp">
 
-    <RelativeLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="当天有效巡检量："
-            android:textSize="20dp"
-            android:textColor="#ff00dd"
-            />
-        <TextView
-            android:id="@+id/userful_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.568"
-            android:textSize="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:textColor="#aa00ff"
-            />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="当天最后一次签到时间："
+                    android:textColor="#ff00dd"
+                    android:textSize="20dp"
+                    />
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/lastSignin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:text="0.568"
+                    android:textColor="#aa00ff"
+                    android:textSize="20dp"
+                    />
 
-    <View
-        android:layout_marginTop="12dp"
-        android:layout_width="fill_parent"
-        android:layout_height="0.6dp"
-        android:background="#4F4F4F"/>
-    <RelativeLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="当天派单处理量："
-            android:textSize="20dp"
-            android:textColor="#ff00dd"
-            />
-        <TextView
-            android:id="@+id/order_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.568"
-            android:textSize="20dp"
-            android:textColor="#aa00ff"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            />
+            </RelativeLayout>
 
-    </RelativeLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="12dp"
+                android:background="#4F4F4F"/>
 
-    <View
-        android:layout_marginTop="12dp"
-        android:layout_width="fill_parent"
-        android:layout_height="0.6dp"
-        android:background="#4F4F4F"/>
-    <RelativeLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="最高在线率："
-            android:textSize="20dp"
-            android:textColor="#ff00dd"
-            />
-        <TextView
-            android:id="@+id/topOnline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.568"
-            android:textSize="20dp"
-            android:textColor="#aa00ff"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp"
+                >
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="当天有效巡检量："
+                    android:textColor="#ff00dd"
+                    android:textSize="20dp"
+                    />
 
-    <View
-        android:layout_marginTop="12dp"
-        android:layout_width="fill_parent"
-        android:layout_height="0.6dp"
-        android:background="#4F4F4F"/>
-    <RelativeLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="本周截止目前有效巡检量："
-            android:textSize="20dp"
-            android:textColor="#ff00dd"
-            />
-        <TextView
-            android:id="@+id/xjNumWeek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.568"
-            android:textSize="20dp"
-            android:textColor="#aa00ff"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            />
+                <TextView
+                    android:id="@+id/userful_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:text="0.568"
+                    android:textColor="#aa00ff"
+                    android:textSize="20dp"
+                    />
 
-    </RelativeLayout>
+            </RelativeLayout>
 
-    <View
-        android:layout_marginTop="12dp"
-        android:layout_width="fill_parent"
-        android:layout_height="0.6dp"
-        android:background="#4F4F4F"/>
-    <RelativeLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="本周截止目前派单处理量："
-            android:textSize="20dp"
-            android:textColor="#ff00dd"
-            />
-        <TextView
-            android:id="@+id/processWeek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.568"
-            android:textSize="20dp"
-            android:textColor="#aa00ff"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="12dp"
+                android:background="#4F4F4F"/>
 
-    </RelativeLayout>
-    <View
-        android:layout_marginTop="12dp"
-        android:layout_width="fill_parent"
-        android:layout_height="0.6dp"
-        android:background="#4F4F4F"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="当天派单处理量："
+                    android:textColor="#ff00dd"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/order_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:text="0.568"
+                    android:textColor="#aa00ff"
+                    android:textSize="20dp"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="12dp"
+                android:background="#4F4F4F"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="最高在线率："
+                    android:textColor="#ff00dd"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/topOnline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:text="0.568"
+                    android:textColor="#aa00ff"
+                    android:textSize="20dp"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="12dp"
+                android:background="#4F4F4F"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="本周截止目前有效巡检量："
+                    android:textColor="#ff00dd"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/xjNumWeek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:text="0.568"
+                    android:textColor="#aa00ff"
+                    android:textSize="20dp"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="12dp"
+                android:background="#4F4F4F"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="本周截止目前派单处理量："
+                    android:textColor="#ff00dd"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/processWeek"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:text="0.568"
+                    android:textColor="#aa00ff"
+                    android:textSize="20dp"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:layout_marginTop="12dp"
+                android:background="#4F4F4F"/>
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

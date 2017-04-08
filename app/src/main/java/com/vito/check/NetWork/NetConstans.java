@@ -5,7 +5,7 @@ package com.vito.check.NetWork;
  */
 public class NetConstans {
 
-    public static final int CONNECTTIMEOUT = 20;
-    public static final int READTIMEOUT = 20;
-    public static final int WRITETIMEOUT = 20;
+    public static final int CONNECTTIMEOUT = 30;
+    public static final int READTIMEOUT = 30;
+    public static final int WRITETIMEOUT = 30;
 }

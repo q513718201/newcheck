@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_day"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_below="@+id/rl"
+              android:orientation="vertical"
+    >
+    <include layout="@layout/my_toolbar"></include>
+    <RelativeLayout
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名："
+            android:textSize="20dp"
+            android:textColor="#ff00dd"
+            />
+        <TextView
+            android:id="@+id/tv_weekname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.568"
+            android:textSize="20dp"
+            android:textColor="#aa00ff"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="0.6dp"
+        android:background="#4F4F4F"/>
+    <RelativeLayout
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="本周巡检量："
+            android:textSize="20dp"
+            android:textColor="#ff00dd"
+            />
+        <TextView
+            android:id="@+id/xjNumWeek_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.568"
+            android:textSize="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:textColor="#aa00ff"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_marginTop="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="0.6dp"
+        android:background="#4F4F4F"/>
+
+
+    <RelativeLayout
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="本周接到派单量："
+            android:textSize="20dp"
+            android:textColor="#ff00dd"
+            />
+        <TextView
+            android:id="@+id/dispatchNumWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.568"
+            android:textSize="20dp"
+            android:textColor="#aa00ff"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_marginTop="12dp"
+        android:layout_width="fill_parent"
+        android:layout_height="0.6dp"
+        android:background="#4F4F4F"/>
+
+    <RelativeLayout
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="本周派单处理量："
+            android:textSize="20dp"
+            android:textColor="#ff00dd"
+            />
+        <TextView
+            android:id="@+id/processNumWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.568"
+            android:textSize="20dp"
+            android:textColor="#aa00ff"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_marginTop="12dp"
+        android:layout_width="fill_parent"
+        android:layout_height="0.6dp"
+        android:background="#4F4F4F"/>
+
+    <RelativeLayout
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="本周最高在线率："
+            android:textSize="20dp"
+            android:textColor="#ff00dd"
+            />
+        <TextView
+            android:id="@+id/week_topOnlineRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.568"
+            android:textSize="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:textColor="#aa00ff"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_marginTop="12dp"
+        android:layout_width="fill_parent"
+        android:layout_height="0.6dp"
+        android:background="#4F4F4F"/>
+
+
+</LinearLayout>

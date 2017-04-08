@@ -1,16 +1,14 @@
 package com.vito.check.bean;
 
-
 /**
  * Created by xk on 2017/3/21.
  */
 
 public class SendOrder {
 
-
     /**
-     * content : token fault
-     * success : false
+     * content : 派单转发成功
+     * success : true
      */
 
     private String content;

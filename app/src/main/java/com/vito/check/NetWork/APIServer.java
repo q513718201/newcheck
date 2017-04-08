@@ -43,19 +43,19 @@ public interface APIServer {
     @POST("register.do")
     @FormUrlEncoded
     Observable<Regist> UserRegist(@Field("userName") String username, @Field("nickName") String nickName,
-                            @Field("password") String pwd, @Field("role") String role);
+                                  @Field("password") String pwd, @Field("role") String role);
 
     //获取在线离线设备
     @GET("getDevInfo.do")
-    Observable<Device> getDevices(@Query("token") String token,@Query("isOnline") String isOnline,@Query("xjName") String xjName,@Query("devNo") String devNo);
+    Observable<Device> getDevices(@Query("token") String token, @Query("isOnline") String isOnline, @Query("xjName") String xjName, @Query("devNo") String devNo);
 
     //获取全部设备
     @GET("getDevInfo.do")
-    Observable<Device> getAllDevices(@Query("token")String token,@Query("xjName") String xjName,@Query("devNo") String devNo);
+    Observable<Device> getAllDevices(@Query("token") String token, @Query("xjName") String xjName, @Query("devNo") String devNo);
 
     //获取是否巡检设备
     @GET("getDevInfo.do")
-    Observable<Device> getCheckedDevices(@Query("token") String token, @Query("isChecked") String isChecked,@Query("xjName") String xjName,@Query("devNo") String devNo);
+    Observable<Device> getCheckedDevices(@Query("token") String token, @Query("isChecked") String isChecked, @Query("xjName") String xjName, @Query("devNo") String devNo);
 
     //获取派单设备
     @GET("getDispatchDevInfos.do")
@@ -68,7 +68,7 @@ public interface APIServer {
 
     //查询所有巡检人员信息
     @GET("getUser.do")
-    Observable<AllUsers> getAllUsers(@Query("token")String token);
+    Observable<AllUsers> getAllUsers(@Query("token") String token);
 
 
     //工程部派单
@@ -76,19 +76,18 @@ public interface APIServer {
     @FormUrlEncoded
     Observable<SendOrder> sendOrder(@Field("token") String token, @Field("devNo") String devNo,
                                     @Field("description") String description, @Field("address") String address,
-                                    @Field("phone") String phone , @Field("sendTo") String sendTo);
+                                    @Field("phone") String phone, @Field("sendTo") String sendTo);
 
     //完成工程部派单
     @POST("finishDailyCheckEngineer.do")
     Observable<SendOrder> finishEngineerOrder(@Body RequestBody Body);
 
 
-
     //完成运营部派单
     @POST("finishDispatch.do")
     @Multipart
     Call<String> finishyunyingOrder(@Part("token") String token, @Part("id") String id,
-                                     @Part("processInfo") String processInfo, @PartMap Map<String, RequestBody> params);
+                                    @Part("processInfo") String processInfo, @PartMap Map<String, RequestBody> params);
 
 
     //查看在线率
@@ -97,15 +96,28 @@ public interface APIServer {
 
     //日报表查询
     @GET("getTodayReport.do")
-    Observable<DayReport>  getDayReport(@Query("token") String token, @Query("xjName") String xjName);
+    Observable<DayReport> getDayReport(@Query("token") String token, @Query("xjName") String xjName);
 
     //周报表查询
     @GET("getWeekReport.do")
-    Observable<WeekReport>  getWeekReport(@Query("token") String token, @Query("xjName") String xjName);
+    Observable<WeekReport> getWeekReport(@Query("token") String token, @Query("xjName") String xjName);
 
     //修改设备地址
     @GET("updateDevPosition.do")
-    Observable<AddressModify>  addressModify(@Query("token") String token,@Query("devNo") String devNo,
-                                             @Query("lat") double lat,@Query("lng") double lng,
-                                             @Query("address") String address );
+    Observable<AddressModify> addressModify(@Query("token") String token, @Query("devNo") String devNo,
+                                            @Query("lat") double lat, @Query("lng") double lng,
+                                            @Query("address") String address);
+
+    //日常巡检上传
+    @POST("addDailyCheck.do")
+    @FormUrlEncoded
+    Observable<SendOrder> addDailyCheck(@Field("token") String token, @Field("devNo") String devNo,
+                                        @Field("safeLeve") String safeLeve, @Field("inoutDoor") String inoutDoor,
+                                        @Field("awning") String awning, @Field("outLook") String outLook,
+                                        @Field("screen") String screen, @Field("touchScreen") String touchScreen,
+                                        @Field("netStat") String netStat, @Field("updateResult") String updateResult,
+                                        @Field("softwareVersion") String softwareVersion, @Field("payResult") String payResult,
+                                        @Field("nonCardReader") String nonCardReader, @Field("unionPayCardReader") String unionPayCardReader,
+                                        @Field("gasCardReader") String gasCardReader, @Field("keyPad") String keyPad,
+                                        @Field("printer") String printer, @Field("coinReader") String coinReader);
 }

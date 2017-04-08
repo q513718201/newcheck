@@ -1,5 +1,8 @@
 package com.vito.check.bean;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * Created by xk on 2017/3/29.
  */
@@ -7,77 +10,92 @@ package com.vito.check.bean;
 public class WeekReport {
 
     /**
-     * id : null
-     * nickName : 王彦锋
-     * xjNumWeek : 43
-     * dispatchNumWeek : 0
-     * processNumWeek : 0
-     * topOnlineRate : 34.35%
+     * content : [{"id":null,"nickName":"陈浴","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"0.00"},{"id":null,"nickName":"雍福平","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"31.76%"},{"id":null,"nickName":"蔺伟东","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"32.62%"},{"id":null,"nickName":"王彦锋","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"29.97%"},{"id":null,"nickName":"梁耀安","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"28.10%"},{"id":null,"nickName":"陈智俊","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"0.00"},{"id":null,"nickName":"赵生录","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"40.21%"},{"id":null,"nickName":"刘洋","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"0.00"},{"id":null,"nickName":"陈轩","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"0.00"},{"id":null,"nickName":"史豪杰","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"34.85%"},{"id":null,"nickName":"赵国锋","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"32.59%"},{"id":null,"nickName":"陈海龙","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"0.00"},{"id":null,"nickName":"柴长进","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"11.96%"},{"id":null,"nickName":"刘兵","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"0.00"},{"id":null,"nickName":"李建强","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"0.00"},{"id":null,"nickName":"孙建刚","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"0.00"},{"id":null,"nickName":"林耀强","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"29.19%"},{"id":null,"nickName":"陈沐","xjNumWeek":0,"dispatchNumWeek":0,"processNumWeek":0,"topOnlineRate":"0.00"}]
+     * success : true
      */
 
-    private Object id;
-    private String nickName;
-    private int xjNumWeek;
-    private int dispatchNumWeek;
-    private int processNumWeek;
-    private String topOnlineRate;
-    @Override
-    public String toString() {
-        return "WeekReport{" +
-                "id=" + id +
-                ", nickName='" + nickName + '\'' +
-                ", xjNumWeek=" + xjNumWeek +
-                ", dispatchNumWeek=" + dispatchNumWeek +
-                ", processNumWeek=" + processNumWeek +
-                ", topOnlineRate='" + topOnlineRate + '\'' +
-                '}';
+    private boolean success;
+    private List<ContentBean> content;
+
+    public boolean isSuccess() {
+        return success;
     }
 
-    public Object getId() {
-        return id;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
-    public void setId(Object id) {
-        this.id = id;
+    public List<ContentBean> getContent() {
+        return content;
     }
 
-    public String getNickName() {
-        return nickName;
+    public void setContent(List<ContentBean> content) {
+        this.content = content;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
+    public static class ContentBean implements Serializable{
+        /**
+         * id : null
+         * nickName : 陈浴
+         * xjNumWeek : 0
+         * dispatchNumWeek : 0
+         * processNumWeek : 0
+         * topOnlineRate : 0.00
+         */
 
-    public int getXjNumWeek() {
-        return xjNumWeek;
-    }
+        private int id;
+        private String nickName;
+        private int xjNumWeek;
+        private int dispatchNumWeek;
+        private int processNumWeek;
+        private String topOnlineRate;
 
-    public void setXjNumWeek(int xjNumWeek) {
-        this.xjNumWeek = xjNumWeek;
-    }
+        public int getId() {
+            return id;
+        }
 
-    public int getDispatchNumWeek() {
-        return dispatchNumWeek;
-    }
+        public void setId(int id) {
+            this.id = id;
+        }
 
-    public void setDispatchNumWeek(int dispatchNumWeek) {
-        this.dispatchNumWeek = dispatchNumWeek;
-    }
+        public String getNickName() {
+            return nickName;
+        }
 
-    public int getProcessNumWeek() {
-        return processNumWeek;
-    }
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
 
-    public void setProcessNumWeek(int processNumWeek) {
-        this.processNumWeek = processNumWeek;
-    }
+        public int getXjNumWeek() {
+            return xjNumWeek;
+        }
 
-    public String getTopOnlineRate() {
-        return topOnlineRate;
-    }
+        public void setXjNumWeek(int xjNumWeek) {
+            this.xjNumWeek = xjNumWeek;
+        }
 
-    public void setTopOnlineRate(String topOnlineRate) {
-        this.topOnlineRate = topOnlineRate;
+        public int getDispatchNumWeek() {
+            return dispatchNumWeek;
+        }
+
+        public void setDispatchNumWeek(int dispatchNumWeek) {
+            this.dispatchNumWeek = dispatchNumWeek;
+        }
+
+        public int getProcessNumWeek() {
+            return processNumWeek;
+        }
+
+        public void setProcessNumWeek(int processNumWeek) {
+            this.processNumWeek = processNumWeek;
+        }
+
+        public String getTopOnlineRate() {
+            return topOnlineRate;
+        }
+
+        public void setTopOnlineRate(String topOnlineRate) {
+            this.topOnlineRate = topOnlineRate;
+        }
     }
 }

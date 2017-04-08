@@ -6,7 +6,7 @@
                 android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/rl"
+        android:id="@+id/rl_chose_device"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp">
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="12dp"
-        android:layout_toRightOf="@id/rl">
+        android:layout_toRightOf="@id/rl_chose_device">
 
         <TextView
             android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
         android:id="@+id/view"
         android:layout_width="fill_parent"
         android:layout_height="0.6dp"
-        android:layout_below="@+id/rl"
+        android:layout_below="@+id/rl_chose_device"
         android:background="#e3e3e3"/>
 
 
@@ -140,23 +140,39 @@
     <ImageView
         android:clickable="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/view"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/locaton_my"
         android:textColor="@color/colorAccent"
         />
-
-    <CheckBox
-      android:id="@+id/cb"
+    <ImageView
+        android:clickable="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
-        android:text="是否显示设备查询"
-      android:textColor="#b923ff"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="80dp"
+        android:id="@+id/isshowquery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/right"
+        android:textColor="@color/colorAccent"
+        />
+    <ImageView
+        android:clickable="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="80dp"
+        android:id="@+id/isshowchose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/left"
+        android:textColor="@color/colorAccent"
+        android:visibility="gone"
         />
 
     <LinearLayout

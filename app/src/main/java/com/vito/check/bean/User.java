@@ -6,15 +6,27 @@ package com.vito.check.bean;
 
 public class User {
 
-
     /**
-     * content : baijw-2a3233b0-1cd5-4510-8400-c1b1706ce9ee
+     * content : xj003-d8fe8e11-de05-4d5d-9174-dcf6499c3a4f
+     * role : xj
+     * branch : 工程部
+     * nickName : 蔺伟东
      * success : true
      */
 
     private String content;
-    private boolean success;
     private String role;
+    private String branch;
+    private String nickName;
+    private boolean success;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public String getRole() {
         return role;
@@ -24,12 +36,20 @@ public class User {
         this.role = role;
     }
 
-    public String getContent() {
-        return content;
+    public String getBranch() {
+        return branch;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public boolean isSuccess() {

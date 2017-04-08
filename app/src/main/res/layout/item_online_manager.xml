@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.6dp"
+        android:background="#4F4F4F"/>
+<LinearLayout
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginBottom="10dp"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.68"
+        android:text="张三"
+        android:textColor="#ff00e5"
+        android:textSize="25sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_nowrate"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="48%"
+        android:textColor="#ff00e5"
+        android:textSize="25sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_toprate"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="55.7%"
+        android:textColor="#ff00e5"
+        android:textSize="25sp"
+        />
+</LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="0.6dp"
+        android:background="#4F4F4F"/>
+</LinearLayout>

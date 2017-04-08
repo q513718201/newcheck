@@ -56,8 +56,6 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
     TextView mTvDescTitle;
     @BindView(R.id.et_chose)
     EditText mEtChose;
-    @BindView(R.id.arrow1)
-    ImageView mArrow1;
     @BindView(R.id.tv_phone)
     TextView mTvPhone;
     @BindView(R.id.ll_progress)
@@ -80,7 +78,7 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
         }
 
         mLoginBtn.setOnClickListener(this);
-        mArrow1.setOnClickListener(this);
+        mEtChose.setOnClickListener(this);
     }
 
     private void init() {
@@ -145,7 +143,7 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
                 });
                 break;
 
-            case R.id.arrow1:
+            case R.id.et_chose:
                 showPopWindow1();
                 break;
         }
@@ -205,11 +203,7 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
                 } else {
                     Toast.makeText(getApplicationContext(), "未能查询到巡检人员", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
-
-
     }
 }
