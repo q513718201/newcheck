@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:clickable="true"
         android:id="@+id/all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,6 +15,7 @@
         android:textSize="20dp" />
 
     <TextView
+        android:clickable="true"
         android:id="@+id/not_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,6 +24,7 @@
         android:textSize="20dp" />
 
     <TextView
+        android:clickable="true"
         android:id="@+id/yes_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,6 +33,7 @@
         android:textSize="20dp" />
 
     <TextView
+        android:clickable="true"
         android:id="@+id/online"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

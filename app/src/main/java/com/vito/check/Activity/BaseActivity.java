@@ -27,7 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity  {
     public Toolbar mToolbar;
     private CompositeSubscription mCompositeSubscription;
     public TextView mTv_toolbar;
-    public TextView name;
+    public TextView nick_name;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity  {
         ButterKnife.bind(this);
         mToolbar= (Toolbar) findViewById(R.id.tl_toolbar);
         mTv_toolbar = (TextView)findViewById(R.id.tv_toolbar);
-        name = (TextView)findViewById(R.id.name);
+        nick_name = (TextView)findViewById(R.id.nick_name);
     }
 
     public abstract int getLayout() ;

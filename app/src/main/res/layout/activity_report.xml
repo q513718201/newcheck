@@ -9,10 +9,10 @@
     <include layout="@layout/my_toolbar"></include>
 
     <RelativeLayout
-        android:id="@+id/rl"
+        android:id="@+id/rl_report"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@+id/tl_toolbar"
+        android:layout_below="@+id/rl_toolbar"
         android:background="@color/blue"
         >
 

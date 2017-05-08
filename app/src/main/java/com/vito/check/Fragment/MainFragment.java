@@ -56,12 +56,12 @@ public class MainFragment extends Fragment implements RadioGroup.OnCheckedChange
 
     private void init() {
         mMessage.setNotificationNumber(0);
-        mRg.check(R.id.device);
+        mDevice.setChecked(true);
         //replace(new BaiduDeviceFragment());
-        mBaiduDeviceFragment=new BaiduDeviceFragment();
+        mBaiduDeviceFragment = new BaiduDeviceFragment();
         mTransaction.add(R.id.rl_content, mBaiduDeviceFragment).commit();
-        firstFragment=mBaiduDeviceFragment;
-        mActivity.setToolBarTittle("设备状态");
+        firstFragment = mBaiduDeviceFragment;
+        mActivity.setToolBarTittle("设备监控");
         mRg.setOnCheckedChangeListener(this);
     }
 
@@ -77,33 +77,34 @@ public class MainFragment extends Fragment implements RadioGroup.OnCheckedChange
         switch (checkedId) {
             case R.id.message:
 
-                mRg.check(R.id.message);
-                if(mMessageFragment==null){
+                mMessage.setChecked(true);
+
+                if (mMessageFragment == null) {
                     mMessageFragment = new MessageFragment();
                 }
-                switchContent(firstFragment,mMessageFragment);
-               // replace(new MessageFragment());
-                firstFragment=mMessageFragment;
+                switchContent(firstFragment, mMessageFragment);
+                // replace(new MessageFragment());
+                firstFragment = mMessageFragment;
                 mActivity.setToolBarTittle("消息");
                 break;
             case R.id.device:
-                mRg.check(R.id.device);
-                if(mBaiduDeviceFragment==null){
+                mDevice.setChecked(true);
+                if (mBaiduDeviceFragment == null) {
                     mBaiduDeviceFragment = new BaiduDeviceFragment();
                 }
 
-                switchContent(firstFragment,mBaiduDeviceFragment);
+                switchContent(firstFragment, mBaiduDeviceFragment);
                 // replace(new BaiduDeviceFragment());
-                firstFragment=mBaiduDeviceFragment;
-                mActivity.setToolBarTittle("设备状态");
+                firstFragment = mBaiduDeviceFragment;
+                mActivity.setToolBarTittle("设备监控");
                 break;
             case R.id.work:
-                mRg.check(R.id.work);
-                if(mWorkFragment==null){
+                mWork.setChecked(true);
+                if (mWorkFragment == null) {
                     mWorkFragment = new WorkFragment();
                 }
-                switchContent(firstFragment,mWorkFragment);
-                firstFragment=mWorkFragment;
+                switchContent(firstFragment, mWorkFragment);
+                firstFragment = mWorkFragment;
                 mActivity.setToolBarTittle("工作");
                 // replace(new WorkFragment());
                 break;
@@ -111,9 +112,9 @@ public class MainFragment extends Fragment implements RadioGroup.OnCheckedChange
         }
     }
 
-     public void  show(){
-             mMessage.setNotificationNumber(1);
-     }
+    public void show() {
+        mMessage.setNotificationNumber(1);
+    }
 
     public void switchContent(Fragment from, Fragment to) {
         mFragmentTransaction = mActivity.getSupportFragmentManager().beginTransaction();
@@ -126,7 +127,6 @@ public class MainFragment extends Fragment implements RadioGroup.OnCheckedChange
         }
 
     }
-
 
 
 }

@@ -135,7 +135,7 @@ public class BaiduActivity extends BaseActivity {
 
             mOoD = new MarkerOptions().position(mList.get(i));
 
-            if (content.get(i).getOnline().equals("1")) {
+            if (content.get(i).getOnline()) {
                 mOoD.icon(BitmapDescriptorFactory
                         .fromResource(R.drawable.mark_blue));
             } else {

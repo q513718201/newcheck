@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#792a6d"
+              android:orientation="vertical">
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:id="@+id/xunjianzhengchang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="设备正常"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:id="@+id/yichuli"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="故障已处理"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/weichuli"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="故障未处理"
+        android:textSize="20dp"/>
+    <TextView
+        android:id="@+id/xietiao"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="需市场部协调"
+        android:textSize="20dp"/>
+
+
+</LinearLayout>

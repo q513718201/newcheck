@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#792a6d"
+              android:orientation="vertical">
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:id="@+id/zidonggengxin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="自动更新"
+        android:textSize="20dp"/>
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:id="@+id/shoudonggengxin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="手动更新"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/shibai"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="更新失败"
+        android:textSize="20dp"/>
+
+
+</LinearLayout>

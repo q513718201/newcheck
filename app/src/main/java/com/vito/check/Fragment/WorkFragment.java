@@ -17,8 +17,9 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.vito.check.Activity.BackOrderActivity;
 import com.vito.check.Activity.DeviceCheckActivity;
-import com.vito.check.Activity.FinishOrderActivity;
+
 import com.vito.check.Activity.LoginActivity;
 import com.vito.check.Activity.OnlineActivity;
 import com.vito.check.Activity.ReportActivity;
@@ -77,7 +78,7 @@ public class WorkFragment extends Fragment {
                         startActivity(SendOrderActivity.class);
                         break;
                     case 2:
-                        startActivity(OnlineActivity.class);
+                        startActivity(BackOrderActivity.class);
                         break;
                     case 3:
                         startActivity(DeviceCheckActivity.class);
@@ -86,7 +87,7 @@ public class WorkFragment extends Fragment {
                         startActivity(ReportActivity.class);
                         break;
                     case 6:
-                      //  startActivity(FinishOrderActivity.class);
+                        startActivity(OnlineActivity.class);
                         break;
                     case 8:
                         dialog();

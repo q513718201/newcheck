@@ -1,5 +1,6 @@
 package com.vito.check.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class Device {
         this.content = content;
     }
 
-    public static class ContentBean {
+    public static class ContentBean implements Serializable{
         /**
          * id : fc2cdfa4a61a11e6a0c8286ed488c66d
          * t_id : LZD0061
@@ -64,7 +65,7 @@ public class Device {
         private String key_t_id;
         private double lat;
         private double lng;
-        private String online;
+        private boolean online;
         private String exc_state;
         private String group_id;
         private String del_falg;
@@ -171,11 +172,11 @@ public class Device {
         }
 
 
-        public String getOnline() {
+        public boolean getOnline() {
             return online;
         }
 
-        public void setOnline(String online) {
+        public void setOnline(boolean online) {
             this.online = online;
         }
 

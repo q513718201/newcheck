@@ -14,7 +14,7 @@ import butterknife.BindView;
  */
 public class DayReportActivity extends BaseActivity {
 
-    @BindView(R.id.date)
+    @BindView(R.id.dat_report_date)
     TextView mDate;
     @BindView(R.id.firstSignin)
     TextView mFirstSignin;

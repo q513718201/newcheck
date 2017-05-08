@@ -13,6 +13,7 @@ import com.vito.check.Activity.DeviceCheckActivity;
 import com.vito.check.Activity.SendOrderActivity;
 import com.vito.check.R;
 import com.vito.check.bean.AllUsers;
+import com.vito.check.bean.DayReport;
 import com.vito.check.bean.MyOrder;
 
 import java.util.List;
@@ -25,15 +26,15 @@ public class AllUserAdapter extends BaseAdapter {
     private Context context;
 
     public AllUserAdapter(List<AllUsers.ContentBean> content, Context context) {
-        this.content=content;
-        this.context=context;
+        this.content = content;
+        this.context = context;
     }
 
     @Override
     public int getCount() {
-        if(content.size()!=0){
+        if (content.size() != 0) {
             return content.size();
-        }else{
+        } else {
             return 0;
         }
 
@@ -50,14 +51,14 @@ public class AllUserAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
 
-        ViewHolder holder ;
+        ViewHolder holder;
         if (convertView == null) {
-            convertView = View.inflate(context,R.layout.item_alluser, null);
+            convertView = View.inflate(context, R.layout.item_alluser, null);
             holder = new ViewHolder();
-            holder.tv_name= (TextView) convertView.findViewById(R.id.tv_name);
+            holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -65,13 +66,32 @@ public class AllUserAdapter extends BaseAdapter {
         }
         holder.tv_name.setText(content.get(position).getNick_name());
 
+        holder.tv_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener!=null) {
+                    listener.onClickUser(content.get(position));
+                }
+            }
+        });
 
         return convertView;
     }
 
 
-
     public class ViewHolder {
         public TextView tv_name;
     }
+
+    private OnClickUserListener listener;
+
+    public void setOnClickDay(OnClickUserListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnClickUserListener {
+        void onClickUser(AllUsers.ContentBean bean);
+    }
+
+
 }

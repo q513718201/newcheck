@@ -66,7 +66,7 @@ public class ReportDayAdapter extends BaseAdapter  {
 
         }
         holder.tv_name.setText(content.get(position).getNickName());
-        holder.tv_userful_num.setText("巡检量:" + content.get(position).getXjNumToday());
+        holder.tv_userful_num.setText("有效巡检量:" + content.get(position).getXjNumToday());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -68,7 +68,7 @@ public class ReportWeekAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.tv_name.setText(content.get(position).getNickName());
-        holder.tv_userful_num.setText("巡检量:"+content.get(position).getXjNumWeek() );
+        holder.tv_userful_num.setText("有效巡检量:"+content.get(position).getXjNumWeek() );
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

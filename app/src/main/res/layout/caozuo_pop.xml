@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#792a6d"
+              android:orientation="vertical">
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:id="@+id/wei32"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="32位Windows7"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:id="@+id/wei64"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="64位Windows7"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/android"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="安卓"
+        android:textSize="20dp"/>
+
+
+</LinearLayout>

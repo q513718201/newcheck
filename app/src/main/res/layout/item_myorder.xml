@@ -61,6 +61,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tv_branch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="派单部门：工程部"
+            android:textSize="20dp"
+            android:textColor="#bb00ff"
+            />
+        <TextView
             android:id="@+id/tv_orderno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

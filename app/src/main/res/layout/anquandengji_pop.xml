@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#792a6d"
+              android:orientation="vertical">
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:id="@+id/anquan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="安全"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:id="@+id/yiban"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="一般"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/weixian"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="危险"
+        android:textSize="20dp"/>
+    <TextView
+        android:id="@+id/gaowei"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="高危"
+        android:textSize="20dp"/>
+
+
+</LinearLayout>

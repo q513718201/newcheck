@@ -12,15 +12,14 @@ public class DataServer {
 
     public static List<WorkSelect> getSampleData() {
         List<WorkSelect> list = new ArrayList<>();
-        list.add(new WorkSelect(true, "巡检", false));
-        list.add(new WorkSelect(new WorkContent("派单")));
-        list.add(new WorkSelect(new WorkContent("在线率查询")));
+        list.add(new WorkSelect(true, "工作管理", false));
+        list.add(new WorkSelect(new WorkContent("我的派单")));
+        list.add(new WorkSelect(new WorkContent("派单查询")));
         list.add(new WorkSelect(new WorkContent("日常巡检")));
 
-        list.add(new WorkSelect(true, "管理", false));
-        list.add(new WorkSelect(new WorkContent("报表")));
-        list.add(new WorkSelect(new WorkContent("考核")));
-
+        list.add(new WorkSelect(true, "统计分析", false));
+        list.add(new WorkSelect(new WorkContent("报表统计")));
+        list.add(new WorkSelect(new WorkContent("在线率查询")));
         list.add(new WorkSelect(true, "账户", false));
         list.add(new WorkSelect(new WorkContent("注销登录")));
 

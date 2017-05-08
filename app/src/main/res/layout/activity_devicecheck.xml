@@ -3,12 +3,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ffffff"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:id="@+id/main"
+
                 android:orientation="vertical">
 
     <include layout="@layout/my_toolbar"></include>
 
     <ScrollView
-        android:layout_below="@+id/tl_toolbar"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/scroll"
+        android:layout_below="@+id/rl_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -18,460 +25,1055 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ll1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="设备号:"
+                    android:text="设备编号:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
                 <EditText
-                    android:id="@+id/et1"
-                    android:layout_width="200dp"
+                    android:id="@+id/deviceno"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
+                    android:background="@null"
+                    android:hint="请输入设备号"
                     android:textSize="14sp"/>
             </LinearLayout>
-
+            <View
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
             <LinearLayout
-                android:id="@+id/ll2"
+                android:clickable="true"
+                android:id="@+id/ll_xunjianjieguo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll1"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:id="@+id/tv_address"
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="安全等级:"
+                    android:layout_gravity="center_vertical"
+                    android:text="巡检结果:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et2"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/tv_result"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/tv_result"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
 
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
             <LinearLayout
-                android:id="@+id/ll3"
+                android:clickable="true"
+                android:id="@+id/ll_shineiwai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll2"
+                android:layout_below="@+id/ll1"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:text="室内外:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et3"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/tv_shineiwai"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/tv_shineiwai"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
+
+                </RelativeLayout>
             </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
 
             <LinearLayout
-                android:id="@+id/ll4"
+                android:clickable="true"
+                android:id="@+id/ll_safe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll3"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:text="安全等级:"
+                    android:textColor="@color/base_gray"
+                    android:textSize="18sp"/>
+
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/tv_safe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/tv_safe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
+            <LinearLayout
+                android:clickable="true"
+                android:id="@+id/ll_zhijia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/base_gray">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="是否有支架:"
+                    android:textColor="@color/base_gray"
+                    android:textSize="18sp"/>
+
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/zhijia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/zhijia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
+            <LinearLayout
+                android:clickable="true"
+                android:id="@+id/ll_shifouyouxupeng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/base_gray">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="是否有雨棚:"
+                    android:textColor="@color/base_gray"
+                    android:textSize="18sp"/>
+
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/shifouyouyupeng"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/shifouyouyupeng"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
+            <LinearLayout
+                android:clickable="true"
+                android:id="@+id/ll_xujiaxupeng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/base_gray">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:text="需加雨棚:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et14"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/xujiaxupeng"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/xujiaxupeng"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
+
+                </RelativeLayout>
             </LinearLayout>
-
-
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
             <LinearLayout
-                android:id="@+id/ll5"
+                android:clickable="true"
+                android:id="@+id/ll_caozuo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll4"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:text="操作系统:"
+                    android:textColor="@color/base_gray"
+                    android:textSize="18sp"/>
+
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/caozuoxitong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/caozuoxitong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
+            <LinearLayout
+                android:clickable="true"
+                android:id="@+id/ll_neicun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/base_gray">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="内存容量:"
+                    android:textColor="@color/base_gray"
+                    android:textSize="18sp"/>
+
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/neicun"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/neicun"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
+
+            <LinearLayout
+                android:clickable="true"
+                android:id="@+id/ll_waixing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/base_gray">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:text="机体外观:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et5"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/waixing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/waixing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
 
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
             <LinearLayout
-                android:id="@+id/ll6"
+                android:clickable="true"
+                android:id="@+id/ll_xianshiping"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll5"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:text="显示屏:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et6"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/xianshiping"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/xianshiping"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
 
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
             <LinearLayout
-                android:id="@+id/ll7"
+                android:clickable="true"
+                android:id="@+id/ll_chumoping"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll6"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:text="触摸屏:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et7"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/chumoping"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/chumoping"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
 
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
             <LinearLayout
-                android:id="@+id/ll8"
+                android:clickable="true"
+                android:id="@+id/ll_wangluo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll7"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:text="网络状况:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et8"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/wangluo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/wangluo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
 
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
             <LinearLayout
-                android:id="@+id/ll9"
+                android:clickable="true"
+                android:id="@+id/ll_gengxin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll8"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="更新状况:"
+                    android:layout_gravity="center_vertical"
+                    android:text="更新结果:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et9"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/gengxin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/gengxin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
 
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
             <LinearLayout
-                android:id="@+id/ll10"
+                android:clickable="true"
+                android:id="@+id/ll_banben"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll9"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:text="软件版本:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
                 <EditText
-                    android:id="@+id/et10"
+                    android:id="@+id/banbenhao"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
+                    android:background="@null"
+                    android:hint="请输入版本号"
                     android:textSize="14sp"/>
             </LinearLayout>
-
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
             <LinearLayout
-                android:id="@+id/ll11"
+                android:clickable="true"
+                android:id="@+id/ll_jiaofei"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll10"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:text="缴费结果:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et11"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/jiaofei"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/jiaofei"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
 
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
             <LinearLayout
-                android:id="@+id/ll12"
+                android:clickable="true"
+                android:id="@+id/ll_yinlian"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll11"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:text="银联读卡器:"
+                    android:textColor="@color/base_gray"
+                    android:textSize="18sp"/>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/yinlian"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/yinlian"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
+            <LinearLayout
+
+                android:clickable="true"
+                android:id="@+id/ll_feijiechouduka"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/base_gray">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:text="非接读卡器:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et12"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/feijiechuduka"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/feijiechuduka"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
+
+                </RelativeLayout>
             </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
 
             <LinearLayout
-                android:id="@+id/ll13"
+                android:clickable="true"
+                android:id="@+id/ll_ranqi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll12"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="银联读卡器:"
+                    android:layout_gravity="center_vertical"
+                    android:text="燃气读卡器:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et13"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/ranqi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/ranqi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
 
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
             <LinearLayout
-                android:id="@+id/ll14"
+                android:clickable="true"
+                android:id="@+id/ll_dayinji"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll13"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="燃气读卡:"
-                    android:textColor="@color/base_gray"
-                    android:textSize="18sp"/>
-
-                <EditText
-                    android:id="@+id/et4"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll15"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll14"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/base_gray">
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="密码键盘:"
-                    android:textColor="@color/base_gray"
-                    android:textSize="18sp"/>
-
-                <EditText
-                    android:id="@+id/et15"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll15"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/base_gray">
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
                     android:text="凭条打印机:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et16"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/dayinji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/dayinji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
 
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
             <LinearLayout
-                android:id="@+id/ll17"
+                android:clickable="true"
+                android:id="@+id/ll_mima"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll16"
                 android:layout_marginStart="35dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/base_gray">
 
                 <TextView
-                    android:layout_width="100dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="识币器:"
+                    android:layout_gravity="center_vertical"
+                    android:text="密码键盘:"
                     android:textColor="@color/base_gray"
                     android:textSize="18sp"/>
 
-                <EditText
-                    android:id="@+id/et17"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:background="@drawable/et_normal"
-                    android:textSize="14sp"/>
-            </LinearLayout>
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/mima"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/mima"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
 
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
+            <LinearLayout
+                android:clickable="true"
+                android:id="@+id/ll_shibiqi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/base_gray">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="拾币器:"
+                    android:textColor="@color/base_gray"
+                    android:textSize="18sp"/>
+
+                <RelativeLayout
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/shibiqi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请选择(必填)"
+                        android:textSize="18sp"
+                        android:layout_marginRight="10dp"
+                        />
+                    <ImageView
+                        android:layout_toRightOf="@+id/shibiqi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/common_btn_more"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="fill_parent"
+                android:layout_height="0.6dp"
+                android:background="#4F4F4F"/>
+            <Button
+                android:id="@+id/login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/button_selector"
+                android:onClick="click"
+                android:text="提交"
+                android:textColor="#ffffff"
+                android:textSize="20sp"/>
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/login_btn"
-        android:layout_width="100dp"
+    <LinearLayout
+        android:id="@+id/ll_progress"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/button_selector"
-        android:onClick="click"
-        android:text="提交"
-        android:textColor="#ffffff"
-        android:textSize="20sp"/>
+        android:layout_centerInParent="true"
+        android:background="@drawable/loading_normal"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                    android:id="@+id/progress"
+                                                    style="@style/SpinKitView.Circle"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="5dp"
+                                                    app:SpinKit_Color="@color/colorAccent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="正在查询中..."
+            android:textColor="@color/colorAccent" />
+
+
+    </LinearLayout>
 
 </RelativeLayout>

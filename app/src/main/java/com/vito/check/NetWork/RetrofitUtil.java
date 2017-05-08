@@ -29,7 +29,6 @@ public class RetrofitUtil {
                 .readTimeout(NetConstans.READTIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(NetConstans.WRITETIMEOUT, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true);
-
         okHttpClient = mOkHttpBuilder.build();
 
     }

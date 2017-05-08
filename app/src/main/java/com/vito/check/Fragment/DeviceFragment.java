@@ -115,7 +115,6 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_device, container, false);
         ButterKnife.bind(this, view);
-        mActivity.setToolBarTittle("设备状态");
         mapView = (MapView) view.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         init();
@@ -324,7 +323,7 @@ public class DeviceFragment extends Fragment implements View.OnClickListener, AM
                     .position(mList.get(i))
                     .draggable(true)
                     .title(content.get(i).getT_id()).snippet(b.getContent().get(i).getDescription());
-            if (content.get(i).getOnline().equals("0")) {
+            if (content.get(i).getOnline()) {
                 markerOption.icon(BitmapDescriptorFactory
                         .defaultMarker(BitmapDescriptorFactory.HUE_RED));
             } else {

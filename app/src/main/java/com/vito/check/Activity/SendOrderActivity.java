@@ -4,15 +4,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +18,8 @@ import com.vito.check.Adapter.AllUserAdapter;
 import com.vito.check.NetWork.ApiWrapper;
 import com.vito.check.R;
 import com.vito.check.bean.AllUsers;
-import com.vito.check.bean.MyOrder;
 import com.vito.check.bean.SendOrder;
+import com.vito.check.bean.YunyingOrder;
 import com.vito.check.util.DensityUtils;
 import com.vito.check.util.SpUtils;
 
@@ -44,46 +42,74 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
     EditText mTvAddress;
     @BindView(R.id.tv_desc)
     EditText mTvDesc;
+
     @BindView(R.id.login_btn)
     Button mLoginBtn;
-    @BindView(R.id.et_phone)
+
+    @BindView(R.id.tv_phone)
     EditText etPhone;
-    @BindView(R.id.rl_phone)
-    RelativeLayout mRlPhone;
-    @BindView(R.id.tv_address1)
-    TextView mTvAddress1;
-    @BindView(R.id.tv_desc_title)
-    TextView mTvDescTitle;
+
     @BindView(R.id.et_chose)
     EditText mEtChose;
-    @BindView(R.id.tv_phone)
-    TextView mTvPhone;
+
     @BindView(R.id.ll_progress)
     LinearLayout mLlProgress;
-    private MyOrder.ContentBean mOrderBean;
+    @BindView(R.id.et_type)
+    LinearLayout mEtType;
+
+    @BindView(R.id.tv_type)
+    TextView mTvType;
+
+    @BindView(R.id.et_chengdu)
+    LinearLayout mEtChengdu;
+    @BindView(R.id.tv_chengdu)
+    TextView mTvChengdu;
+
+    @BindView(R.id.et_time)
+    LinearLayout mEtTime;
+    @BindView(R.id.tv_time)
+    TextView mTvTime;
+
+
+    @BindView(R.id.et_usermsg)
+    EditText mEtUsermsg;
+
+
+    private YunyingOrder.ContentBean mOrderBean;
     private String mToken;
     private PopupWindow mPopupWindow1;
+    private PopupWindow mPopupWindow;
+    private PopupWindow mPopupWindow2;
+    private PopupWindow mPopupWindow3;
+
+
     private List<AllUsers.ContentBean> allUsersContent;
     private ListView lv_name;
-    private String XjName = "";
+    private String xjName = "";
+    private AllUserAdapter mAllUserAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("派单", true);
         mToken = SpUtils.getString(this, "token", "");
-        mOrderBean = (MyOrder.ContentBean) getIntent().getSerializableExtra("orderBean");
+        mOrderBean = (YunyingOrder.ContentBean) getIntent().getSerializableExtra("orderBean");
         if (mOrderBean != null) {
             init();
         }
 
+
         mLoginBtn.setOnClickListener(this);
         mEtChose.setOnClickListener(this);
+        mEtType.setOnClickListener(this);
+        mEtChengdu.setOnClickListener(this);
+        mEtTime.setOnClickListener(this);
+
     }
 
     private void init() {
         mTvDeviceNo.setText(mOrderBean.getDevNo());
-        mTvAddress.setText(mOrderBean.getAddress());
+        mTvAddress.setText(mOrderBean.getDevAddress());
         mTvDesc.setText(mOrderBean.getDescription());
 
 
@@ -105,16 +131,24 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
                 String Desc = mTvDesc.getText().toString();
                 String phone = etPhone.getText().toString();
                 String SendTo = mEtChose.getText().toString();
-                if (TextUtils.isEmpty(phone)) {
-                    Toast.makeText(getApplicationContext(), "手机号不能为空", Toast.LENGTH_SHORT).show();
+                String faultType = mTvType.getText().toString();
+                String chengdu = mTvChengdu.getText().toString();
+                String time = mTvTime.getText().toString();
+                String usermsg = mEtUsermsg.getText().toString();
+
+                if (TextUtils.isEmpty(SendTo)||TextUtils.isEmpty(phone)
+                        ||TextUtils.isEmpty(DeviceNo)||TextUtils.isEmpty(Desc)||TextUtils.isEmpty(chengdu)||TextUtils.isEmpty(usermsg)
+                        ||TextUtils.isEmpty(Address)||TextUtils.isEmpty(faultType)||TextUtils.isEmpty(time)
+
+                        ) {
+                    Toast.makeText(getApplicationContext(), "信息不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (TextUtils.isEmpty(SendTo)) {
-                    Toast.makeText(getApplicationContext(), "派发人不能为空", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                 mLlProgress.setVisibility(View.VISIBLE);
-                Observable<SendOrder> obsevable = ApiWrapper.getInstance().sendOrder(mToken, DeviceNo, Desc, Address, phone, XjName);
+                mLlProgress.setVisibility(View.VISIBLE);
+                Observable<SendOrder> obsevable = ApiWrapper.getInstance().paidan(mToken, DeviceNo, faultType,
+                        chengdu, time, usermsg,
+                        Address, "", Desc,
+                        phone, xjName);
                 addSubscription(obsevable, new Subscriber<SendOrder>() {
                     @Override
                     public void onCompleted() {
@@ -146,9 +180,117 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
             case R.id.et_chose:
                 showPopWindow1();
                 break;
+            case R.id.et_type:
+                showPopWindow();
+                break;
+            case R.id.et_chengdu:
+                showPopWindow2();
+                break;
+            case R.id.et_time:
+                showPopWindow3();
+                break;
+            case R.id.yingjian:
+                mTvType.setText("硬件");
+                mPopupWindow.dismiss();
+                break;
+            case R.id.ruanjian:
+                mTvType.setText("软件");
+                mPopupWindow.dismiss();
+                break;
+
+            case R.id.jinji:
+                mTvChengdu.setText("紧急");
+                mPopupWindow2.dismiss();
+                break;
+            case R.id.yiban:
+                mTvChengdu.setText("一般");
+                mPopupWindow2.dismiss();
+                break;
+            case R.id.zhengchang:
+                mTvChengdu.setText("正常");
+                mPopupWindow2.dismiss();
+                break;
+            case R.id.ersi:
+                mTvTime.setText("24");
+                mPopupWindow3.dismiss();
+                break;
+            case R.id.siba:
+                mTvTime.setText("48");
+                mPopupWindow3.dismiss();
+                break;
+            case R.id.qier:
+                mTvTime.setText("72");
+                mPopupWindow3.dismiss();
+                break;
+
         }
 
 
+    }
+
+    private void showPopWindow3() {
+        if (mPopupWindow3 == null) {
+            //弹出PopupWindow
+            mPopupWindow3 = new PopupWindow(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        }
+        View view = View.inflate(this, R.layout.time_pop_window, null);
+        TextView tv1 = (TextView) view.findViewById(R.id.ersi);
+        TextView tv2 = (TextView) view.findViewById(R.id.siba);
+        TextView tv3 = (TextView) view.findViewById(R.id.qier);
+        tv1.setOnClickListener(this);
+        tv2.setOnClickListener(this);
+        tv3.setOnClickListener(this);
+        //设置PopupWindow里面的View
+        mPopupWindow3.setContentView(view);
+        mPopupWindow3.setFocusable(true);
+        //让PopupWindow能够消失
+        mPopupWindow3.setOutsideTouchable(true);
+        mPopupWindow3.setBackgroundDrawable(new ColorDrawable());
+        //弹出mPopupWindow, 在mEdit下显示
+        mPopupWindow3.showAtLocation(SendOrderActivity.this.findViewById(R.id.rl_sendorder), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+    }
+
+    private void showPopWindow2() {
+        if (mPopupWindow2 == null) {
+            //弹出PopupWindow
+            mPopupWindow2 = new PopupWindow(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        }
+        View view = View.inflate(this, R.layout.chengdu_pop_window, null);
+        TextView tv1 = (TextView) view.findViewById(R.id.jinji);
+        TextView tv2 = (TextView) view.findViewById(R.id.yiban);
+        TextView tv3 = (TextView) view.findViewById(R.id.zhengchang);
+        tv1.setOnClickListener(this);
+        tv2.setOnClickListener(this);
+        tv3.setOnClickListener(this);
+        //设置PopupWindow里面的View
+        mPopupWindow2.setContentView(view);
+        mPopupWindow2.setFocusable(true);
+        //让PopupWindow能够消失
+        mPopupWindow2.setOutsideTouchable(true);
+        mPopupWindow2.setBackgroundDrawable(new ColorDrawable());
+        //弹出mPopupWindow, 在mEdit下显示
+        mPopupWindow2.showAtLocation(SendOrderActivity.this.findViewById(R.id.rl_sendorder), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+    }
+
+    private void showPopWindow() {
+        if (mPopupWindow == null) {
+            //弹出PopupWindow
+            mPopupWindow = new PopupWindow(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        }
+        View view = View.inflate(this, R.layout.type_pop_window, null);
+        TextView tv1 = (TextView) view.findViewById(R.id.yingjian);
+        TextView tv2 = (TextView) view.findViewById(R.id.ruanjian);
+        tv1.setOnClickListener(this);
+        tv2.setOnClickListener(this);
+        //设置PopupWindow里面的View
+        mPopupWindow.setContentView(view);
+        mPopupWindow.setFocusable(true);
+        //让PopupWindow能够消失
+        mPopupWindow.setOutsideTouchable(true);
+        mPopupWindow.setBackgroundDrawable(new ColorDrawable());
+        //弹出mPopupWindow, 在mEdit下显示
+        mPopupWindow.showAtLocation(SendOrderActivity.this.findViewById(R.id.rl_sendorder), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
     private void showPopWindow1() {
@@ -161,19 +303,9 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
         View view = View.inflate(this, R.layout.user_pop_window, null);
         lv_name = (ListView) view.findViewById(R.id.lv);
         getUserData();
-        lv_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                XjName = allUsersContent.get(i).getLogin_name();
-                mEtChose.setText(allUsersContent.get(i).getNick_name());
-                mPopupWindow1.dismiss();
-
-            }
-        });
         //设置PopupWindow里面的View
         mPopupWindow1.setContentView(view);
-
-
+        mPopupWindow1.setFocusable(true);
         //让PopupWindow能够消失
         mPopupWindow1.setOutsideTouchable(true);
         mPopupWindow1.setBackgroundDrawable(new ColorDrawable());
@@ -182,7 +314,7 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void getUserData() {
-        Observable<AllUsers> users = ApiWrapper.getInstance().getAllUsers(mToken);
+        Observable<AllUsers> users = ApiWrapper.getInstance().getpaidanUsers(mToken);
         addSubscription(users, new Subscriber<AllUsers>() {
 
             @Override
@@ -199,11 +331,23 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
             public void onNext(AllUsers allUsers) {
                 allUsersContent = allUsers.getContent();
                 if (allUsersContent.size() != 0) {
-                    lv_name.setAdapter(new AllUserAdapter(allUsersContent, getApplicationContext()));
+                    mAllUserAdapter = new AllUserAdapter(allUsersContent, getApplicationContext());
+                    lv_name.setAdapter(mAllUserAdapter);
+
+                    mAllUserAdapter.setOnClickDay(new AllUserAdapter.OnClickUserListener() {
+                        @Override
+                        public void onClickUser(AllUsers.ContentBean bean) {
+                            xjName = bean.getLogin_name();
+                            mEtChose.setText(bean.getNick_name());
+                            mPopupWindow1.dismiss();
+                        }
+                    });
                 } else {
                     Toast.makeText(getApplicationContext(), "未能查询到巡检人员", Toast.LENGTH_SHORT).show();
                 }
             }
+
+
         });
     }
 }

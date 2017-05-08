@@ -3,9 +3,9 @@
               android:id="@+id/ll_day"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_below="@+id/rl"
+              android:layout_below="@+id/rl_report"
               android:orientation="vertical"
-              android:visibility="gone"
+                android:visibility="gone"
     >
 
     <ScrollView
@@ -37,7 +37,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/date"
+                    android:id="@+id/day_report_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

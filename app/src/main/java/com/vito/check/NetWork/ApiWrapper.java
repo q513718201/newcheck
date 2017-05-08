@@ -5,12 +5,14 @@ import com.vito.check.bean.AddressModify;
 import com.vito.check.bean.AllUsers;
 import com.vito.check.bean.DayReport;
 import com.vito.check.bean.Device;
+import com.vito.check.bean.Gonggao;
 import com.vito.check.bean.MyOrder;
 import com.vito.check.bean.OnlineRate;
 import com.vito.check.bean.Regist;
 import com.vito.check.bean.SendOrder;
 import com.vito.check.bean.User;
 import com.vito.check.bean.WeekReport;
+import com.vito.check.bean.YunyingOrder;
 
 import java.io.File;
 import java.util.Map;
@@ -98,10 +100,45 @@ public class ApiWrapper extends RetrofitUtil {
     }
 
     /**
+     * 查看运营部的派单
+     */
+    public Observable<YunyingOrder> getYunyingOrders(String token, int day, String state) {
+        return apiServer.getYunyingOrders(token, day, state);
+    }
+
+    /**
+     * 经理查看所有的派单
+     */
+    public Observable<YunyingOrder> getAllOrders(String token, int day, String state) {
+        return apiServer.getAllOrders(token, day, state);
+    }
+
+    /**
+     * 查看自己排出去的单
+     */
+    public Observable<YunyingOrder> getBackOrders(String token) {
+        return apiServer.getBackOrders(token);
+    }
+
+    /**
+     * 撤回自己的派单
+     */
+    public Observable<SendOrder> BackOrders(String token, int dispatchId) {
+        return apiServer.BackOrders(token, dispatchId);
+    }
+
+    /**
      * 查询所有巡检人信息
      */
     public Observable<AllUsers> getAllUsers(String token) {
         return apiServer.getAllUsers(token);
+    }
+
+    /**
+     * 查询所有派单人信息
+     */
+    public Observable<AllUsers> getpaidanUsers(String token) {
+        return apiServer.getpaidanUsers(token);
     }
 
     /**
@@ -113,11 +150,26 @@ public class ApiWrapper extends RetrofitUtil {
     }
 
     /**
+     * 运营部派单
+     */
+    public Observable<SendOrder> sendYunyingOrder(String token, String id, String sendTo) {
+        return apiServer.sendYunyingOrder(token, id, sendTo);
+    }
+
+    /**
      * 完成工程部派单
      */
     public Observable<SendOrder> finishEngineerOrder(RequestBody Body) {
 
         return apiServer.finishEngineerOrder(Body);
+    }
+
+    /**
+     * 完成运营部派单
+     */
+    public Observable<SendOrder> finishyunyingOrder(RequestBody Body) {
+
+        return apiServer.finishyunyingOrder(Body);
     }
 
     /**
@@ -152,24 +204,47 @@ public class ApiWrapper extends RetrofitUtil {
     /**
      * 日常巡检
      */
-    public Observable<SendOrder> addDailyCheck(String token, String devNo,
-                                               String safeLeve, String inoutDoor,
-                                               String awning, String outLook,
+    public Observable<SendOrder> addDailyCheck(String token, String devNo, String xjResult,
+                                               String inoutDoor, String safeLeve, String hasStructure,
+                                               String hasAwning, String awning, String os, String ram,
+                                               String outLook,
                                                String screen, String touchScreen,
                                                String netStat, String updateResult,
                                                String softwareVersion, String payResult,
-                                               String nonCardReader, String unionPayCardReader,
-                                               String gasCardReader, String keyPad,
-                                               String printer, String coinReader) {
-        return apiServer.addDailyCheck(token, devNo,
-                safeLeve, inoutDoor,
-                awning, outLook,
+                                               String unionPayCardReader, String nonCardReader,
+                                               String gasCardReader,
+                                               String printer, String keyPad, String coinReader) {
+
+        return apiServer.addDailyCheck(token, devNo, xjResult,
+                inoutDoor, safeLeve, hasStructure,
+                hasAwning, awning, os, ram,
+                outLook,
                 screen, touchScreen,
                 netStat, updateResult,
                 softwareVersion, payResult,
-                nonCardReader, unionPayCardReader,
-                gasCardReader, keyPad,
-                printer, coinReader);
+                unionPayCardReader, nonCardReader,
+                gasCardReader,
+                printer, keyPad, coinReader);
     }
 
+
+    //派单
+    public Observable<SendOrder> paidan(String token, String devNo, String faultType,
+                                        String urgency, String finishtime, String userInfo,
+                                        String devAddress, String type, String description,
+                                        String phone, String sendTo) {
+        return apiServer.paidan(token, devNo, faultType,
+                urgency, finishtime, userInfo,
+                devAddress, type, description,
+                phone, sendTo);
+    }
+
+    //发布公告
+    public Observable<SendOrder> gonggao(String token, String content){
+        return apiServer.gonggao(token,content);
+    }
+    //查询公告
+    public Observable<Gonggao> getGgonggao(String token){
+        return apiServer.getGonggao(token);
+    }
 }

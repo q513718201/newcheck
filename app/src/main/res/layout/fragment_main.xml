@@ -37,7 +37,7 @@
             notButton:circleSize="6dp"
             notButton:textColor="@android:color/white"
             android:drawableTop="@drawable/select_bottom"
-            android:text="设备状态"/>
+            android:text="设备监控"/>
 
         <com.vito.check.View.NotificationButton
             android:id="@+id/work"

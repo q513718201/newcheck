@@ -12,6 +12,7 @@ import com.vito.check.Fragment.MainFragment;
 import com.vito.check.MainActivity;
 
 import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.data.JPushLocalNotification;
 import cn.jpush.android.service.PushService;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
@@ -30,14 +31,26 @@ public class MyBroadCast extends BroadcastReceiver {
             Bundle extras = intent.getExtras();
             String title = extras.getString(JPushInterface.EXTRA_TITLE);
             String message = extras.getString(JPushInterface.EXTRA_MESSAGE);
-            Log.d("jpush", title + "---" + message);
+            Log.d("jpush111", title + "---" + message);
         }
-
-        if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-            Intent i = new Intent(context, MyOrderActivity.class);
+        if (intent.getAction().equals(JPushInterface.ACTION_NOTIFICATION_RECEIVED)) {
             Bundle extras = intent.getExtras();
-            String msg = extras.getString(JPushInterface.EXTRA_MESSAGE);
-            i.putExtra("message", msg);
+            String title = extras.getString(JPushInterface.ACTION_NOTIFICATION_RECEIVED);
+            String message = extras.getString(JPushInterface.EXTRA_ALERT);
+            Log.d("jpush112", title + "---" + message);
+
+        }
+        if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
+            Bundle extras = intent.getExtras();
+            String title = extras.getString(JPushInterface.EXTRA_TITLE);
+            String message = extras.getString(JPushInterface.EXTRA_MESSAGE);
+
+            String string = extras.getString(JPushInterface.EXTRA_ALERT);
+
+            Log.d("jpush111", string);
+
+            Intent i = new Intent(context, MyOrderActivity.class);
+            i.putExtra("jingli", "0");
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         }

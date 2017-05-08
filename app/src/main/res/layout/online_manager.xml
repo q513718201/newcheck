@@ -3,7 +3,7 @@
               android:id="@+id/manager_online"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_below="@+id/tl_toolbar"
+              android:layout_below="@+id/rl_toolbar"
               android:orientation="vertical"
               android:visibility="gone"
     >

@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.vito.check">
+          package="com.vito.check">
 
 
     <permission
         android:name="com.vito.check.permission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
+        android:protectionLevel="signature"/>
 
     <!-- Required -->
-    <uses-permission android:name="com.vito.check.permission.JPUSH_MESSAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.vito.check.permission.JPUSH_MESSAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <!--允许程序打开网络套接字-->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <!--允许程序设置内置sd卡的写权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!--允许程序获取网络状态-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <!--允许程序访问WiFi网络信息-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <!--允许程序读写手机状态和身份-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
     <!--用于访问GPS定位-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
     <!-- Optional. Required for location feature -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
     <!-- SD卡读取权限，用户写入离线定位数据-->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
 
@@ -58,47 +58,48 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="plSs0w2xhcmIyrxy6nBIb4e0PGIjpqq9" />
+            android:value="plSs0w2xhcmIyrxy6nBIb4e0PGIjpqq9"/>
 
-        <activity android:name=".Activity.SplashActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <activity android:name=".Activity.FinishOrderActivity"></activity>
 
         <activity android:name=".Activity.AllUserActivity"></activity>
-        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.LoginActivity"/>
 
-        <activity android:name=".Activity.MarkerActivity" />
+        <activity android:name=".Activity.MarkerActivity"/>
 
-        <activity android:name=".MainActivity" />
+        <!--<activity android:name=".MainActivity"/>-->
         <activity
             android:name=".Activity.LocationActivity"
-            android:alwaysRetainTaskState="true" />
+            android:alwaysRetainTaskState="true"/>
         <activity
             android:name=".Activity.RegistActivity"
-            android:alwaysRetainTaskState="true" />
-
+            android:alwaysRetainTaskState="true"/>
+        <activity android:name=".Activity.GonggaoActivity"/>
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".Activity.DeviceCheckActivity" />
-        <activity android:name=".Activity.SendOrderActivity" />
-        <activity android:name=".Activity.MyOrderActivity" />
-        <activity android:name=".Activity.ReportActivity" />
-        <activity android:name=".Activity.InspectionRecord" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".Activity.DeviceCheckActivity"/>
+        <activity android:name=".Activity.SendOrderActivity"/>
+        <activity android:name=".Activity.MyOrderActivity"/>
+        <activity android:name=".Activity.ReportActivity"/>
+        <activity android:name=".Activity.InspectionRecord"/>
         <activity android:name=".Activity.OnlineActivity"></activity>
         <activity android:name=".Activity.DayReportActivity"></activity>
         <activity android:name=".Activity.WeekReportActivity"></activity>
+        <activity android:name=".Activity.SendYunyingOrderActivity"></activity>
+        <activity android:name=".Activity.BackOrderActivity"></activity>
 
-        <service android:name="com.amap.api.location.APSService" />
+        <service android:name="com.amap.api.location.APSService"/>
 
         <service
             android:name="com.baidu.location.f"
@@ -111,10 +112,10 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.REGISTER" />
-                <action android:name="cn.jpush.android.intent.REPORT" />
-                <action android:name="cn.jpush.android.intent.PushService" />
-                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+                <action android:name="cn.jpush.android.intent.REGISTER"/>
+                <action android:name="cn.jpush.android.intent.REPORT"/>
+                <action android:name="cn.jpush.android.intent.PushService"/>
+                <action android:name="cn.jpush.android.intent.PUSH_TIME"/>
             </intent-filter>
         </service>
 
@@ -125,8 +126,8 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="cn.jpush.android.intent.DaemonService" />
-                <category android:name="com.vito.check" />
+                <action android:name="cn.jpush.android.intent.DaemonService"/>
+                <category android:name="com.vito.check"/>
             </intent-filter>
         </service>
 
@@ -135,19 +136,19 @@
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true">
             <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
-                <category android:name="com.vito.check" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY"/>
+                <category android:name="com.vito.check"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
             <!-- Optional -->
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
 
-                <data android:scheme="package" />
+                <data android:scheme="package"/>
             </intent-filter>
         </receiver>
 
@@ -158,10 +159,10 @@
             android:exported="false"
             android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
-                <action android:name="cn.jpush.android.ui.PushActivity" />
+                <action android:name="cn.jpush.android.ui.PushActivity"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.vito.check" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="com.vito.check"/>
             </intent-filter>
         </activity>
         <!-- SDK核心功能-->
@@ -171,8 +172,8 @@
             android:exported="false"
             android:theme="@style/MyDialogStyle">
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="com.vito.check" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="com.vito.check"/>
             </intent-filter>
         </activity>
 
@@ -183,7 +184,7 @@
             android:exported="false"></service>
 
         <!-- Required SDK核心功能-->
-        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver"/>
 
         <!-- User defined. 用户自定义的广播接收器-->
         <receiver
@@ -191,16 +192,16 @@
             android:enabled="true">
             <intent-filter>
                 <!--Required 用户注册SDK的intent-->
-                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.REGISTRATION"/>
                 <!--Required 用户接收SDK消息的intent-->
-                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/>
                 <!--Required 用户接收SDK通知栏信息的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED"/>
                 <!--Required 用户打开自定义通知栏的intent-->
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED"/>
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <action android:name="cn.jpush.android.intent.CONNECTION" />
-                <category android:name="com.vito.check" />
+                <action android:name="cn.jpush.android.intent.CONNECTION"/>
+                <category android:name="com.vito.check"/>
             </intent-filter>
         </receiver>
 
@@ -212,15 +213,15 @@
         <!-- 目前这个渠道统计功能的报表还未开放。-->
         <meta-data
             android:name="JPUSH_CHANNEL"
-            android:value="developer-default" />
+            android:value="developer-default"/>
         <!-- Required. AppKey copied from Portal -->
         <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="4f2c69c341dbaec7258bfae8" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+            android:value="4f2c69c341dbaec7258bfae8"/><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
     </application>
 
 </manifest>

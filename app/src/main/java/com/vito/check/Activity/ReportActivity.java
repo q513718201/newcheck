@@ -37,7 +37,7 @@ public class ReportActivity extends BaseActivity implements RadioGroup.OnChecked
     RadioButton mRbWeek;
     @BindView(R.id.rg_gp)
     RadioGroup mRgGp;
-    @BindView(R.id.date)
+    @BindView(R.id.day_report_date)
     TextView mDate;
     @BindView(R.id.firstSignin)
     TextView mFirstSignin;

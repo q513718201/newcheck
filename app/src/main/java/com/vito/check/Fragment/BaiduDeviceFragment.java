@@ -6,17 +6,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -44,6 +44,7 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.vito.check.Activity.DeviceCheckActivity;
 import com.vito.check.Activity.LoginActivity;
 import com.vito.check.Adapter.AllUserAdapter;
 import com.vito.check.MainActivity;
@@ -57,8 +58,11 @@ import com.vito.check.util.DialogUtil;
 import com.vito.check.util.MyOrientationListener;
 import com.vito.check.util.SpUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,6 +102,8 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
     ImageView mIsshowquery;
     @BindView(R.id.isshowchose)
     ImageView mIsshowchose;
+    @BindView(R.id.tv_loading)
+    TextView mTvLoading;
 
     private MainActivity mActivity;
     private List<LatLng> mList;
@@ -136,25 +142,30 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
     private double mDevicelatitude;
     private double mDevicelongitude;
     private LatLng mDeviceposition;
-    private boolean isShow=true;
-    private boolean isShowChose=true;
+    private boolean isShow = true;
+    private boolean isShowChose = true;
+    private AllUserAdapter mAllUserAdapter;
+    private Device.ContentBean mDeviceBean;
+    private PopupWindow mPopupWindow2;
+    private View mInflate;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = (MainActivity) getActivity();
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_baidudevice, container, false);
-        ButterKnife.bind(this, view);
-        mMapView = (MapView) view.findViewById(R.id.device_map);
+        mInflate = inflater.inflate(R.layout.fragment_baidudevice, container, false);
+        ButterKnife.bind(this, mInflate);
+        mMapView = (MapView) mInflate.findViewById(R.id.device_map);
         mMapView.showZoomControls(false);
         init();
         initMap();
-        return view;
+        return mInflate;
     }
 
     //获取之前请求的值
@@ -167,22 +178,23 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
 
         if (mRole.equals("manager")) {
             mRl1.setVisibility(View.VISIBLE);
-            mLocation.setVisibility(View.GONE);
             mIsshowchose.setVisibility(View.VISIBLE);
         }
 
-        if (et != "") {
-            if (et.equals("派单设备")) {
-                getDevice();
-            } else {
-                mEt.setText(et);
-                getDevices(isOnLine, isChecked, xjName, "");
-            }
-
-        } else {
-            mEt.setText("在线设备");
-            getDevices("1", "", xjName, "");
-        }
+//        if (et != "") {
+//            if (et.equals("派单设备")) {
+//                getDevice();
+//            } else {
+//                mEt.setText(et);
+//                getDevices(isOnLine, isChecked, xjName, "");
+//            }
+//
+//        } else {
+        mEt.setText("在线设备");
+        isOnLine = "1";
+        isChecked = "";
+        getDevices(isOnLine, isChecked , xjName, deviceNo);
+        //  }
         mEt.setOnClickListener(this);
         mEtChose.setOnClickListener(this);
         mQuery.setOnClickListener(this);
@@ -229,6 +241,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         mDeviceNumber = marker.getTitle();
         Bundle extraInfo = marker.getExtraInfo();
         mDeviceAddress = extraInfo.getString("address");
+        mDeviceBean = (Device.ContentBean) extraInfo.getSerializable("device");
         mDeviceposition = marker.getPosition();
         mDevicelatitude = mDeviceposition.latitude;
         mDevicelongitude = mDeviceposition.longitude;
@@ -394,6 +407,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
 
             @Override
             public void onError(Throwable e) {
+               // mLlProgress.setVisibility(View.GONE);
                 mLlProgress.setVisibility(View.GONE);
                 Log.d("aa", e.getMessage());
                 Toast.makeText(mActivity, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -417,9 +431,10 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
                     startActivity(new Intent(mActivity, LoginActivity.class));
                     mActivity.finish();
                 }
-                if (device.getContent().size() == 0) {
-                    center2myLoc(new LatLng(mCurrentLantitude, mCurrentLantitude));
+
+                if (size == 0) {
                     Toast.makeText(mActivity, "未查到相关设备信息", Toast.LENGTH_SHORT).show();
+                    center2myLoc(new LatLng(mCurrentLantitude, mCurrentLongitude));
                     return;
                 }
 
@@ -437,25 +452,26 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
             showPopWindow();
             return;
         }
-        if(v.getId() == R.id.isshowquery){
+        if (v.getId() == R.id.isshowquery) {
             if (isShow) {
                 mLlQuery.setVisibility(View.VISIBLE);
-                isShow=!isShow;
+                isShow = !isShow;
             } else {
                 mLlQuery.setVisibility(View.GONE);
                 mDeviceno.setText("");
-                isShow=!isShow;
+                deviceNo = "";
+                isShow = !isShow;
             }
             return;
         }
-        if(v.getId()==R.id.isshowchose){
+        if (v.getId() == R.id.isshowchose) {
 
             if (isShowChose) {
                 mRl1.setVisibility(View.VISIBLE);
-                isShowChose=!isShowChose;
+                isShowChose = !isShowChose;
             } else {
                 mRl1.setVisibility(View.GONE);
-                isShowChose=!isShowChose;
+                isShowChose = !isShowChose;
             }
             return;
         }
@@ -470,12 +486,13 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         }
 
         if (v.getId() == R.id.location) {
+            // mBaiduMap.setMyLocationEnabled(false);
             center2myLoc(new LatLng(mCurrentLantitude, mCurrentLongitude));
             return;
         }
 
         if (v.getId() == R.id.query) {
-            mBaiduMap.setMyLocationEnabled(false);
+
             deviceNo = mDeviceno.getText().toString();
             Log.d("mContent", mContent + "");
             if (TextUtils.isEmpty(deviceNo)) {
@@ -497,7 +514,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         }
 
         if (v.getId() == R.id.modify) {
-            modifyAddress();
+           showDescription();
             return;
         }
         switch (v.getId()) {
@@ -539,6 +556,37 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         SpUtils.putString(mActivity, "isChecked", isChecked);
         mPopupWindow.dismiss();
 
+    }
+
+    private void showDescription() {
+        if(mPopupWindow2==null){
+            mPopupWindow2 = new PopupWindow(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        }
+        View view = View.inflate(mActivity, R.layout.device_desc_pop, null);
+        //设置PopupWindow里面的View
+        mPopupWindow2.setContentView(view);
+        TextView tv1 = (TextView) view.findViewById(R.id.device_no);
+        TextView tv2 = (TextView) view.findViewById(R.id.device_address);
+        TextView tv3 = (TextView) view.findViewById(R.id.device_time);
+        TextView tv4 = (TextView) view.findViewById(R.id.device_bianhao);
+        TextView tv5 = (TextView) view.findViewById(R.id.device_people);
+        TextView tv6 = (TextView) view.findViewById(R.id.device_phone);
+        TextView tv7 = (TextView) view.findViewById(R.id.device_version);
+        TextView tv8 = (TextView) view.findViewById(R.id.device_update);
+
+        tv1.setText("设备编号 :"+" "+mDeviceBean.getT_id());
+        tv2.setText("设备地址 :"+" "+mDeviceBean.getDescription());
+        tv3.setText("设备放置时间 :"+" "+mDeviceBean.getCreate_time());
+        tv4.setText("终端号 :"+" "+mDeviceBean.getKey_t_id());
+        tv5.setText("设备联系人 :"+" "+mDeviceBean.getUser_name());
+        tv6.setText("联系电话 :"+" "+mDeviceBean.getUser_phone());
+        tv7.setText("当前版本 :"+" "+mDeviceBean.getSoft_version());
+        tv8.setText("更新时间 :"+" "+mDeviceBean.getUpdate_time());
+
+        mPopupWindow2.setOutsideTouchable(true);
+        mPopupWindow2.setBackgroundDrawable(new ColorDrawable());
+        //弹出mPopupWindow, 在mEdit下显示
+        mPopupWindow2.showAtLocation(mInflate, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
     /**
@@ -615,7 +663,8 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
                     return;
                 }
                 if (device.getContent().size() == 0) {
-                    center2myLoc(new LatLng(mCurrentLantitude, mCurrentLantitude));
+                    Log.d("hhh", "我来了");
+                    center2myLoc(new LatLng(mCurrentLantitude, mCurrentLongitude));
                     Toast.makeText(mActivity, "未查到相关设备信息", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -646,7 +695,11 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         TextView tv4 = (TextView) view.findViewById(R.id.online);
         TextView tv5 = (TextView) view.findViewById(R.id.outline);
         TextView tv6 = (TextView) view.findViewById(R.id.order);
-        if (mRole.equals("manager")) {
+        if (mRole.equals("manager") && mEtChose.getText().toString().equals("查看人员")) {
+            tv1.setVisibility(View.GONE);
+            tv2.setVisibility(View.GONE);
+            tv3.setVisibility(View.GONE);
+            tv5.setVisibility(View.GONE);
             tv6.setVisibility(View.GONE);
         }
         tv1.setOnClickListener(this);
@@ -672,16 +725,6 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         View view = View.inflate(mActivity, R.layout.user_pop_window, null);
         lv_name = (ListView) view.findViewById(R.id.lv);
         getUserData();
-        lv_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                xjName = allUsersContent.get(i).getLogin_name();
-                mEtChose.setText(allUsersContent.get(i).getNick_name());
-                getDevices(isOnLine, isChecked, xjName, deviceNo);
-                mPopupWindow1.dismiss();
-
-            }
-        });
         //设置PopupWindow里面的View
         mPopupWindow1.setContentView(view);
 
@@ -699,20 +742,32 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
 
             @Override
             public void onCompleted() {
-
+                mLlProgress.setVisibility(View.GONE);
             }
 
             @Override
             public void onError(Throwable e) {
 
             }
-
             @Override
             public void onNext(AllUsers allUsers) {
                 allUsersContent = allUsers.getContent();
                 if (allUsersContent.size() != 0) {
                     allUserAdapter = new AllUserAdapter(allUsersContent, mActivity);
                     lv_name.setAdapter(allUserAdapter);
+
+                    mAllUserAdapter = new AllUserAdapter(allUsersContent, mActivity);
+                    lv_name.setAdapter(mAllUserAdapter);
+
+                    mAllUserAdapter.setOnClickDay(new AllUserAdapter.OnClickUserListener() {
+                        @Override
+                        public void onClickUser(AllUsers.ContentBean bean) {
+                            xjName = bean.getLogin_name();
+                            mEtChose.setText(bean.getNick_name());
+                            getDevices(isOnLine, isChecked, xjName, deviceNo);
+                            mPopupWindow1.dismiss();
+                        }
+                    });
                 } else {
                     Toast.makeText(mActivity, "未能查询到巡检人员", Toast.LENGTH_SHORT).show();
                 }
@@ -723,46 +778,52 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
 
     }
 
+
     /**
      * 添加标记
      *
      * @param b
      */
-    private void addMarkersToMap(Device b) {
+    private void addMarkersToMap(final Device b) {
         mContent = b.getContent();
         isFristLocation = false;
-
+        double latcenter=0;
+        double lngcenter=0;
         Log.d("aa", "获取到的设备数量" + mContent.size() + "");
         mList = new ArrayList<>();
+                for (Device.ContentBean device : mContent) {
+                    double lat = device.getLat();
+                    double lng = device.getLng();
+                    latcenter=latcenter+lat;
+                    lngcenter=lngcenter+lng;
+                    mLatLng = new LatLng(lat, lng);
+                    mList.add(mLatLng);
+                }
 
-        for (Device.ContentBean device : mContent) {
-            double lat = device.getLat();
-            double lng = device.getLng();
-            mLatLng = new LatLng(lat, lng);
-            mList.add(mLatLng);
-        }
+                Log.d("aa", "坐标数量" + mList.size() + "");
+                for (int i = 0; i < mList.size(); i++) {
+                    mBundle = new Bundle();
+                    mOoD = new MarkerOptions().position(mList.get(i));
+                    mBundle.putString("address", mContent.get(i).getDescription());
+                    mBundle.putSerializable("device",mContent.get(i));
+                    mOoD.title(mContent.get(i).getT_id()).extraInfo(mBundle);
 
-        Log.d("aa", "坐标数量" + mList.size() + "");
-        for (int i = 0; i < mList.size(); i++) {
-            mBundle = new Bundle();
-            mOoD = new MarkerOptions().position(mList.get(i));
-            mBundle.putString("address", mContent.get(i).getDescription());
-            mOoD.title(mContent.get(i).getT_id()).extraInfo(mBundle);
-
-            if (mContent.get(i).getOnline().equals("1")) {
-                mOoD.icon(BitmapDescriptorFactory
-                        .fromResource(R.drawable.mark_blue));
-            } else {
-                mOoD.icon(BitmapDescriptorFactory
-                        .fromResource(R.drawable.mark_red));
-            }
+                    if (mContent.get(i).getOnline()) {
+                        mOoD.icon(BitmapDescriptorFactory
+                                .fromResource(R.drawable.mark_blue));
+                    } else {
+                        mOoD.icon(BitmapDescriptorFactory
+                                .fromResource(R.drawable.mark_red));
+                    }
 //            // 生长动画
 //            mOoD.animateType(MarkerOptions.MarkerAnimateType.drop);
-            mBaiduMap.addOverlay(mOoD);
-        }
-        if (mList.get(0) != null) {
-            center2myLoc(mList.get(mList.size() / 2));
-        }
+                    mBaiduMap.addOverlay(mOoD);
+                }
+        Log.d("bbb",mList.size() / 2 +"");
+           // center2myLoc(mList.get(mList.size() ));
+        center2myLoc(new LatLng(latcenter/mList.size(),(lngcenter/mList.size())));
+
+
     }
 
     /**
@@ -770,6 +831,8 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
      * 直接拿最近一次经纬度，如果长时间没有定位成功，可能会显示效果不好
      */
     private void center2myLoc(LatLng a) {
+        MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(15.0f);
+        mBaiduMap.setMapStatus(msu);
         MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(a);
         mBaiduMap.animateMapStatus(u);
     }

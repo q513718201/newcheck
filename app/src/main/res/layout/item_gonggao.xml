@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_allorder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        >
+      <LinearLayout
+          android:background="@color/blue"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
+          <TextView
+              android:layout_marginTop="5dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:text="公告"
+              android:textSize="20sp"
+              />
+          <TextView
+              android:id="@+id/gonggao_name"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="张云峰："
+              android:textSize="15sp"
+              />
+          <TextView
+              android:id="@+id/gonggao_content"
+              android:layout_marginTop="5dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="       所发生的事都过得很好四大公司都过得复旦复华的话都过得广东公司的公告是否四大公司都根深蒂固三国杀都过得广东随时都过得个是否四都过得三个是否四都范德萨公司广东公司个"
+              android:textSize="15sp"
+              />
+
+          <TextView
+              android:id="@+id/gonggao_date"
+              android:layout_marginTop="5dp"
+              android:layout_gravity="end"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="2013-10-12"
+              android:layout_marginBottom="5dp"
+              android:textSize="15sp"
+              />
+
+      </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
