@@ -198,41 +198,6 @@
 
                     </RelativeLayout>
                 </LinearLayout>
-
-                <View
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="0.6dp"
-                    android:background="#4F4F4F"/>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="35dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp">
-
-                    <TextView
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="用户信息:"
-                        android:textColor="@color/base_gray"
-                        android:textSize="18sp"/>
-
-                    <EditText
-                        android:id="@+id/et_usermsg"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:background="@null"
-                        android:hint="请输入用户信息"
-                        android:textSize="14sp"/>
-                </LinearLayout>
                 <View
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
@@ -273,6 +238,55 @@
                     android:layout_width="fill_parent"
                     android:layout_height="0.6dp"
                     android:background="#4F4F4F"/>
+                <LinearLayout
+                    android:clickable="true"
+                    android:id="@+id/et_dept"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/base_gray">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="接单部门:"
+                        android:textColor="@color/base_gray"
+                        android:textSize="18sp"/>
+
+                    <RelativeLayout
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:id="@+id/tv_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="请选择(必填)"
+                            android:textSize="18sp"
+                            />
+                        <ImageView
+                            android:layout_marginRight="20dp"
+                            android:layout_toRightOf="@+id/tv_dept"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/common_btn_more"
+                            />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.6dp"
+                    android:background="#4F4F4F"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -286,7 +300,42 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="联系电话:"
+                        android:text="具体联系人信息:"
+                        android:textColor="@color/base_gray"
+                        android:textSize="18sp"/>
+
+                    <EditText
+                        android:id="@+id/et_usermsg"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:background="@null"
+                        android:hint="请输入用户信息"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+
+
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.6dp"
+                    android:background="#4F4F4F"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="具体联系人电话:"
                         android:textColor="@color/base_gray"
                         android:textSize="18sp"/>
 

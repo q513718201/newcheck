@@ -145,7 +145,7 @@ public interface APIServer {
                                         @Field("softwareVersion") String softwareVersion,@Field("payResult") String payResult,
                                         @Field("unionPayCardReader")String unionPayCardReader,@Field("nonCardReader") String nonCardReader,
                                         @Field("gasCardReader")String gasCardReader, @Field("printer")String printer,@Field("keyPad")String keyPad,
-                                        @Field("coinReader")String coinReader);
+                                        @Field("coinReader")String coinReader, @Field("img")String img);
 
 
     //派单

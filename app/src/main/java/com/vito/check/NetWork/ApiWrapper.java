@@ -213,7 +213,7 @@ public class ApiWrapper extends RetrofitUtil {
                                                String softwareVersion, String payResult,
                                                String unionPayCardReader, String nonCardReader,
                                                String gasCardReader,
-                                               String printer, String keyPad, String coinReader) {
+                                               String printer, String keyPad, String coinReader,String img) {
 
         return apiServer.addDailyCheck(token, devNo, xjResult,
                 inoutDoor, safeLeve, hasStructure,
@@ -224,7 +224,7 @@ public class ApiWrapper extends RetrofitUtil {
                 softwareVersion, payResult,
                 unionPayCardReader, nonCardReader,
                 gasCardReader,
-                printer, keyPad, coinReader);
+                printer, keyPad, coinReader,img);
     }
 
 

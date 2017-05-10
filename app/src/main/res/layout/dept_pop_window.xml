@@ -9,15 +9,15 @@
         android:layout_height="0.6dp"
         android:background="#4f4f4f"/>
     <TextView
-        android:layout_marginTop="5dp"
         android:gravity="center"
-        android:id="@+id/yingjian"
+        android:layout_marginTop="5dp"
+        android:id="@+id/gongchengbu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:clickable="true"
-        android:text="移机"
         android:textColor="#00ffd4"
+        android:text="工程部"
         android:textSize="25dp"/>
     <View
         android:layout_marginTop="5dp"
@@ -25,31 +25,16 @@
         android:layout_height="0.6dp"
         android:background="#4f4f4f"/>
     <TextView
-        android:id="@+id/ruanjian"
+        android:gravity="center"
+        android:id="@+id/yunyingbu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:clickable="true"
-        android:gravity="center"
         android:textColor="#00ffd4"
-        android:text="拆机"
+        android:text="运营部"
         android:textSize="25dp"/>
 
-    <View
-        android:layout_marginTop="5dp"
-        android:layout_width="fill_parent"
-        android:layout_height="0.6dp"
-        android:background="#4f4f4f"/>
-    <TextView
-        android:id="@+id/fangong"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:clickable="true"
-        android:gravity="center"
-        android:textColor="#00ffd4"
-        android:text="返工"
-        android:textSize="25dp"/>
 
     <View
         android:layout_marginTop="5dp"

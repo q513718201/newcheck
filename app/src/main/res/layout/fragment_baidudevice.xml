@@ -33,26 +33,30 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="12dp"
         android:layout_toRightOf="@id/rl_chose_device">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="设备数量:"
-            android:textColor="#ff6f00"
-            android:textSize="18sp"
-            />
+
 
         <TextView
             android:id="@+id/device_no"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text=""
+            android:text="1"
             android:textColor="#ff6f00"
+            android:textSize="18sp"
+            />
+        <TextView
+            android:id="@+id/online"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#ff6f00"
+            android:text="2"
             android:textSize="18sp"
             />
 

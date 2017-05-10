@@ -105,7 +105,7 @@ public class MainFragment extends Fragment implements RadioGroup.OnCheckedChange
                 }
                 switchContent(firstFragment, mWorkFragment);
                 firstFragment = mWorkFragment;
-                mActivity.setToolBarTittle("工作");
+                mActivity.setToolBarTittle("我的工作");
                 // replace(new WorkFragment());
                 break;
 

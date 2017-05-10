@@ -1,8 +1,17 @@
 package com.vito.check.Activity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -12,13 +21,22 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.vito.check.Adapter.PhotoAdapter;
+import com.vito.check.Adapter.RecyclerItemClickListener;
 import com.vito.check.NetWork.ApiWrapper;
 import com.vito.check.R;
 import com.vito.check.bean.SendOrder;
+import com.vito.check.util.ImageToBase64;
 import com.vito.check.util.SpUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.iwf.photopicker.PhotoPicker;
+import me.iwf.photopicker.PhotoPreview;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -122,8 +140,12 @@ public class DeviceCheckActivity extends BaseActivity implements View.OnClickLis
     private PopupWindow mPopupWindow = new PopupWindow(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     private int shifou = 0;
     private int isok = 0;
-
-
+    private PhotoAdapter photoAdapter;
+    private ArrayList<String> selectedPhotos = new ArrayList<>();
+    private String mS1;
+    private String mS2;
+    private String mImage;
+    private File mFile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,6 +153,98 @@ public class DeviceCheckActivity extends BaseActivity implements View.OnClickLis
         mToken = SpUtils.getString(getApplicationContext(), "token", "");
         mBtn.setOnClickListener(this);
         initData();
+        initRecycleView();
+//        <!--android:focusable="true"-->
+//        <!--android:focusableInTouchMode="true"-->
+    }
+    private void initRecycleView() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        photoAdapter = new PhotoAdapter(this, selectedPhotos);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL));
+        recyclerView.setAdapter(photoAdapter);
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        if (photoAdapter.getItemViewType(position) == PhotoAdapter.TYPE_ADD) {
+                            PhotoPicker.builder()
+                                    .setPhotoCount(PhotoAdapter.MAX)
+                                    .setShowCamera(true)
+                                    .setPreviewEnabled(false)
+                                    .setSelected(selectedPhotos)
+                                    .start(DeviceCheckActivity.this);
+                        } else {
+                            PhotoPreview.builder()
+                                    .setPhotos(selectedPhotos)
+                                    .setCurrentItem(position)
+                                    .start(DeviceCheckActivity.this);
+                        }
+                    }
+                }));
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK &&
+                (requestCode == PhotoPicker.REQUEST_CODE || requestCode == PhotoPreview.REQUEST_CODE)) {
+
+            List<String> photos = null;
+            if (data != null) {
+                photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+            }
+            selectedPhotos.clear();
+            if (photos != null) {
+                selectedPhotos.addAll(photos);
+            }
+            photoAdapter.notifyDataSetChanged();
+        }
+
+
+    }
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    load();
+                    break;
+            }
+        }
+    };
+
+    private void load() {
+        String path = mFile.getAbsolutePath();
+        String mName = path.substring(path.length() - 4, path.length());
+        Log.d("junjunsb",mImage+mName);
+        Observable<SendOrder> sendOrderObservable = ApiWrapper.getInstance().addDailyCheck(mToken, mS1, mTvResult.getText().toString(), mTvShineiwai.getText().toString(), mTvSafe.getText().toString(), mZhijia.getText().toString(), mShifouyouyupeng.getText().toString()
+                , mXujiaxupeng.getText().toString(), mCaozuoxitong.getText().toString(), mNeicun.getText().toString(), mWaixing.getText().toString(), mXianshiping.getText().toString(), mChumoping.getText().toString()
+                , mWangluo.getText().toString(), mGengxin.getText().toString(), mS2, mJiaofei.getText().toString(), mYinlian.getText().toString(), mFeijiechuduka.getText().toString(), mRanqi.getText().toString(), mDayinji.getText().toString()
+                , mMima.getText().toString(), mShibiqi.getText().toString(),mImage+mName);
+        addSubscription(sendOrderObservable, new Subscriber<SendOrder>() {
+            @Override
+            public void onCompleted() {
+                mLlProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                mLlProgress.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onNext(SendOrder sendOrder) {
+                if(sendOrder.isSuccess()){
+                    Toast.makeText(getApplicationContext(),"提交成功",Toast.LENGTH_LONG).show();
+                    exit();
+                }else{
+                    Toast.makeText(getApplicationContext(),"提交失败",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
     }
 
     private void initData() {
@@ -234,9 +348,9 @@ public class DeviceCheckActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.login_btn:
 
-                String s1 = mDeviceno.getText().toString();
-                String s2 = mBanben.getText().toString();
-                if (s1.equals("") || mTvResult.getText().equals("请选择(必填)") || mTvSafe.getText().equals("请选择(必填)") || mTvShineiwai.getText().equals("请选择(必填)")
+                mS1 = mDeviceno.getText().toString();
+                mS2 = mBanben.getText().toString();
+                if (mS1.equals("") || mTvResult.getText().equals("请选择(必填)") || mTvSafe.getText().equals("请选择(必填)") || mTvShineiwai.getText().equals("请选择(必填)")
                         || mShifouyouyupeng.getText().equals("请选择(必填)") || mXujiaxupeng.getText().equals("请选择(必填)") || mCaozuoxitong.getText().equals("请选择(必填)") || mNeicun.getText().equals("请选择(必填)")
                         || mZhijia.getText().equals("请选择(必填)") || mWaixing.getText().equals("请选择(必填)") || mXianshiping.getText().equals("请选择(必填)") || mChumoping.getText().equals("请选择(必填)")
                         || mWangluo.getText().equals("请选择(必填)") || mGengxin.getText().equals("请选择(必填)") || mJiaofei.getText().equals("请选择(必填)") || mFeijiechuduka.getText().equals("请选择(必填)")
@@ -246,31 +360,21 @@ public class DeviceCheckActivity extends BaseActivity implements View.OnClickLis
                     return;
                 }
                 mLlProgress.setVisibility(View.VISIBLE);
-                Observable<SendOrder> sendOrderObservable = ApiWrapper.getInstance().addDailyCheck(mToken, s1, mTvResult.getText().toString(), mTvShineiwai.getText().toString(), mTvSafe.getText().toString(), mZhijia.getText().toString(), mShifouyouyupeng.getText().toString()
-                        , mXujiaxupeng.getText().toString(), mCaozuoxitong.getText().toString(), mNeicun.getText().toString(), mWaixing.getText().toString(), mXianshiping.getText().toString(), mChumoping.getText().toString()
-                        , mWangluo.getText().toString(), mGengxin.getText().toString(), s2, mJiaofei.getText().toString(), mYinlian.getText().toString(), mFeijiechuduka.getText().toString(), mRanqi.getText().toString(), mDayinji.getText().toString()
-                        , mMima.getText().toString(), mShibiqi.getText().toString());
-                addSubscription(sendOrderObservable, new Subscriber<SendOrder>() {
+                new Thread(new Runnable() {
                     @Override
-                    public void onCompleted() {
-                        mLlProgress.setVisibility(View.GONE);
-                    }
+                    public void run() {
+                        if (selectedPhotos.size() != 0) {
+                            mFile = new File(selectedPhotos.get(0));
+                            Log.d("image", mFile.length() / 1024 + "");
+                            long l = System.currentTimeMillis();
+                            mImage = ImageToBase64.bitmaptoString( decodeSampledBitmapFromResource(selectedPhotos.get(0),300,500));
+                            long l1 = System.currentTimeMillis();
+                            Log.d("image", l - l1 + "");
+                            mHandler.sendEmptyMessage(1);
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        mLlProgress.setVisibility(View.GONE);
                     }
-
-                    @Override
-                    public void onNext(SendOrder sendOrder) {
-                      if(sendOrder.isSuccess()){
-                          Toast.makeText(getApplicationContext(),"提交成功",Toast.LENGTH_LONG).show();
-                          exit();
-                      }else{
-                          Toast.makeText(getApplicationContext(),"提交失败",Toast.LENGTH_LONG).show();
-                      }
-                    }
-                });
+                }).start();
                 break;
             case R.id.ll_xunjianjieguo:
                 showPop1();
@@ -766,5 +870,31 @@ public class DeviceCheckActivity extends BaseActivity implements View.OnClickLis
         mPopupWindow.showAtLocation(DeviceCheckActivity.this.findViewById(R.id.main), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
+    public static Bitmap decodeSampledBitmapFromResource(String path, int reqWidth, int reqHeight) {
+        // 第一次解析将inJustDecodeBounds设置为true，来获取图片大小  
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        // 使用获取到的inSampleSize值再次解析图片  
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(path, options);
+    }
 
+    public static int calculateInSampleSize(BitmapFactory.Options options,
+                                            int reqWidth, int reqHeight) {
+        // 源图片的高度和宽度  
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+        if(height>reqHeight||width>reqWidth){
+            // 计算出实际宽高和目标宽高的比率  
+            final int heightRatio=Math.round((float)height/(float)reqHeight);
+            final int widthRatio=Math.round((float)width/(float)reqWidth);
+            // 选择宽和高中最小的比率作为inSampleSize的值，这样可以保证最终图片的宽和高  
+            // 一定都会大于等于目标的宽和高。  
+            inSampleSize=heightRatio<widthRatio?heightRatio:widthRatio;
+        }
+        return inSampleSize;
+    }
 }

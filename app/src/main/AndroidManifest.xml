@@ -60,7 +60,7 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="plSs0w2xhcmIyrxy6nBIb4e0PGIjpqq9"/>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -74,7 +74,7 @@
 
         <activity android:name=".Activity.MarkerActivity"/>
 
-        <!--<activity android:name=".MainActivity"/>-->
+        <activity android:name=".MainActivity"/>
         <activity
             android:name=".Activity.LocationActivity"
             android:alwaysRetainTaskState="true"/>

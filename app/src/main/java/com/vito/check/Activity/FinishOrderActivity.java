@@ -252,7 +252,7 @@ public class FinishOrderActivity extends BaseActivity implements View.OnClickLis
 
                 @Override
                 public void onError(Throwable e) {
-
+                    mLlProgress.setVisibility(View.GONE);
                 }
 
                 @Override

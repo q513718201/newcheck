@@ -3,17 +3,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ffffff"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:id="@+id/main"
-
                 android:orientation="vertical">
 
     <include layout="@layout/my_toolbar"></include>
 
     <ScrollView
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:id="@+id/scroll"
         android:layout_below="@+id/rl_toolbar"
         android:layout_width="match_parent"
@@ -1034,12 +1029,32 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0.6dp"
                 android:background="#4F4F4F"/>
+            <LinearLayout
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="上传图片："
+                android:textColor="@color/base_gray"
+                android:textSize="18sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_weight="1"
+                android:id="@+id/recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            </LinearLayout>
             <Button
                 android:id="@+id/login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/button_selector"
                 android:onClick="click"
                 android:text="提交"
@@ -1070,7 +1085,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="正在查询中..."
+            android:text="正在提交中..."
             android:textColor="@color/colorAccent" />
 
 

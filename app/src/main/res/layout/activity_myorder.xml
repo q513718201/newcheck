@@ -31,19 +31,19 @@
                 android:id="@+id/rb_paidan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="派单中"
+                android:text="派单"
                 />
             <RadioButton
                 android:id="@+id/rb_daishenhe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="待审核"
+                android:text="审核"
                 />
             <RadioButton
                 android:id="@+id/rb_jiedan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="已结单"
+                android:text="结单"
                 />
 
         </RadioGroup>

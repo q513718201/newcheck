@@ -13,7 +13,7 @@ public class DataServer {
     public static List<WorkSelect> getSampleData() {
         List<WorkSelect> list = new ArrayList<>();
         list.add(new WorkSelect(true, "工作管理", false));
-        list.add(new WorkSelect(new WorkContent("我的派单")));
+        list.add(new WorkSelect(new WorkContent("我要派单")));
         list.add(new WorkSelect(new WorkContent("派单查询")));
         list.add(new WorkSelect(new WorkContent("日常巡检")));
 

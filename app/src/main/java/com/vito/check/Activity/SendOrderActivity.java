@@ -38,8 +38,7 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
 
     @BindView(R.id.tv_deviceNo)
     EditText mTvDeviceNo;
-    @BindView(R.id.tv_address)
-    EditText mTvAddress;
+
     @BindView(R.id.tv_desc)
     EditText mTvDesc;
 
@@ -73,6 +72,10 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
 
     @BindView(R.id.et_usermsg)
     EditText mEtUsermsg;
+    @BindView(R.id.tv_dept)
+    TextView mTvDept;
+    @BindView(R.id.et_dept)
+    LinearLayout mEtDept;
 
 
     private YunyingOrder.ContentBean mOrderBean;
@@ -81,7 +84,7 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
     private PopupWindow mPopupWindow;
     private PopupWindow mPopupWindow2;
     private PopupWindow mPopupWindow3;
-
+    private PopupWindow mPopupWindow4;
 
     private List<AllUsers.ContentBean> allUsersContent;
     private ListView lv_name;
@@ -98,21 +101,18 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
             init();
         }
 
-
         mLoginBtn.setOnClickListener(this);
         mEtChose.setOnClickListener(this);
         mEtType.setOnClickListener(this);
         mEtChengdu.setOnClickListener(this);
         mEtTime.setOnClickListener(this);
+        mEtDept.setOnClickListener(this);
 
     }
 
     private void init() {
         mTvDeviceNo.setText(mOrderBean.getDevNo());
-        mTvAddress.setText(mOrderBean.getDevAddress());
         mTvDesc.setText(mOrderBean.getDescription());
-
-
     }
 
     @Override
@@ -127,7 +127,7 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.login_btn:
                 String DeviceNo = mTvDeviceNo.getText().toString();
-                String Address = mTvAddress.getText().toString();
+
                 String Desc = mTvDesc.getText().toString();
                 String phone = etPhone.getText().toString();
                 String SendTo = mEtChose.getText().toString();
@@ -136,9 +136,9 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
                 String time = mTvTime.getText().toString();
                 String usermsg = mEtUsermsg.getText().toString();
 
-                if (TextUtils.isEmpty(SendTo)||TextUtils.isEmpty(phone)
-                        ||TextUtils.isEmpty(DeviceNo)||TextUtils.isEmpty(Desc)||TextUtils.isEmpty(chengdu)||TextUtils.isEmpty(usermsg)
-                        ||TextUtils.isEmpty(Address)||TextUtils.isEmpty(faultType)||TextUtils.isEmpty(time)
+                if (TextUtils.isEmpty(SendTo) || TextUtils.isEmpty(phone)
+                        || TextUtils.isEmpty(DeviceNo) || TextUtils.isEmpty(Desc) || TextUtils.isEmpty(chengdu) || TextUtils.isEmpty(usermsg)
+                       || TextUtils.isEmpty(faultType) || TextUtils.isEmpty(time)
 
                         ) {
                     Toast.makeText(getApplicationContext(), "信息不能为空", Toast.LENGTH_SHORT).show();
@@ -147,7 +147,7 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
                 mLlProgress.setVisibility(View.VISIBLE);
                 Observable<SendOrder> obsevable = ApiWrapper.getInstance().paidan(mToken, DeviceNo, faultType,
                         chengdu, time, usermsg,
-                        Address, "", Desc,
+                        "", "", Desc,
                         phone, xjName);
                 addSubscription(obsevable, new Subscriber<SendOrder>() {
                     @Override
@@ -190,24 +190,32 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
                 showPopWindow3();
                 break;
             case R.id.yingjian:
-                mTvType.setText("硬件");
+                mTvType.setText("移机");
                 mPopupWindow.dismiss();
                 break;
             case R.id.ruanjian:
-                mTvType.setText("软件");
+                mTvType.setText("拆机");
+                mPopupWindow.dismiss();
+                break;
+            case R.id.fangong:
+                mTvType.setText("返工");
                 mPopupWindow.dismiss();
                 break;
 
             case R.id.jinji:
-                mTvChengdu.setText("紧急");
+                mTvChengdu.setText("紧急(一天)");
                 mPopupWindow2.dismiss();
                 break;
             case R.id.yiban:
-                mTvChengdu.setText("一般");
+                mTvChengdu.setText("一般(二天)");
                 mPopupWindow2.dismiss();
                 break;
             case R.id.zhengchang:
-                mTvChengdu.setText("正常");
+                mTvChengdu.setText("正常(三天)");
+                mPopupWindow2.dismiss();
+                break;
+            case R.id.yanshi:
+                mTvChengdu.setText("延时(七天)");
                 mPopupWindow2.dismiss();
                 break;
             case R.id.ersi:
@@ -222,10 +230,42 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
                 mTvTime.setText("72");
                 mPopupWindow3.dismiss();
                 break;
-
+            case R.id.et_dept:
+                showPopWindow4();
+                break;
+            case R.id.gongchengbu:
+                mTvDept.setText("工程部");
+                xjName="wh001";
+                mEtChose.setText("陈智俊");
+                mPopupWindow4.dismiss();
+                break;
+            case R.id.yunyingbu:
+                mTvDept.setText("运营部");
+                mPopupWindow4.dismiss();
+                break;
         }
 
 
+    }
+
+    private void showPopWindow4() {
+        if (mPopupWindow4 == null) {
+            //弹出PopupWindow
+            mPopupWindow4 = new PopupWindow(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        }
+        View view = View.inflate(this, R.layout.dept_pop_window, null);
+        TextView tv1 = (TextView) view.findViewById(R.id.gongchengbu);
+        TextView tv2 = (TextView) view.findViewById(R.id.yunyingbu);
+        tv1.setOnClickListener(this);
+        tv2.setOnClickListener(this);
+        //设置PopupWindow里面的View
+        mPopupWindow4.setContentView(view);
+        mPopupWindow4.setFocusable(true);
+        //让PopupWindow能够消失
+        mPopupWindow4.setOutsideTouchable(true);
+        mPopupWindow4.setBackgroundDrawable(new ColorDrawable());
+        //弹出mPopupWindow, 在mEdit下显示
+        mPopupWindow4.showAtLocation(SendOrderActivity.this.findViewById(R.id.rl_sendorder), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
     private void showPopWindow3() {
@@ -281,8 +321,10 @@ public class SendOrderActivity extends BaseActivity implements View.OnClickListe
         View view = View.inflate(this, R.layout.type_pop_window, null);
         TextView tv1 = (TextView) view.findViewById(R.id.yingjian);
         TextView tv2 = (TextView) view.findViewById(R.id.ruanjian);
+        TextView tv3 = (TextView) view.findViewById(R.id.fangong);
         tv1.setOnClickListener(this);
         tv2.setOnClickListener(this);
+        tv3.setOnClickListener(this);
         //设置PopupWindow里面的View
         mPopupWindow.setContentView(view);
         mPopupWindow.setFocusable(true);

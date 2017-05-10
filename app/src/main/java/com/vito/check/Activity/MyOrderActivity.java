@@ -123,7 +123,7 @@ public class MyOrderActivity extends BaseActivity implements RadioGroup.OnChecke
 
             @Override
             public void onError(Throwable e) {
-
+                mLlProgress.setVisibility(View.GONE);
             }
 
             @Override
@@ -163,7 +163,7 @@ public class MyOrderActivity extends BaseActivity implements RadioGroup.OnChecke
             }
 
             @Override
-            public void onError(Throwable e) {
+            public void onError(Throwable e) {mLlProgress.setVisibility(View.GONE);
             }
 
             @Override

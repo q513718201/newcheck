@@ -17,7 +17,7 @@
         android:layout_marginStart="20dp"
         android:clickable="true"
         android:textColor="#00ffd4"
-        android:text="紧急"
+        android:text="紧急(一天)"
         android:textSize="25dp"/>
     <View
         android:layout_marginTop="5dp"
@@ -32,7 +32,7 @@
         android:layout_marginStart="20dp"
         android:clickable="true"
         android:textColor="#00ffd4"
-        android:text="一般"
+        android:text="一般(二天)"
         android:textSize="25dp"/>
     <View
         android:layout_marginTop="5dp"
@@ -47,7 +47,22 @@
         android:layout_marginStart="20dp"
         android:clickable="true"
         android:textColor="#00ffd4"
-        android:text="正常"
+        android:text="正常(三天)"
+        android:textSize="25dp"/>
+    <View
+        android:layout_marginTop="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="0.6dp"
+        android:background="#4f4f4f"/>
+    <TextView
+        android:gravity="center"
+        android:id="@+id/yanshi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:clickable="true"
+        android:textColor="#00ffd4"
+        android:text="延时(七天)"
         android:textSize="25dp"/>
     <View
         android:layout_marginTop="5dp"
