@@ -181,23 +181,6 @@ public class FinishOrderActivity extends BaseActivity implements View.OnClickLis
             }
         }).start();
 
-//        if (mImage == null) {
-//            Log.d("aaa","我来了");
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    SystemClock.sleep(2000);
-//                    if(mImage!=null){
-//                        Log.d("aaa","我要演示来了");
-//                        mHandler.sendEmptyMessage(0);
-//                    }
-//
-//                }
-//            }).start();
-//
-//        } else {
-//            load();
-//        }
     }
 
 

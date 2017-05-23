@@ -88,8 +88,8 @@ public class ApiWrapper extends RetrofitUtil {
     /**
      * 获取派单设备
      */
-    public Observable<Device> getOrderDevices(String token) {
-        return apiServer.getOrderDevices(token);
+    public Observable<Device> getOrderDevices(String token,String remark) {
+        return apiServer.getOrderDevices(token,remark);
     }
 
     /**

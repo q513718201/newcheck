@@ -61,7 +61,15 @@ public interface APIServer {
 
     //获取派单设备
     @GET("getDispatchDevInfos.do")
-    Observable<Device> getOrderDevices(@Query("token") String token);
+    Observable<Device> getOrderDevices(@Query("token") String token,@Query("remark") String remark);
+
+    //获取派单设备中审核不通过的设备
+    @GET("getDispatchDevInfos.do")
+    Observable<Device> getOrderNotPassDevices(@Query("token") String token,@Query("remark") String remark);
+
+
+
+
 
     //查询自己的派单信息
     @GET("findMyDispatch.do")

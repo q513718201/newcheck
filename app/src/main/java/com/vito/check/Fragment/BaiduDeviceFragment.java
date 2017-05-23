@@ -34,6 +34,7 @@ import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
+import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -42,6 +43,11 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.vito.check.Activity.LoginActivity;
 import com.vito.check.Adapter.AllUserAdapter;
 import com.vito.check.Adapter.OnLineManagerAdapter;
@@ -145,9 +151,19 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
     private AllUserAdapter mAllUserAdapter;
     private Device.ContentBean mDeviceBean;
     private PopupWindow mPopupWindow2;
+    private PopupWindow mPopupWindow3;
     private View mInflate;
+    private TextView mMove_jingdu;
+    private TextView mMove_weidu;
+    private TextView mMove_address;
+    private Marker movemark;
+    private boolean canclemove=false;
 
     @Override
+
+
+
+
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = (MainActivity) getActivity();
@@ -180,7 +196,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
 
             @Override
             public void onNext(OnlineRate onlineRate) {
-                if(onlineRate.isSuccess()){
+                if (onlineRate.isSuccess()) {
                     List<OnlineRate.ContentBean> content = onlineRate.getContent();
                     OnlineRate.ContentBean contentBean = content.get(0);
                     mOnline.setText(contentBean.getNowOnlineRate());
@@ -239,6 +255,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
 
         mBaiduMap.setOnMarkerClickListener(this);
         mBaiduMap.setOnMapClickListener(this);
+
     }
 
 
@@ -260,6 +277,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        this.movemark=marker;
         mDeviceNumber = marker.getTitle();
         Bundle extraInfo = marker.getExtraInfo();
         mDeviceAddress = extraInfo.getString("address");
@@ -285,6 +303,8 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
             viewHold.snippet = (TextView) mView.findViewById(R.id.snippet);
             viewHold.start_amap_app = (ImageButton) mView.findViewById(R.id.start_amap_app);
             viewHold.address = (ImageButton) mView.findViewById(R.id.modify);
+            viewHold.move = (ImageButton) mView.findViewById(R.id.move);
+
             mView.setTag(viewHold);
         } else {
             viewHold = (ViewHold) mView.getTag();
@@ -293,6 +313,7 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         viewHold.snippet.setText(address);
         viewHold.start_amap_app.setOnClickListener(this);
         viewHold.address.setOnClickListener(this);
+        viewHold.move.setOnClickListener(this);
         //将marker所在的经纬度的信息转化成屏幕上的坐标
         InfoWindow mInfoWindow = new InfoWindow(mView, ll, DensityUtils.dp2px(mActivity, -32));
         if (!isShowPopWindow) {
@@ -324,6 +345,8 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
     public static class ViewHold {
         TextView title;
         TextView snippet;
+        ImageButton move;
+
         ImageButton start_amap_app;
         ImageButton address;
     }
@@ -507,11 +530,35 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
             return;
         }
 
+        //拖拽地图
+        if (v.getId() == R.id.move) {
+            showMoveMsg();
+            MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newLatLngZoom(mDeviceposition, 28.f);
+            mBaiduMap.animateMapStatus(mapStatusUpdate);
+            initMoveListener();
+            canclemove=true;
+            return;
+        }
+
+        if (v.getId() == R.id.move_sure) {
+           // modifyAddress();
+            mPopupWindow3.dismiss();
+            return;
+        }
+        if (v.getId() == R.id.move_cancle) {
+             mPopupWindow3.dismiss();
+            mBaiduMap.setOnMapStatusChangeListener(null);
+            canclemove=false;
+            center2myLoc(mDeviceposition);
+            return;
+        }
+
+
         if (v.getId() == R.id.location) {
-            // mBaiduMap.setMyLocationEnabled(false);
             center2myLoc(new LatLng(mCurrentLantitude, mCurrentLongitude));
             return;
         }
+
 
         if (v.getId() == R.id.query) {
 
@@ -530,7 +577,8 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         if (v.getId() == R.id.order) {
             mEt.setText("派单设备");
             SpUtils.putString(mActivity, "et", "派单设备");
-            getDevice();
+            getDevice("1");
+            getDevice("2");
             mPopupWindow.dismiss();
             return;
         }
@@ -578,6 +626,77 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
         SpUtils.putString(mActivity, "isChecked", isChecked);
         mPopupWindow.dismiss();
 
+    }
+
+//TODO 地图拖动监听
+    private void initMoveListener() {
+        mBaiduMap.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
+            @Override
+            public void onMapStatusChangeStart(MapStatus mapStatus) {
+
+            }
+
+            @Override
+            public void onMapStatusChange(MapStatus mapStatus) {
+
+            }
+
+            @Override
+            public void onMapStatusChangeFinish(MapStatus mapStatus) {
+
+                if(canclemove){
+                    updateAddress(mapStatus);
+                }
+
+            }
+        });
+    }
+
+    private void updateAddress(MapStatus mapStatus) {
+        movemark.setPosition(mapStatus.target);
+        GeoCoder geoCoder = GeoCoder.newInstance();
+        geoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(mapStatus.target));
+        geoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
+            @Override
+            public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+
+            }
+
+            @Override
+            public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+                String address = reverseGeoCodeResult.getAddress();
+                LatLng location = reverseGeoCodeResult.getLocation();
+                double latitude = location.latitude;
+                double longitude = location.longitude;
+                mMove_address.setText("当前地址 :" + " " +address);
+                mMove_jingdu.setText("当前经度 :" + " " + latitude);
+                mMove_weidu.setText("当前纬度 :" + " " + longitude);
+            }
+        });
+
+    }
+
+
+    private void showMoveMsg() {
+        if (mPopupWindow3 == null) {
+            mPopupWindow3 = new PopupWindow(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        }
+        View view = View.inflate(mActivity, R.layout.device_move, null);
+        //设置PopupWindow里面的View
+        mPopupWindow3.setContentView(view);
+        mMove_jingdu = (TextView) view.findViewById(R.id.device_jingdu);
+        mMove_weidu = (TextView) view.findViewById(R.id.device_weidu);
+        mMove_address = (TextView) view.findViewById(R.id.device_address);
+        Button move_sure= (Button) view.findViewById(R.id.move_sure);
+        Button move_cancle= (Button) view.findViewById(R.id.move_cancle);
+        move_sure.setOnClickListener(this);
+        move_cancle.setOnClickListener(this);
+        mMove_jingdu.setText("当前经度 :" + " " + mDevicelatitude);
+        mMove_weidu.setText("当前纬度 :" + " " + mDevicelongitude);
+        mMove_address.setText("当前地址 :" + " " + mDeviceAddress);
+        mPopupWindow3.setBackgroundDrawable(new ColorDrawable());
+        //弹出mPopupWindow, 在mEdit下显示
+        mPopupWindow3.showAtLocation(mInflate, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
     private void showDescription() {
@@ -657,9 +776,9 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
 
     }
 
-    private void getDevice() {
+    private void getDevice(final String remark) {
 
-        Observable<Device> orderDevices = ApiWrapper.getInstance().getOrderDevices(mToken);
+        Observable<Device> orderDevices = ApiWrapper.getInstance().getOrderDevices(mToken,remark);
         mActivity.addSubscription(orderDevices, new Subscriber<Device>() {
             @Override
             public void onCompleted() {
@@ -691,11 +810,50 @@ public class BaiduDeviceFragment extends Fragment implements View.OnClickListene
                     return;
                 }
 
-                addMarkersToMap(device);
-
+                if(remark.equals("1")){
+                    addMarkersToMap(device);
+                }else{
+                    
+                    addMarkersNotPassToMap(device);
+                }
+                
+                
 
             }
         });
+    }
+
+    private void addMarkersNotPassToMap(Device b) {
+        mContent = b.getContent();
+        isFristLocation = false;
+        double latcenter = 0;
+        double lngcenter = 0;
+        Log.d("aa", "获取到的设备数量" + mContent.size() + "");
+        mList = new ArrayList<>();
+        for (Device.ContentBean device : mContent) {
+            double lat = device.getLat();
+            double lng = device.getLng();
+            latcenter = latcenter + lat;
+            lngcenter = lngcenter + lng;
+            mLatLng = new LatLng(lat, lng);
+            mList.add(mLatLng);
+        }
+
+        Log.d("aa", "坐标数量" + mList.size() + "");
+        for (int i = 0; i < mList.size(); i++) {
+            mBundle = new Bundle();
+            mOoD = new MarkerOptions().position(mList.get(i));
+            mBundle.putString("address", mContent.get(i).getDescription());
+            mBundle.putSerializable("device", mContent.get(i));
+            mOoD.title(mContent.get(i).getT_id()).extraInfo(mBundle);
+
+             mOoD.icon(BitmapDescriptorFactory.fromResource(R.drawable.notpass));
+
+            mBaiduMap.addOverlay(mOoD);
+        }
+        Log.d("bbb", mList.size() / 2 + "");
+        // center2myLoc(mList.get(mList.size() ));
+        center2myLoc(new LatLng(latcenter / mList.size(), (lngcenter / mList.size())));
     }
 
     /**

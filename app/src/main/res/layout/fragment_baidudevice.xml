@@ -43,20 +43,25 @@
 
         <TextView
             android:id="@+id/device_no"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="1"
             android:textColor="#ff6f00"
             android:textSize="18sp"
             />
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="丨"
+           android:textColor="#e3e3e3"
+            android:textSize="18sp"
+            />
+        <TextView
             android:id="@+id/online"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ff6f00"
-            android:text="2"
+            android:text="20%"
             android:textSize="18sp"
             />
 
@@ -162,7 +167,7 @@
         android:id="@+id/isshowquery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/right"
+        android:src="@drawable/search"
         android:textColor="@color/colorAccent"
         />
     <ImageView
