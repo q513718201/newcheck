@@ -39,9 +39,7 @@ public class DialogUtil {
                         if(TextUtils.isEmpty(dev_id)){
                             Toast.makeText(context,"请输入地址",Toast.LENGTH_SHORT).show();
                         }else{
-                            Observable<Device> asdfsf = ApiWrapper.getInstance().getOrderDevices("asdfsf");
-                            BaseActivity applicationContext = (BaseActivity) context.getApplicationContext();
-                           //applicationContext.addSubscription();
+
                         }
 
                     }

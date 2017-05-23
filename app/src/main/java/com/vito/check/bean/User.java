@@ -15,10 +15,11 @@ public class User {
      */
 
     private String content;
-    private String role;
     private String branch;
     private String nickName;
     private boolean success;
+    private String role;
+
 
     public String getContent() {
         return content;
